@@ -9,6 +9,7 @@
         },
         "files": [
 
+
             "./config/packages/doctrine.yaml",
             "./src/Entity/.gitignore",
             "./src/Repository/.gitignore"
@@ -27,6 +28,7 @@
 
             "./config/packages/doctrine_migrations.yaml",
             "./migrations/.gitignore"
+
 
         ]
     },

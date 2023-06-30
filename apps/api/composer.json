@@ -23,6 +23,7 @@
         "symfony/maker-bundle": "^1.49"
     },
 
+
     "config": {
         "allow-plugins": {
             "php-http/discovery": true,
