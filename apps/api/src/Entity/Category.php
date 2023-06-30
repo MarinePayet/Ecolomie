@@ -2,23 +2,23 @@
 
 namespace App\Entity;
 
-use App\Repository\StorageRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: StorageRepository::class)]
-class Storage
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'storage', targetEntity: Product::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class, orphanRemoval: true)]
     private Collection $products;
 
     public function __construct()
@@ -55,7 +55,7 @@ class Storage
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
-            $product->setStorage($this);
+            $product->setCategory($this);
         }
 
         return $this;
@@ -65,8 +65,8 @@ class Storage
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getStorage() === $this) {
-                $product->setStorage(null);
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
             }
         }
 
