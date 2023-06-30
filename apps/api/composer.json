@@ -20,6 +20,7 @@
 
 
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/maker-bundle": "^1.49"
     },
 
@@ -72,8 +73,5 @@
             "require": "6.3.*",
             "docker": false
         }
-    },
-    "require-dev": {
-        "symfony/maker-bundle": "^1.49"
     }
 }
