@@ -2,12 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata as Api;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[Api\ApiResource(
+    normalizationContext:['groups' => ['read_category']],
+    denormalizationContext:['groups' => ['create_category']]
+)]
+
+
 class Category
 {
     #[ORM\Id]
@@ -16,6 +24,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['read_category'], ['create_category'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class, orphanRemoval: true)]

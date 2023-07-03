@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata as Api;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,6 +12,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[Api\ApiResource(
+    normalizationContext:['groups' => ['read_products']],
+    denormalizationContext:['groups' => ['create_product']]
+)]
 class Product
 {
     #[ORM\Id]
@@ -17,35 +24,44 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?float $quantity = null;
+    #[Groups(['read_products','create_product'])]
+    private ?float $quantity = null;    
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['read_products','create_product'])]
     private ?\DateTimeInterface $dlc = null;
 
     #[ORM\Column(length: 30, nullable: true)]
+    #[Groups(['read_products','create_product'])]
     private ?string $nutriscore = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['read_products','create_product'])]
     private ?float $calorie = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(['read_products','create_product'])]
     private ?string $season = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read_products','create_product'])]
     private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read_products','create_product'])]
     private ?Storage $storage = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'products')]
     private Collection $user;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read_products','create_product'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read_products','create_product'])]
     private ?string $unit = null;
 
     public function __construct()
