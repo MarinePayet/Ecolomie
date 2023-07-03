@@ -2,12 +2,19 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata as Api;
 use App\Repository\StorageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: StorageRepository::class)]
+#[Api\ApiResource(
+    normalizationContext:['groups' => 'read_storage'],
+    denormalizationContext:['groups' => 'create_storage']
+
+)]
 class Storage
 {
     #[ORM\Id]
@@ -16,6 +23,7 @@ class Storage
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    #[Groups(['read_storage' , 'create_storage'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'storage', targetEntity: Product::class, orphanRemoval: true)]
