@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\User;
 
 class UserFixtures extends Fixture
 {
@@ -15,8 +15,8 @@ class UserFixtures extends Fixture
         $user->setPassword('password');
         $user->setFirstname('Salim');
         $user->setLastname('Bouassida');
+        $user->setRoles(['ADMIN']);
         $manager->persist($user);
-
         $manager->flush();
     }
 }
