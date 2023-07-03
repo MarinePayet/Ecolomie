@@ -53,9 +53,6 @@ class Product
     #[Groups(['read_products','create_product'])]
     private ?Storage $storage = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'products')]
-    private Collection $user;
-
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read_products','create_product'])]
     private ?string $name = null;
@@ -64,9 +61,13 @@ class Product
     #[Groups(['read_products','create_product'])]
     private ?string $unit = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[Groups(['read_products','create_product'])]
+    private ?User $user = null;
+
     public function __construct()
     {
-        $this->user = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -161,26 +162,7 @@ class Product
     /**
      * @return Collection<int, User>
      */
-    public function getUser(): Collection
-    {
-        return $this->user;
-    }
 
-    public function addUser(User $user): static
-    {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        $this->user->removeElement($user);
-
-        return $this;
-    }
 
     public function getName(): ?string
     {
@@ -202,6 +184,18 @@ class Product
     public function setUnit(?string $unit): static
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
