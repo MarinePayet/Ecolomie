@@ -1,0 +1,6 @@
+api_platform:
+    defaults:
+        item_operation:
+            - get
+            - put
+            - delete
