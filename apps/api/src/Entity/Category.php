@@ -9,10 +9,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[Api\ApiResource(
     normalizationContext:['groups' => 'read_category'],
-    denormalizationContext:['groups' => 'create_category']
+    denormalizationContext:['groups' => 'create_category'],
+    
 )]
 
 

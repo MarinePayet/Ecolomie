@@ -19,8 +19,31 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $product->setNutriscore('D');
         $product->setCalorie('42');
         $product->setCategory($this->getReference(CategoryFixtures::CAT_BOISSONS));
-        $product->setStorage($this->getReference(StorageFixtures::STORAGE_WAREHOUSE));
+        $product->setStorage($this->getReference(StorageFixtures::STORAGE_PLACARD));
         $manager->persist($product);
+        
+        $product = new Product();
+        $product->setName('Pomme');
+        $product->setQuantity(3);
+        $product->setUnit('entier');
+        $product->setDlc(new \DateTime('2021-12-31'));
+        $product->setNutriscore('A');
+        $product->setCalorie('10');
+        $product->setCategory($this->getReference(CategoryFixtures::CAT_FRUITS));
+        $product->setStorage($this->getReference(StorageFixtures::STORAGE_CORBEILLE));
+        $manager->persist($product);
+        
+        $product = new Product();
+        $product->setName('Courgette');
+        $product->setQuantity(2.5);
+        $product->setUnit('entier');
+        $product->setDlc(new \DateTime('2021-12-31'));
+        $product->setNutriscore('A');
+        $product->setCalorie('4');
+        $product->setCategory($this->getReference(CategoryFixtures::CAT_LEGUMES));
+        $product->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
+        $manager->persist($product);
+
 
         $manager->flush();
     }
