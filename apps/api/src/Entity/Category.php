@@ -26,7 +26,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['read_category', 'create_category'])]
+    #[Groups(['read_category', 'create_category','read_products'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class, orphanRemoval: true)]
