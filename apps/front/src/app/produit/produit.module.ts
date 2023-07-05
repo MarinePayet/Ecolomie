@@ -1,21 +1,22 @@
-import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { TabsPageRoutingModule } from './tabs-routing.module';
+import { IonicModule } from '@ionic/angular';
 
-import { TabsPage } from './tabs.page';
+import { ProduitPageRoutingModule } from './produit-routing.module';
+
+import { ProduitPage } from './produit.page';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   imports: [
-    IonicModule,
     CommonModule,
     FormsModule,
-    TabsPageRoutingModule,
+    IonicModule,
+    ProduitPageRoutingModule,
     ScrollingModule
   ],
-  declarations: [TabsPage]
+  declarations: [ProduitPage]
 })
-export class TabsPageModule {}
+export class ProduitPageModule {}

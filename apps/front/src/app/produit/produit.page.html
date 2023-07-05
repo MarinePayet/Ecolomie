@@ -1,0 +1,15 @@
+
+
+<ion-content>
+  <cdk-virtual-scroll-viewport itemSize="56" minBufferPx="900" maxBufferPx="1350">
+    <ion-card *cdkVirtualFor="let product of products">
+      <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+      <ion-card-header>
+        <ion-card-title>{{ product?.name}}
+          <ion-card-subtitle>{{product?.category.name}}</ion-card-subtitle>
+        </ion-card-title>
+
+      </ion-card-header>
+    </ion-card>
+  </cdk-virtual-scroll-viewport>
+</ion-content>

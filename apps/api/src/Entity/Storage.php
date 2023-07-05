@@ -23,7 +23,7 @@ class Storage
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
-    #[Groups(['read_storage' , 'create_storage'])]
+    #[Groups(['read_storage' , 'create_storage','read_products'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'storage', targetEntity: Product::class, orphanRemoval: true)]
