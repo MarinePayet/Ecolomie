@@ -7,11 +7,31 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Product</ion-label>
+    </ion-list-header>
+    <ion-list>
+      <ion-item> {{ currentProduct }} </ion-item>
+        <!-- <ion-select-option *ngFor="let currentProduct of currentProduct" >
+
+
+          <ion-item> {{ currentProduct.brands }} </ion-item>
+
+
+          <ion-item lines="none">
+            <ion-label>Current value: {{ currentProduct | json }}</ion-label>
+          </ion-item>
+        </ion-select-option> -->
+          <!-- <ion-item *ngFor="let item of products | keyvalue">
+            <ng-container *ngIf="item.key === 'brands'">
+              {{ item.key }} : {{ item.value }}
+            </ng-container>
+          </ion-item> -->
+      </ion-list>
+
+  </ion-list>
+
 </ion-content>
+
