@@ -29,6 +29,9 @@ class Storage
     #[ORM\OneToMany(mappedBy: 'storage', targetEntity: Product::class, orphanRemoval: true)]
     private Collection $products;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -77,6 +80,18 @@ class Storage
                 $product->setStorage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }
