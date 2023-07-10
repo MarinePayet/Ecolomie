@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { WebApiService } from '../../service/web-api.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,34 +7,35 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  private configUrl = 'https://127.0.0.1:8000/api';
+  storages: any;
 
-  storages: { name: string, description: string }[] = [];
-  searchTerm: string = '';
-  filteredStorages: { name: string, description: string }[];
-
-  constructor(private http: HttpClient) {
-    this.filteredStorages = [];
-  }
+  constructor(private webApiService: WebApiService) {}
 
   ngOnInit() {
-    this.getStorage();
+    this.getStorages();
   }
 
-  getStorage() {
-    this.http.get<any>(`${this.configUrl}/storages`).subscribe(data => {
+  getStorages() {
+    this.webApiService.getStorages().subscribe((data) => {
       this.storages = data['hydra:member'];
-      this.filterStorages();
+      console.log(this.storages);
     });
   }
 
-  filterStorages() {
-    if (!this.searchTerm) {
-      this.filteredStorages = this.storages;
-    } else {
-      this.filteredStorages = this.storages.filter(storage => {
-        return storage.name.toLowerCase().includes(this.searchTerm.toLowerCase()) || storage.description.toLowerCase().includes(this.searchTerm.toLowerCase());
-      });
-    }
+  deleteStorage(id: number) {
+    this.webApiService.deleteStorage(id).subscribe(() => {
+      console.log('Stockage supprimé avec succès.');
+      this.getStorages();
+    }, error => {
+      console.log('Erreur lors de la suppression du stockage :', error);
+    });
+  }
+
+  ;
+  updateStorage(id: any, data: any) {
+    this.webApiService.editStorage(id, data).subscribe((data) => {
+      console.log(data);
+      this.getStorages();
+    });
   }
 }

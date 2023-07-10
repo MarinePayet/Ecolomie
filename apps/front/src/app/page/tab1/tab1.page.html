@@ -7,12 +7,11 @@
     </ion-buttons>
     <ion-title>Ecolomie</ion-title>
   </ion-toolbar>
-  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterStorages()"></ion-searchbar>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button size="small" color="primary">
+      <ion-button size="small" color="primary" routerLink="/editer">
         <ion-icon name="add"></ion-icon>
-        <ion-title>Créer un stockage</ion-title>
+        <ion-title>Crée un Stokage</ion-title>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -20,16 +19,20 @@
 
 <ion-content>
   <cdk-virtual-scroll-viewport itemSize="56" minBufferPx="900" maxBufferPx="1350">
-    <ion-card *cdkVirtualFor="let storage of filteredStorages" [routerLink]="['/produit']">
-      <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+    <ion-card *cdkVirtualFor="let storage of storages">
+      <ion-img alt="Image d'un stockage" src="https://ionicframework.com/docs/img/demos/card-media.png"></ion-img>
       <ion-card-header>
-        <ion-card-title>{{ storage?.name }}</ion-card-title>
+        <ion-card-title>{{ storage.name }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        Here's a small text description for the card content. Nothing more, nothing less.
+        <p>Voici une petite description du contenu de la carte. Rien de plus, rien de moins.</p>
       </ion-card-content>
+      <ion-button size="small" (click)="deleteStorage(storage.id)" color="danger" fill="outline">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+      <ion-button size="small" (click)="updateStorage(storage.id, storage.name)" color="primary" fill="outline">
+        <ion-icon slot="icon-only" name="create"></ion-icon>
+      </ion-button>
     </ion-card>
   </cdk-virtual-scroll-viewport>
 </ion-content>
-
-

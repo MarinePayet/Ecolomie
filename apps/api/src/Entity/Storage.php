@@ -12,21 +12,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: StorageRepository::class)]
 #[Api\ApiResource(
     normalizationContext:['groups' => 'read_storage'],
-    denormalizationContext:['groups' => 'create_storage']
-
+    denormalizationContext:['groups' => 'create_storage','groups' => 'remove_storage'],
 )]
+
 class Storage
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_storage' , 'create_storage','read_products','remove_storage'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
-    #[Groups(['read_storage' , 'create_storage','read_products'])]
+    #[Groups(['read_storage' , 'create_storage','read_products','remove_storage'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'storage', targetEntity: Product::class, orphanRemoval: true)]
+    #[Groups(['read_storage' , 'create_storage','read_products','remove_storage'])]
     private Collection $products;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -96,4 +98,5 @@ class Storage
 
         return $this;
     }
+
 }
