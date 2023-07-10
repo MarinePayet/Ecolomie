@@ -1,0 +1,35 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button routerLink="/login" size="small" color="primary">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Ecolomie</ion-title>
+  </ion-toolbar>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterStorages()"></ion-searchbar>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button size="small" color="primary">
+        <ion-icon name="add"></ion-icon>
+        <ion-title>Créer un stockage</ion-title>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <cdk-virtual-scroll-viewport itemSize="56" minBufferPx="900" maxBufferPx="1350">
+    <ion-card *cdkVirtualFor="let storage of filteredStorages" [routerLink]="['/produit']">
+      <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+      <ion-card-header>
+        <ion-card-title>{{ storage?.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Here's a small text description for the card content. Nothing more, nothing less.
+      </ion-card-content>
+    </ion-card>
+  </cdk-virtual-scroll-viewport>
+</ion-content>
+
+

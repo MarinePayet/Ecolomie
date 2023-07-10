@@ -30,6 +30,7 @@ class Storage
     private Collection $products;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read_storage' , 'create_storage','read_products'])]
     private ?string $image = null;
 
     public function __construct()
