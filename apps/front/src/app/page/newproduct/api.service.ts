@@ -18,10 +18,6 @@ export class ApiService {
     return this.http.get(`${this.API_URL}/storages`);
   }
 
-  saveProduct(product: any): Observable<any> {
-    return this.http.post(`${this.API_URL}/products`, product);
-  }
-
   addProduct(product: any): Observable<any> {
     return this.http.post(`${this.API_URL}/products`, product);
   }

@@ -16,6 +16,9 @@ export class NewproductPage {
     category: string;
     storage: string;
     name: string;
+    user: string;
+    season : string;
+    unit : string;
   };
 
   categories: any[] = [];
@@ -31,21 +34,26 @@ export class NewproductPage {
       category: '',
       storage: '',
       name: '',
+      user: '/api/users/20',
+      season : 'hiver',
+      unit : 'kg'
     };
   }
 
   addProduct() {
-    // ...
-
+    this.product.category = '/api/categories/' + this.product.category;
+    this.product.storage = '/api/storages/' + this.product.storage;
+    console.log('Product:', this.product);
     this.apiService.addProduct(this.product).subscribe(
-      response => {
-        // Traitement de la réponse
+      (data) => {
+        console.log('Add product response:', data);
       },
       (error: HttpErrorResponse) => {
-        console.error('Erreur lors de l\'ajout du produit :', error);
+        console.log('Add product error:', error);
       }
     );
   }
+
 
   getCategories() {
     this.apiService.getCategories().subscribe((data) => {
