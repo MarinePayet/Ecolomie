@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Ecolomie',
   webDir: 'www',
   server: {
-    androidScheme: 'https',
+    androidScheme: 'http',
     iosScheme: 'http'
   }
 };
