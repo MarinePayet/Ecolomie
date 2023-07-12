@@ -26,8 +26,9 @@ class Storage
     #[ORM\Column(length: 30)]
     #[Groups(['read_storage' , 'create_storage','read_products','remove_storage'])]
     private ?string $name = null;
-
+    
     #[ORM\OneToMany(mappedBy: 'storage', targetEntity: Product::class, orphanRemoval: true)]
+    #[ORM\Column(nullable:true)]
     #[Groups(['read_storage' , 'create_storage','read_products','remove_storage'])]
     private Collection $products;
 
