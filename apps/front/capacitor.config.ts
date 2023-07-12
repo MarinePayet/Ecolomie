@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'front',
+  appId: 'com.donkey.ecolomie',
+  appName: 'Ecolomie',
   webDir: 'www',
   server: {
     androidScheme: 'https'

@@ -8,6 +8,8 @@ import { WebApiService } from '../../service/web-api.service';
 })
 export class Tab1Page implements OnInit {
   storages: any;
+  isEditing: boolean = false;
+  selectedStorageId: number | null = null;
 
   constructor(private webApiService: WebApiService) {}
 
@@ -31,11 +33,30 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  ;
-  updateStorage(id: any, data: any) {
-    this.webApiService.editStorage(id, data).subscribe((data) => {
-      console.log(data);
-      this.getStorages();
-    });
+  updateStorage(id: number, newName: string) {
+    const storageToUpdate = this.storages.find((storage: { id: number; name: string }) => storage.id === id);
+    if (storageToUpdate) {
+      const updatedStorage = Object.assign({}, storageToUpdate);
+      updatedStorage.name = newName;
+      this.webApiService.updateStorage(id, updatedStorage).subscribe(() => {
+        console.log('Stockage mis à jour avec succès.');
+        this.getStorages();
+        this.isEditing = false; // Désactiver le mode édition
+        this.selectedStorageId = null; // Réinitialiser le stockage sélectionné
+      }, error => {
+        console.log('Erreur lors de la mise à jour du stockage :', error);
+      });
+    }
   }
+
+  enableEdit(id: number) {
+    this.isEditing = true;
+    this.selectedStorageId = id;
+  }
+
+  cancelEdit() {
+    this.isEditing = false;
+    this.selectedStorageId = null;
+  }
+
 }

@@ -11,7 +11,7 @@
     <ion-buttons slot="end">
       <ion-button size="small" color="primary" routerLink="/editer">
         <ion-icon name="add"></ion-icon>
-        <ion-title>Crée un Stokage</ion-title>
+        <ion-title>Crée un Stockage</ion-title>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -22,16 +22,24 @@
     <ion-card *cdkVirtualFor="let storage of storages">
       <ion-img alt="Image d'un stockage" src="https://ionicframework.com/docs/img/demos/card-media.png"></ion-img>
       <ion-card-header>
-        <ion-card-title>{{ storage.name }}</ion-card-title>
+        <ion-card-title>
+          <ion-input [(ngModel)]="storage.name" [disabled]="!isEditing || selectedStorageId !== storage.id"></ion-input>
+        </ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p>Voici une petite description du contenu de la carte. Rien de plus, rien de moins.</p>
       </ion-card-content>
-      <ion-button size="small" (click)="deleteStorage(storage.id)" color="danger" fill="outline">
+      <ion-button fill="clear" size="small" (click)="deleteStorage(storage.id)" color="danger" fill="outline" [hidden]="isEditing">
         <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>
-      <ion-button size="small" (click)="updateStorage(storage.id, storage.name)" color="primary" fill="outline">
+      <ion-button fill="clear" size="small" (click)="updateStorage(storage.id, storage.name)" color="success" fill="outline" [hidden]="!isEditing || selectedStorageId !== storage.id">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" size="small" (click)="enableEdit(storage.id)" color="primary" fill="outline" [hidden]="isEditing || selectedStorageId !== storage.id">
         <ion-icon slot="icon-only" name="create"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" size="small" (click)="cancelEdit()" color="danger" fill="outline" [hidden]="!isEditing || selectedStorageId !== storage.id">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
       </ion-button>
     </ion-card>
   </cdk-virtual-scroll-viewport>

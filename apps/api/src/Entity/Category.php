@@ -12,11 +12,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[Api\ApiResource(
-    normalizationContext:['groups' => 'read_category'],
-    denormalizationContext:['groups' => 'create_category'],
-    
+    normalizationContext:['groups' => ['read_category']],
+    denormalizationContext:['groups' => ['create_category']],
 )]
-
 
 class Category
 {
@@ -30,6 +28,7 @@ class Category
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class, orphanRemoval: true)]
+    #[Groups(['read_category'])]
     private Collection $products;
 
     public function __construct()
