@@ -24,8 +24,11 @@ export class WebApiService {
 
   updateStorage(id: number, name: string): Observable<any> {
     const updatedData = { name: name };
-
     return this.http.put(`${this.apiUrl}/storages/${id}`, updatedData);
+  }
+
+  getProducts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/products`);
   }
 
   saveProduct(product: any): Observable<any> {

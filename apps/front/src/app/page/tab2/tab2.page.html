@@ -1,16 +1,22 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="secondary">
+      <ion-button routerLink="/login" size="small" color="warning">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Ecolomie</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="light">
     <ion-title>
-      Tab 2
+      Mes listes
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-
-  <ion-list>
+    <ion-list>
     <ion-list-header>
-      <ion-label>Product</ion-label>
+      <ion-label>TOTO</ion-label>
     </ion-list-header>
     <ion-list>
       <ion-item> {{ currentProduct }} </ion-item>

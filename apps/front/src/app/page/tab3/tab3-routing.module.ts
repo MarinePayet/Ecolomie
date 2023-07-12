@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Tab3Page } from './tab3.page';
+import { ProduitPage } from '../produit/produit.page';
+import { LoginPage } from '../login/login.page';
 
 const routes: Routes = [
   {
