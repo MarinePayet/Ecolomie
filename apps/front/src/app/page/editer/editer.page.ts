@@ -13,6 +13,6 @@ export class EditerPage implements OnInit {
   ngOnInit() {
   }
 
-  
+
 
 }

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[Api\ApiResource(
-    normalizationContext:['groups' => ['read_products']],
+    normalizationContext:['groups' => ['read_products',]],
     denormalizationContext:['groups' => ['create_product']]
 )]
 class Product
@@ -45,12 +45,12 @@ class Product
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read_products','create_product'])]
+    #[Groups(['read_products','create_product','read_category'])]
     private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read_products','create_product'])]
+    #[Groups(['read_products','create_product','read_storage'])]
     private ?Storage $storage = null;
 
     #[ORM\Column(length: 255, nullable: true)]
