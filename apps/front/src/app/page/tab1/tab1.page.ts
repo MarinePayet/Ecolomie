@@ -38,9 +38,9 @@ export class Tab1Page implements OnInit {
     if (storageToUpdate) {
       const updatedStorage = Object.assign({}, storageToUpdate);
       updatedStorage.name = newName;
-      this.webApiService.updateStorage(id, updatedStorage).subscribe(() => {
+      this.webApiService.updateStorage(id, newName).subscribe(() => {
         console.log('Stockage mis à jour avec succès.');
-        this.getStorages();
+        this.getStorages(); 
         this.isEditing = false; // Désactiver le mode édition
         this.selectedStorageId = null; // Réinitialiser le stockage sélectionné
       }, error => {
@@ -48,6 +48,7 @@ export class Tab1Page implements OnInit {
       });
     }
   }
+
 
   enableEdit(id: number) {
     this.isEditing = true;
