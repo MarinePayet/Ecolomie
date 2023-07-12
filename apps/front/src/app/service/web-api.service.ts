@@ -23,6 +23,10 @@ export class WebApiService {
     return this.http.put(`${this.apiUrl}/storages/${id}`, data);
   }
 
+  getProducts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/products`);
+  }
+
 
 
 }
