@@ -21,6 +21,8 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_products', 'read_category', 'read_storage'])]
+
     private ?int $id = null;
 
     #[ORM\Column]

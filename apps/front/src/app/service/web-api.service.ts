@@ -7,14 +7,14 @@ import { Observable } from 'rxjs';
 })
 export class WebApiService {
 
-  // private readonly apiUrl = 'https://127.0.0.1:8000/api';
+  private readonly apiUrl = 'http://192.168.50.39:8000/api';
 
-  private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
+  // private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
 
   //URL de dev pour Marine
   // private readonly apiUrl = 'http://127.0.0.1:8000/api'
 
-  private readonly apiUrl = 'http://172.26.128.1:8000/api'; // for android emulator salim A
+  // private readonly apiUrl = 'http://172.26.128.1:8000/api'; // for android emulator salim A
 
   // private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web salim A
 
@@ -42,6 +42,10 @@ export class WebApiService {
 
   getProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/products`);
+  }
+
+  getProduct(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/products/${id}`);
   }
 
   saveProduct(product: any): Observable<any> {
