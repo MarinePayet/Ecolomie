@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-title class="ion-text-center">{{ product?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="product">
+    <ion-item>
+      <ion-label>Emplacement: </ion-label>{{ product.storage }}
+    </ion-item>
+    <ion-item>
+      <ion-label>Quantity: </ion-label>{{ product.quantity }}
+    </ion-item>
+    <ion-item>
+      <ion-label>Date limite de consommation: </ion-label>{{ product.expiration_date }}
+    </ion-item>
+    <ion-item>
+      <ion-label>Nutriscore: </ion-label>{{ product.nutriscore }}
+    </ion-item>
+    <ion-item>
+      <ion-label>Calorie: </ion-label>{{ product.calorie }}
+    </ion-item>
+    <ion-item>
+      <ion-label>Saison: </ion-label>{{ product.season }}
+    </ion-item>
+  </ion-list>
+</ion-content>
