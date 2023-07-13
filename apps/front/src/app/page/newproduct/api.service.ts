@@ -6,8 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly API_URL = 'https://127.0.0.1:8000/api';  // replace with your API URL
-
+  // private readonly API_URL = 'https://127.0.0.1:8000/api'; 
+  
+  private readonly API_URL = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP
+  
+  // private readonly API_URL = 'http://127.0.0.1:8000/api';  // URL de dev pour Marine
+  
   constructor(private http: HttpClient) { }
 
   getCategories(): Observable<any> {
