@@ -9,9 +9,8 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button size="small" color="primary" routerLink="/editer">
-        <ion-icon name="add"></ion-icon>
-        <ion-title>Crée un Stockage</ion-title>
+      <ion-button size="small" color="primary">
+        <ion-title >editer</ion-title>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -25,7 +24,7 @@
         <ion-card-title>
           <ion-input [(ngModel)]="storage.name" [disabled]="!isEditing || selectedStorageId !== storage.id"></ion-input>
         </ion-card-title>
-      </ion-card-header> 
+      </ion-card-header>
       <ion-card-content>
         <p>Voici une petite description du contenu de la carte. Rien de plus, rien de moins.</p>
       </ion-card-content>
@@ -37,9 +36,6 @@
       </ion-button>
       <ion-button fill="clear" size="small" (click)="enableEdit(storage.id)" color="primary" fill="outline" [hidden]="isEditing || selectedStorageId !== storage.id">
         <ion-icon slot="icon-only" name="create"></ion-icon>
-      </ion-button>
-      <ion-button fill="clear" size="small" (click)="cancelEdit()" color="danger" fill="outline" [hidden]="!isEditing || selectedStorageId !== storage.id">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
       </ion-button>
     </ion-card>
   </cdk-virtual-scroll-viewport>
