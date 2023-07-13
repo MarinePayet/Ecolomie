@@ -1,18 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="secondary">
-      <ion-button routerLink="/login" size="small" color="primary">
-        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-      </ion-button>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login" color="primary"></ion-back-button>
     </ion-buttons>
     <ion-title>Ecolomie</ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true">
   <ion-card>
     <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-    <form #productForm="ngForm" (ngSubmit)="addProduct()">
+    <form #productForm="ngForm" (ngSubmit)="addProduct()" >
       <ion-card-header>
         <ion-card-title class="ion-text-center">
           <ion-input type="text" [(ngModel)]="product.name" name="name" required placeholder="Nom du produit"></ion-input>

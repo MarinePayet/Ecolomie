@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WebApiService } from '../../service/web-api.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',

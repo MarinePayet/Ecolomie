@@ -2,7 +2,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
-      <ion-button routerLink="/login" size="small" color="warning">
+      <ion-button routerLink="/tabs/tab3" size="small" color="warning">
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -14,16 +14,28 @@
 </ion-header>
 
 <ion-content>
+  <ion-header>
+    <ion-toolbar color="light">
+      <ion-buttons slot="end">
+        <ion-button size="small" color="primary" routerLink="/newproduct">
+          <ion-icon name="add"></ion-icon>
+          <ion-label>Ajouter un produit</ion-label>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-grid>
     <ion-row>
       <ion-col size="3" *ngFor="let product of products">
+
           <div class="product-thumbnail">
             <a [routerLink]="['/productdetail', product.id]">
               <div class="product-thumbnail-title">{{ product.name }}</div>
             </a>
           </div>
+
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
-
