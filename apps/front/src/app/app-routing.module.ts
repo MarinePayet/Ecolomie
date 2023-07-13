@@ -15,10 +15,6 @@ const routes: Routes = [
     loadChildren: () => import('./page/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'editer',
-    loadChildren: () => import('./page/editer/editer.module').then( m => m.EditerPageModule)
-  },
-  {
     path: 'newproduct',
     loadChildren: () => import('./page/newproduct/newproduct.module').then( m => m.NewproductPageModule)
   },

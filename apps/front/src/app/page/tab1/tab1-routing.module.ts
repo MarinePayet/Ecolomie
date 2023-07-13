@@ -16,10 +16,6 @@ const routes: Routes = [
       {
         path: 'login',  component: LoginPage,
       },
-
-      {
-        path: 'editer', loadChildren: () => import('../editer/editer.module').then( m => m.EditerPageModule)
-      }
     ]
   }
 ];

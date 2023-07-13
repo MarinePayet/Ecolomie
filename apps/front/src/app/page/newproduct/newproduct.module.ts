@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { IonicModule } from '@ionic/angular';
+import { IonBackButton, IonicModule } from '@ionic/angular';
 
 import { NewproductPageRoutingModule } from './newproduct-routing.module';
 
@@ -13,7 +12,7 @@ import { NewproductPage } from './newproduct.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    NewproductPageRoutingModule
+    NewproductPageRoutingModule,
   ],
   declarations: [NewproductPage]
 })
