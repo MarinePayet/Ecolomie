@@ -6,7 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly API_URL = 'https://127.0.0.1:8000/api';  // replace with your API URL
+  private readonly API_URL = 'http://127.0.0.1:8000/api'; // for web
+
+  // private readonly apiUrl = 'http://172.26.128.1:8000/api'; // for android emulator
+
 
   constructor(private http: HttpClient) { }
 
