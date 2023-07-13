@@ -32,7 +32,7 @@ export class NewproductPage {
       storage: '',
       name: '',
     };
-  }
+  } 
 
   addProduct() {
     // ...

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly API_URL = 'https://127.0.0.1:8000/api';  // replace with your API URL
+  private readonly API_URL = 'http://127.0.0.1:8000/api';  // replace with your API URL
 
   constructor(private http: HttpClient) { }
 
@@ -18,9 +18,6 @@ export class ApiService {
     return this.http.get(`${this.API_URL}/storages`);
   }
 
-  saveProduct(product: any): Observable<any> {
-    return this.http.post(`${this.API_URL}/products`, product);
-  }
 
   addProduct(product: any): Observable<any> {
     return this.http.post(`${this.API_URL}/products`, product);

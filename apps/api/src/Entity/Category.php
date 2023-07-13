@@ -15,12 +15,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext:['groups' => ['read_category']],
     denormalizationContext:['groups' => ['create_category']],
 )]
-
+ 
 class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read_products'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
