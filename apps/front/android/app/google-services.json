@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "81443414414",
+    "project_id": "ecolomiea",
+    "storage_bucket": "ecolomiea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81443414414:android:442a36f876649498c3c4df",
+        "android_client_info": {
+          "package_name": "com.donkey.ecolomie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81443414414-8lglh9oj1b3ethien4tnuq4p8m1lairj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVQ8ZMhbn52fA1ZUNwvu3y1EE7TAKntmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81443414414-8lglh9oj1b3ethien4tnuq4p8m1lairj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
