@@ -6,7 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class WebApiService {
-  private readonly apiUrl = 'http://172.26.128.1:8000/api';
+  private readonly apiUrl = 'http://172.26.128.1:8000/api'; // for android emulator
+
+  // private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web
+
+
 
   constructor(private http: HttpClient) { }
 
