@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Product;
+use App\Entity\ProductUserStorage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Product>
+ * @extends ServiceEntityRepository<ProductUserStorage>
  *
- * @method Product|null find($id, $lockMode = null, $lockVersion = null)
- * @method Product|null findOneBy(array $criteria, array $orderBy = null)
- * @method Product[]    findAll()
- * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ProductUserStorage|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ProductUserStorage|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ProductUserStorage[]    findAll()
+ * @method ProductUserStorage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductRepository extends ServiceEntityRepository
+class ProductUserStorageRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Product::class);
+        parent::__construct($registry, ProductUserStorage::class);
     }
 
 //    /**
-//     * @return Product[] Returns an array of Product objects
+//     * @return ProductUserStorage[] Returns an array of ProductUserStorage objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class ProductRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Product
+//    public function findOneBySomeField($value): ?ProductUserStorage
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

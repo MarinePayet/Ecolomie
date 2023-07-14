@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\CategoryRepository;
+use App\Repository\MyListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Entity(repositoryClass: MyListRepository::class)]
 #[ApiResource]
-class Category
+class MyList
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,7 +20,10 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    #[ORM\ManyToOne]
+    private ?User $user = null;
+
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'my_list')]
     private Collection $products;
 
     public function __construct()
@@ -45,6 +48,18 @@ class Category
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Product>
      */
@@ -57,7 +72,7 @@ class Category
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
-            $product->setCategory($this);
+            $product->addMyList($this);
         }
 
         return $this;
@@ -66,10 +81,7 @@ class Category
     public function removeProduct(Product $product): static
     {
         if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getCategory() === $this) {
-                $product->setCategory(null);
-            }
+            $product->removeMyList($this);
         }
 
         return $this;

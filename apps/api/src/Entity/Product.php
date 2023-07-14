@@ -2,74 +2,42 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata as Api;
-use Symfony\Component\Serializer\Annotation\Groups;
-
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[Api\ApiResource(
-    normalizationContext:['groups' => ['read_products',]],
-    denormalizationContext:['groups' => ['create_product']]
-)]
+#[ApiResource]
 class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read_products', 'read_category', 'read_storage'])]
-
     private ?int $id = null;
 
-    #[ORM\Column]
-    #[Groups(['read_products','create_product'])]
-    private ?float $quantity = null;    
-
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Groups(['read_products','create_product'])]
-    private ?\DateTimeInterface $dlc = null;
-
-    #[ORM\Column(length: 30, nullable: true)]
-    #[Groups(['read_products','create_product'])]
-    private ?string $nutriscore = null;
-
-    #[ORM\Column(nullable: true)]
-    #[Groups(['read_products','create_product'])]
-    private ?float $calorie = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    #[Groups(['read_products','create_product'])]
-    private ?string $season = null;
-
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read_products','create_product','read_category'])]
-    private ?Category $category = null;
-
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read_products','create_product','read_storage'])]
-    private ?Storage $storage = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read_products','create_product'])]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read_products','create_product'])]
-    private ?string $unit = null;
+    private ?string $nutriscore = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
-    #[Groups(['read_products','create_product'])]
-    private ?User $user = null;
+    private ?Category $category = null;
+
+    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
+    private ?ProductUserStorage $productUserStorage = null;
+
+    #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]
+    private Collection $my_list;
 
     public function __construct()
     {
-
+        $this->my_list = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,26 +45,14 @@ class Product
         return $this->id;
     }
 
-    public function getQuantity(): ?float
+    public function getName(): ?string
     {
-        return $this->quantity;
+        return $this->name;
     }
 
-    public function setQuantity(float $quantity): static
+    public function setName(string $name): static
     {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getDlc(): ?\DateTimeInterface
-    {
-        return $this->dlc;
-    }
-
-    public function setDlc(?\DateTimeInterface $dlc): static
-    {
-        $this->dlc = $dlc;
+        $this->name = $name;
 
         return $this;
     }
@@ -113,26 +69,14 @@ class Product
         return $this;
     }
 
-    public function getCalorie(): ?float
+    public function getImage(): ?string
     {
-        return $this->calorie;
+        return $this->image;
     }
 
-    public function setCalorie(?float $calorie): static
+    public function setImage(?string $image): static
     {
-        $this->calorie = $calorie;
-
-        return $this;
-    }
-
-    public function getSeason(): ?string
-    {
-        return $this->season;
-    }
-
-    public function setSeason(?string $season): static
-    {
-        $this->season = $season;
+        $this->image = $image;
 
         return $this;
     }
@@ -149,55 +93,48 @@ class Product
         return $this;
     }
 
-    public function getStorage(): ?Storage
+    public function getProductUserStorage(): ?ProductUserStorage
     {
-        return $this->storage;
+        return $this->productUserStorage;
     }
 
-    public function setStorage(?Storage $storage): static
+    public function setProductUserStorage(?ProductUserStorage $productUserStorage): static
     {
-        $this->storage = $storage;
+        // unset the owning side of the relation if necessary
+        if ($productUserStorage === null && $this->productUserStorage !== null) {
+            $this->productUserStorage->setProduct(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($productUserStorage !== null && $productUserStorage->getProduct() !== $this) {
+            $productUserStorage->setProduct($this);
+        }
+
+        $this->productUserStorage = $productUserStorage;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, MyList>
      */
-
-
-    public function getName(): ?string
+    public function getMyList(): Collection
     {
-        return $this->name;
+        return $this->my_list;
     }
 
-    public function setName(?string $name): static
+    public function addMyList(MyList $myList): static
     {
-        $this->name = $name;
+        if (!$this->my_list->contains($myList)) {
+            $this->my_list->add($myList);
+        }
 
         return $this;
     }
 
-    public function getUnit(): ?string
+    public function removeMyList(MyList $myList): static
     {
-        return $this->unit;
-    }
-
-    public function setUnit(?string $unit): static
-    {
-        $this->unit = $unit;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
+        $this->my_list->removeElement($myList);
 
         return $this;
     }

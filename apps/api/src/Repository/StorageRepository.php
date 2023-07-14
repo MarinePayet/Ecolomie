@@ -21,24 +21,6 @@ class StorageRepository extends ServiceEntityRepository
         parent::__construct($registry, Storage::class);
     }
 
-    public function save(Storage $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(Storage $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
 //    /**
 //     * @return Storage[] Returns an array of Storage objects
 //     */
