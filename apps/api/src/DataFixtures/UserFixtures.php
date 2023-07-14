@@ -9,7 +9,9 @@ use Doctrine\Persistence\ObjectManager;
 class UserFixtures extends Fixture
 {
 
+
     public const USER_SALIM = 'USER_SALIM'; 
+
 
     public function load(ObjectManager $manager): void
     {
@@ -20,7 +22,10 @@ class UserFixtures extends Fixture
         $user->setLastname('Bouassida');
         $user->setRoles(['ROLE_ADMIN']);
         $manager->persist($user);
+
         $this->addReference(self::USER_SALIM, $user);
+
+
 
         $manager->flush();
     }
