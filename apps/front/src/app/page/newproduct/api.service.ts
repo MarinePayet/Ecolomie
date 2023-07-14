@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ApiService {
 
 
-  // private readonly API_URL = 'http://192.168.50.39:8000/api'; url salim B ANDROID
+  private readonly API_URL = 'http://192.168.50.39:8000/api'; //url salim B ANDROID
 
   // private readonly API_URL = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP
 
@@ -16,7 +16,7 @@ export class ApiService {
 
 
 
-  private readonly API_URL = 'https://127.0.0.1:8000/api'; // for web salim A
+  //private readonly API_URL = 'https://127.0.0.1:8000/api'; // for web salim A
 
   // private readonly API_URL = 'http://172.26.128.1:8000/api'; // for android emulator salim A
 
