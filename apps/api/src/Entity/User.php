@@ -53,14 +53,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private ?string $lastname = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Product::class)]
-    #[Groups(['read_user'])]
-    private Collection $products;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class)]
+    private Collection $storages;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->storages = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -156,30 +156,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
     /**
-     * @return Collection<int, Product>
+     * @return Collection<int, Storage>
      */
-    public function getProducts(): Collection
+    public function getStorages(): Collection
     {
-        return $this->products;
+        return $this->storages;
     }
 
-    public function addProduct(Product $product): static
+    public function addStorage(Storage $storage): static
     {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setUser($this);
+        if (!$this->storages->contains($storage)) {
+            $this->storages->add($storage);
+            $storage->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): static
+    public function removeStorage(Storage $storage): static
     {
-        if ($this->products->removeElement($product)) {
+        if ($this->storages->removeElement($storage)) {
             // set the owning side to null (unless already changed)
-            if ($product->getUser() === $this) {
-                $product->setUser(null);
+            if ($storage->getUser() === $this) {
+                $storage->setUser(null);
             }
         }
 
