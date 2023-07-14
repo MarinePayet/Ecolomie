@@ -35,7 +35,7 @@ export class NewproductPage {
       category: '',
       storage: '',
       name: '',
-      user: '/api/users/20',
+      user: '/api/users/2',
       season: 'hiver',
       unit: 'kg'
     };
