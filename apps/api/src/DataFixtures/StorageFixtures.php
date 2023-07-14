@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Storage;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class StorageFixtures extends Fixture
+class StorageFixtures extends Fixture implements DependentFixtureInterface
 {
 
     public const STORAGE_PLACARD = 'STORAGE_PLACARD';
@@ -20,6 +21,7 @@ class StorageFixtures extends Fixture
         $storage->setName('Placard');
         $manager->persist($storage);
         $this->addReference(self::STORAGE_PLACARD, $storage);
+        $storage->setUser($this->getReference(UserFixtures::USER_SALIM));
         
         $storage = new Storage();
         $storage->setName('Frigo');
@@ -34,4 +36,13 @@ class StorageFixtures extends Fixture
 
         $manager->flush();
     }
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+        ];
+    }
+        
+
 }
