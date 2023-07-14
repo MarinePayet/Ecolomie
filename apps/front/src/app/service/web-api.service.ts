@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class WebApiService {
 
-  private readonly apiUrl = 'http://192.168.50.39:8000/api';
 
   // private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
 
@@ -52,5 +51,10 @@ export class WebApiService {
 
   getCategories(): Observable<any> {
     return this.http.get(`${this.apiUrl}/categories`);
+  }
+
+  createStorage(name: string): Observable<any> {
+    const storage = { name: name };
+    return this.http.post(`${this.apiUrl}/storages`, storage);
   }
 }

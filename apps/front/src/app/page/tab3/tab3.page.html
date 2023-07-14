@@ -25,17 +25,17 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col size="3" *ngFor="let product of products">
-
-          <div class="product-thumbnail">
-            <a [routerLink]="['/productdetail', product.id]">
+  <ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3" *ngFor="let product of products">
+          <a [routerLink]="['/productdetail', product.id]">
+            <div class="product-thumbnail">
               <div class="product-thumbnail-title">{{ product.name }}</div>
-            </a>
-          </div>
+            </div>
+          </a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
 
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>

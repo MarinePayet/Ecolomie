@@ -9,6 +9,7 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
+
 @NgModule({
   imports: [
     IonicModule,
