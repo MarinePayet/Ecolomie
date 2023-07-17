@@ -12,3 +12,6 @@
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
+### Base de donnée CSV OPEN FOOD FACTS   ###
+/src/assets/en.openfoodfacts.org.product.textClipping
