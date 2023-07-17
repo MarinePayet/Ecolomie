@@ -13,13 +13,9 @@ export class NewproductPage {
     quantity: number;
     dlc: string;
     nutriscore: string;
-    calorie: number;
     category: string;
     storage: string;
     name: string;
-    user: string;
-    season: string;
-    unit: string;
   };
 
   categories: any[] = [];
@@ -31,13 +27,9 @@ export class NewproductPage {
       quantity: 0,
       dlc: '',
       nutriscore: '',
-      calorie: 0,
       category: '',
       storage: '',
       name: '',
-      user: '/api/users/20',
-      season: 'hiver',
-      unit: 'kg'
     };
   }
 

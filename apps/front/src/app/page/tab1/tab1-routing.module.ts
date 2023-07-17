@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Tab1Page } from './tab1.page';
-import { ProduitPage } from '../produit/produit.page';
 import { LoginPage } from '../login/login.page';
 
 
@@ -9,13 +8,25 @@ const routes: Routes = [
   {
     path: '', component: Tab1Page,
     children: [
-      {
-        path: 'produit', component: ProduitPage,
-      },
+
 
       {
         path: 'login',  component: LoginPage,
       },
+      {
+        path: 'expiration-proche',
+        loadChildren: () => import('../expiration-proche/expiration-proche.module').then(m => m.ExpirationProchePageModule)
+      },
+      {
+        path: 'expiration-depasse',
+        loadChildren: () => import('../expiration-proche/expiration-proche.module').then(m => m.ExpirationProchePageModule)
+      },
+      {
+        path: 'mes-listes',
+        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+      },
+
+
     ]
   }
 ];

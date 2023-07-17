@@ -7,19 +7,21 @@ import { Observable } from 'rxjs';
 })
 export class WebApiService {
 
-  private readonly apiUrl = 'http://192.168.50.39:8000/api'; //URL Android en dev selon l'IP salim B
+  // private readonly apiUrl = 'http://192.168.50.39:8000/api'; //URL Android en dev selon l'IP salim B
 
   // private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
 
 
   // private readonly apiUrl = 'http://172.26.128.1:8000/api'; // for android emulator salim A
 
-  //private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
+    private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
 
 
 
   constructor(private http: HttpClient) { }
+
+
 
   getStorages(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages`);
@@ -38,6 +40,11 @@ export class WebApiService {
     return this.http.put(`${this.apiUrl}/storages/${id}`, updatedData);
   }
 
+  createStorage(name: string): Observable<any> {
+    const storage = { name: name };
+    return this.http.post(`${this.apiUrl}/storages`, storage);
+  }
+
   getProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/products`);
   }
@@ -54,8 +61,7 @@ export class WebApiService {
     return this.http.get(`${this.apiUrl}/categories`);
   }
 
-  createStorage(name: string): Observable<any> {
-    const storage = { name: name };
-    return this.http.post(`${this.apiUrl}/storages`, storage);
+  getMyLists(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/my_list`);
   }
 }
