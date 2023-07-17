@@ -27,11 +27,13 @@ class StorageFixtures extends Fixture implements DependentFixtureInterface
         $storage->setName('Frigo');
         $manager->persist($storage);
         $this->addReference(self::STORAGE_FRIGO, $storage);
+        $storage->setUser($this->getReference(UserFixtures::USER_SALIM));
         
         $storage = new Storage();
         $storage->setName('Corbeille');
         $manager->persist($storage);
         $this->addReference(self::STORAGE_CORBEILLE, $storage);
+        $storage->setUser($this->getReference(UserFixtures::USER_SALIM));
 
 
         $manager->flush();

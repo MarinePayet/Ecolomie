@@ -1,35 +1,63 @@
 <ion-header translucent="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
-      <ion-button routerLink="/login" size="small" color="warning">
-        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      <ion-button routerLink="/login" color="warning">
+        <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Ecolomie</ion-title>
+    <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-        <ion-button size="small" color="primary" (click)="createNewStorage('nouveau stockage')">
-            <ion-title>Créer un stockage</ion-title>
-        </ion-button>
-    </ion-buttons>
-</ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card *ngFor="let storage of storages">
-      <ion-img alt="Image d'un stockage" src="https://ionicframework.com/docs/img/demos/card-media.png"></ion-img>
-      <ion-card-header>
-        <ion-card-title>
-          <ion-item lines="none">
-            <ion-input slot="start" [(ngModel)]="storage.name" [disabled]="!isEditing || selectedStorageId !== storage.id"></ion-input>
-            <ion-button slot="end" fill="clear" size="small" (click)="updateStorage(storage.id, storage.name)" color="success"
-              fill="outline" *ngIf="isEditing && selectedStorageId === storage.id">
-              <ion-icon slot="icon-only" name="checkmark"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </ion-card-title>
-      </ion-card-header>
-      <ion-button expand="block" size="small" (click)="actionSheetButtons(storage.id)" color="primary">Editer</ion-button>
-    </ion-card>
+<ion-content [fullscreen]="true">
+  <ion-card color="primary" class="ion-padding" routerLink="/expiration-proche">
+    <ion-card-header>
+      <ion-card-title class="ion-text-uppercase">Date d'expiration proche</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-toolbar>
+    <ion-title class="ion-text-uppercase ion-text-center">Emplacements</ion-title>
+  </ion-toolbar>
+
+
+
+  <ion-card color="warning" class="ion-padding" *ngFor="let storage of storages" routerLink="/stockage/{{ storage.id }}">
+    <ion-item-sliding>
+      <ion-item color="warning">
+        <ion-card-header>
+          <ion-card-title class="ion-text-uppercase ion-text-wrap">{{ storage.name }}</ion-card-title>
+        </ion-card-header>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteStorage(storage)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-card>
+
+
+  <ion-card class="transparent-card" (click)="createNewStoragePrompt()">
+    <ion-card-content>
+      <ion-toolbar>
+        <ion-title class="ion-text-uppercase ion-text-center">Crée un Emplacement</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="success">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card color="success" class="ion-padding" routerLink="/mes-listes">
+    <ion-card-header>
+      <ion-card-title class="ion-text-uppercase">Mes Listes</ion-card-title>
+    </ion-card-header>
+  </ion-card>
 </ion-content>
+
+

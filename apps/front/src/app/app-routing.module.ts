@@ -7,10 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./page/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'produit',
-    loadChildren: () => import('./page/produit/produit.module').then( m => m.ProduitPageModule)
-  },
-  {
     path: 'login',
     loadChildren: () => import('./page/login/login.module').then( m => m.LoginPageModule)
   },
@@ -22,6 +18,18 @@ const routes: Routes = [
   {
     path: 'productdetail/:id',
     loadChildren: () => import('./page/product-detail/product-detail.module').then(m => m.ProductDetailPageModule)
+  },
+  {
+    path: 'expiration-proche',
+    loadChildren: () => import('./page/expiration-proche/expiration-proche.module').then( m => m.ExpirationProchePageModule)
+  },
+  {
+    path: 'expiration-depassee',
+    loadChildren: () => import('./page/expiration-depassee/expiration-depassee.module').then( m => m.ExpirationDepasseePageModule)
+  },
+  {
+    path: 'mes-listes',
+    loadChildren: () => import('./page/mes-listes/mes-listes.module').then( m => m.MesListesPageModule)
   },
 
 ];
