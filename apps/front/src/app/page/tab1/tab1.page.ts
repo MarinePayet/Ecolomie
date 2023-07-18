@@ -16,6 +16,7 @@ export class Tab1Page implements OnInit {
   isEditing: boolean = false;
   selectedStorageId: number | null = null;
 
+
   constructor(
     private webApiService: WebApiService,
     private alertController: AlertController
@@ -32,6 +33,14 @@ export class Tab1Page implements OnInit {
       console.log(this.storages);
     });
   }
+
+ getProducts_user_storage(id:number) {
+    this.webApiService.getproduct_user_storage(id).subscribe((data) => {
+      this.storages = data['hydra:member'];
+      console.log(this.storages);
+    });
+  }
+
 
   async deleteStorage(storage: any) {
     const alert = await this.alertController.create({

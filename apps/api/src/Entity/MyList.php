@@ -2,25 +2,32 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata as Api;
 use App\Repository\MyListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MyListRepository::class)]
-#[ApiResource]
+#[Api\ApiResource (
+    normalizationContext: ['groups' => ['my_list:read']],
+    denormalizationContext: ['groups' => ['my_list:write']],
+)]
 class MyList
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['my_list:read' , 'my_list:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['my_list:read', 'my_list:write'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne]
+    #[Groups(['my_list:read', 'my_list:write'])]
     private ?User $user = null;
 
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'my_list')]

@@ -75,7 +75,5 @@ export class NewproductPage {
     this.getCategories();
     this.getStorages();
   }
-
-
 }
 
