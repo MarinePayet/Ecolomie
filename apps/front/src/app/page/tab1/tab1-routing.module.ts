@@ -18,15 +18,14 @@ const routes: Routes = [
         loadChildren: () => import('../expiration-proche/expiration-proche.module').then(m => m.ExpirationProchePageModule)
       },
       {
-        path: 'expiration-depasse',
-        loadChildren: () => import('../expiration-proche/expiration-proche.module').then(m => m.ExpirationProchePageModule)
-      },
-      {
         path: 'mes-listes',
         loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
       },
 
-
+      {
+        path: 'product_user_storage/ + user_id',
+        loadChildren: () => import('../product-storage-user/product-storage-user.module').then(m => m.ProductStorageUserPageModule)
+      },
     ]
   }
 ];

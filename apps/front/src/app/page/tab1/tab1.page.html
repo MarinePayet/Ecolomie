@@ -16,17 +16,26 @@
     </ion-card-header>
   </ion-card>
 
-  <ion-toolbar>
-    <ion-title class="ion-text-uppercase ion-text-center">Emplacements</ion-title>
-  </ion-toolbar>
+  <ion-card class="transparent-card">
+    <ion-card-content>
+      <ion-toolbar>
+        <ion-title class="ion-text-uppercase ion-text-center">Emplacements</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="success" (click)="createNewStoragePrompt()">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-card-content>
+  </ion-card>
 
 
 
-  <ion-card color="warning" class="ion-padding" *ngFor="let storage of storages" routerLink="/stockage/{{ storage.id }}">
-    <ion-item-sliding>
+  <ion-card color="warning" class="ion-padding" *ngFor="let storage of storages" (click)="getProducts_user_storage(storage.id)">
+    <ion-item-sliding [routerLink]="'/getProducts_user_storage/' + storage.id">
       <ion-item color="warning">
         <ion-card-header>
-          <ion-card-title class="ion-text-uppercase ion-text-wrap">{{ storage.name }}</ion-card-title>
+          <ion-card-title class="ion-text-uppercase ion-text-center">{{ storage.name }}</ion-card-title>
         </ion-card-header>
       </ion-item>
 
@@ -37,21 +46,6 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-card>
-
-
-  <ion-card class="transparent-card" (click)="createNewStoragePrompt()">
-    <ion-card-content>
-      <ion-toolbar>
-        <ion-title class="ion-text-uppercase ion-text-center">Crée un Emplacement</ion-title>
-        <ion-buttons slot="end">
-          <ion-button color="success">
-            <ion-icon slot="icon-only" name="add"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-card-content>
-  </ion-card>
-
 
   <ion-card color="success" class="ion-padding" routerLink="/mes-listes">
     <ion-card-header>

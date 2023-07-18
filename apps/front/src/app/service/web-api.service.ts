@@ -27,17 +27,12 @@ export class WebApiService {
     return this.http.get(`${this.apiUrl}/storages`);
   }
 
-  getStorage(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/storages/${id}`);
+  getproduct_user_storage(id:number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/product_user_storage/${id}`);
   }
 
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
-  }
-
-  updateStorage(id: number, name: string): Observable<any> {
-    const updatedData = { name: name };
-    return this.http.put(`${this.apiUrl}/storages/${id}`, updatedData);
   }
 
   createStorage(name: string): Observable<any> {
@@ -62,6 +57,11 @@ export class WebApiService {
   }
 
   getMyLists(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/my_list`);
+    return this.http.get(`${this.apiUrl}/my_lists`);
   }
+
+  deleteList(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
+  }
+
 }
