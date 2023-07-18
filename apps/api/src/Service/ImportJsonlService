@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Service;
+
+use App\Entity\OpenFoodProduct;
+use Doctrine\ORM\EntityManagerInterface;
+
+class ImportJsonlService
+{
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    public function importJsonl($filePath)
+    {
+        $file = fopen($filePath, 'r');
+        if ($file === false) {
+            throw new \Exception("Impossible d'ouvrir le fichier JSONL.");
+        }
+
+        while (($line = fgets($file)) !== false) {
+            $data = json_decode($line, true);
+            if ($data === null) {
+                throw new \Exception("Erreur lors du décodage JSON de la ligne : $line");
+            }
+
+            $entity = new OpenFoodProduct();
+            // Affectez les valeurs des propriétés de l'entité à partir des données JSONL
+            $entity->getCategories($data['categories']);
+            $entity->setNutriscoreGrade($data['nutriscore_grade']);
+            $entity->setProductName($data['product_name']);
+            $entity->setImageFrontSmallUrl($data['image_front_small_url']);
+
+            $this->entityManager->persist($entity);
+        }
+
+        fclose($file);
+
+        $this->entityManager->flush();
+    }
+}
