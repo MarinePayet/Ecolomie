@@ -24,10 +24,6 @@ const routes: Routes = [
     loadChildren: () => import('./page/expiration-proche/expiration-proche.module').then( m => m.ExpirationProchePageModule)
   },
   {
-    path: 'expiration-depassee',
-    loadChildren: () => import('./page/expiration-depassee/expiration-depassee.module').then( m => m.ExpirationDepasseePageModule)
-  },
-  {
     path: 'mes-listes',
     loadChildren: () => import('./page/mes-listes/mes-listes.module').then( m => m.MesListesPageModule)
   },
