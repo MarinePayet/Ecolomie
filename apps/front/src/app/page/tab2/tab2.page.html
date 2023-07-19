@@ -8,36 +8,10 @@
     <ion-title>Ecolomie</ion-title>
   </ion-toolbar>
   <ion-toolbar color="light">
-    <ion-title>
-      Mes listes
-    </ion-title>
+
+    <ion-button (click)="scanBarcode()">Scan Barcode</ion-button>
+    <p *ngIf="currentProduct">Brand: {{currentProduct}}</p>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true">
-    <ion-list>
-    <ion-list-header>
-      <ion-label>TOTO</ion-label>
-    </ion-list-header>
-    <ion-list>
-      <ion-item> {{ currentProduct }} </ion-item>
-        <!-- <ion-select-option *ngFor="let currentProduct of currentProduct" >
 
-
-          <ion-item> {{ currentProduct.brands }} </ion-item>
-
-
-          <ion-item lines="none">
-            <ion-label>Current value: {{ currentProduct | json }}</ion-label>
-          </ion-item>
-        </ion-select-option> -->
-          <!-- <ion-item *ngFor="let item of products | keyvalue">
-            <ng-container *ngIf="item.key === 'brands'">
-              {{ item.key }} : {{ item.value }}
-            </ng-container>
-          </ion-item> -->
-      </ion-list>
-
-  </ion-list>
-
-</ion-content>
 
