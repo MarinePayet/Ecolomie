@@ -31,8 +31,8 @@
 
 
 
-  <ion-card color="warning" class="ion-padding" *ngFor="let storage of storages" (click)="getProducts_user_storage(storage.id)">
-    <ion-item-sliding [routerLink]="'/getProducts_user_storage/' + storage.id">
+  <ion-card color="warning" class="ion-padding" *ngFor="let storage of storages">
+    <ion-item-sliding>
       <ion-item color="warning">
         <ion-card-header>
           <ion-card-title class="ion-text-uppercase ion-text-center">{{ storage.name }}</ion-card-title>

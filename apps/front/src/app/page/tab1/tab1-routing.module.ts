@@ -21,11 +21,11 @@ const routes: Routes = [
         path: 'mes-listes',
         loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
       },
-
       {
-        path: 'product_user_storage/ + user_id',
+        path: 'product-user-storage',
         loadChildren: () => import('../product-storage-user/product-storage-user.module').then(m => m.ProductStorageUserPageModule)
       },
+
     ]
   }
 ];

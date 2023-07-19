@@ -1,13 +1,48 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>expiration-proche</ion-title>
+<ion-header translucent="true">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-button routerLink="/login" color="warning">
+        <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="danger">
+    <ion-title class="ion-text-uppercase">expiration-proche</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content fullscreen="true">
   <ion-header collapse="condense">
     <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
       <ion-title size="large">expiration-proche</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list class="dans-1-jour">
+    <ion-list-header>
+      Dans 1 jour
+    </ion-list-header>
+  </ion-list>
+
+  <ion-list class="dans-7-jours">
+    <ion-list-header>
+      Dans 7 jours
+    </ion-list-header>
+
+  </ion-list>
+
+  <ion-list class="dans-15-jours">
+    <ion-list-header>
+      Dans 15 jours
+    </ion-list-header>
+
+  </ion-list>
+
 </ion-content>

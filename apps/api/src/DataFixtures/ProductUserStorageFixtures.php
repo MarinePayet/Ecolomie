@@ -16,35 +16,35 @@ class ProductUserStorageFixtures extends Fixture implements DependentFixtureInte
     {
         $productUserStorage = new ProductUserStorage();
         $productUserStorage->setQuantity(1);
-        $productUserStorage->setDlc(new \DateTime('2021-12-31'));
+        $productUserStorage->setDlc(new \DateTime('2023-07-17'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_BANANE));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
         $manager->persist($productUserStorage);
 
         $productUserStorage = new ProductUserStorage();
         $productUserStorage->setQuantity(2);
-        $productUserStorage->setDlc(new \DateTime('2021-12-31'));
+        $productUserStorage->setDlc(new \DateTime('2023-07-17'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_POMME));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
         $manager->persist($productUserStorage);
 
         $productUserStorage = new ProductUserStorage();
         $productUserStorage->setQuantity(3);
-        $productUserStorage->setDlc(new \DateTime('2021-12-31'));
+        $productUserStorage->setDlc(new \DateTime('2023-07-11'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_LAIT));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
         $manager->persist($productUserStorage);
 
         $productUserStorage = new ProductUserStorage();
         $productUserStorage->setQuantity(4);
-        $productUserStorage->setDlc(new \DateTime('2021-12-31'));
+        $productUserStorage->setDlc(new \DateTime('2023-07-11'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_CHOCOLAT));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
         $manager->persist($productUserStorage);
 
         $productUserStorage = new ProductUserStorage();
         $productUserStorage->setQuantity(5);
-        $productUserStorage->setDlc(new \DateTime('2021-12-31'));
+        $productUserStorage->setDlc(new \DateTime('2023-07-03'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_BONBON));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
         $manager->persist($productUserStorage);

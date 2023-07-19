@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebApiService } from '../../service/web-api.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -8,19 +9,15 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  openActionSheet(arg0: any) {
-    throw new Error('Method not implemented.');
-  }
-
   storages: any;
   isEditing: boolean = false;
   selectedStorageId: number | null = null;
 
-
   constructor(
     private webApiService: WebApiService,
-    private alertController: AlertController
-
+    private alertController: AlertController,
+    private toastController: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -34,18 +31,10 @@ export class Tab1Page implements OnInit {
     });
   }
 
- getProducts_user_storage(id:number) {
-    this.webApiService.getproduct_user_storage(id).subscribe((data) => {
-      this.storages = data['hydra:member'];
-      console.log(this.storages);
-    });
-  }
-
-
   async deleteStorage(storage: any) {
     const alert = await this.alertController.create({
       header: 'Confirmation',
-      message: `Êtes-vous sûr de vouloir supprimer le stockage "${storage.name}" ?`,
+      message: `Êtes-vous sûr de vouloir supprimer l'emplacement "${storage.name}" ?`,
       buttons: [
         {
           text: 'Annuler',
@@ -55,10 +44,11 @@ export class Tab1Page implements OnInit {
           text: 'Supprimer',
           handler: () => {
             this.webApiService.deleteStorage(storage.id).subscribe(() => {
-              console.log('Stockage supprimé avec succès.');
+              console.log('Emplacement supprimé avec succès.');
               this.getStorages();
+              this.presentToast('Emplacement supprimé avec succès.');
             }, error => {
-              console.log('Erreur lors de la suppression du stockage :', error);
+              console.log("Erreur lors de la suppression de l'emplacement", error);
             });
           }
         }
@@ -66,6 +56,14 @@ export class Tab1Page implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000 // Durée d'affichage du toast en millisecondes
+    });
+    toast.present();
   }
 
   createNewStorage(nom: string) {
