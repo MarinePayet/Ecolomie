@@ -12,9 +12,9 @@ export class WebApiService {
   // private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
 
 
-  // private readonly apiUrl = 'http://172.26.128.1:8000/api'; // for android emulator salim A
+  // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
-    private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
+  private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
 
 

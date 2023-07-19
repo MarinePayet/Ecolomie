@@ -12,15 +12,13 @@ export class Tab3Page implements OnInit {
   products: any;
 
 
-  constructor(private webApiService: WebApiService, private router: Router) {}
+  constructor(private webApiService: WebApiService, private router: Router) { }
 
   ngOnInit() {
     this.getProducts();
   }
 
-
-
-getProducts() {
+  getProducts() {
     this.webApiService.getProducts().subscribe((data) => {
       this.products = data['hydra:member'];
       console.log(this.products);
