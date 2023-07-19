@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { WebApiService } from '../../service/web-api.service';
-
 
 @Component({
   selector: 'app-expiration-proche',
@@ -9,7 +7,7 @@ import { WebApiService } from '../../service/web-api.service';
 })
 export class ExpirationProchePage implements OnInit {
 
-  constructor(private webApiService: WebApiService) { }
+  constructor() { }
 
   ngOnInit() {
   }
