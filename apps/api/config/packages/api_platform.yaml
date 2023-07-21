@@ -1,6 +1,6 @@
 api_platform:
-    defaults:
-        item_operation:
-            - get
-            - put
-            - delete
+    swagger:
+         api_keys:
+             JWT:
+                name: Authorization
+                type: header

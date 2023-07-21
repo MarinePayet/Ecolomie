@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 
 
-class RegistrationFormType extends AbstractType
+class RegistrationFormType extends AbstractTypE
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
