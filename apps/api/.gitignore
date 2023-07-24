@@ -12,3 +12,7 @@
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
+/import/en.openfoodfacts.org.products_err.csv
+/import/en.openfoodfacts.org.products_out.csv
+/import/en.openfoodfacts.org.products.csv

@@ -17,7 +17,7 @@ class Product
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['product_user_storage:read'])]
-    private ?int $id = null;
+    private ?string $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['product_user_storage:read'])]
@@ -45,7 +45,14 @@ class Product
         $this->my_list = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): ?string
     {
         return $this->id;
     }
