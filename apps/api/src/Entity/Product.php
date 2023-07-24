@@ -7,6 +7,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ApiResource]
@@ -15,15 +16,19 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['product_user_storage:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['product_user_storage:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['product_user_storage:read'])]
     private ?string $nutriscore = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['product_user_storage:read'])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
