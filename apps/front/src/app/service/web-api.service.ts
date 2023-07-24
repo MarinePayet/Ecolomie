@@ -69,7 +69,7 @@ export class WebApiService {
   }
 
   getProductUserStorage(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product_user_storage/${id}`);
+    return this.http.get(`${this.apiUrl}/product_user_storages/${id}`);
   }
 
   getProductUserStorages(): Observable<any> {
