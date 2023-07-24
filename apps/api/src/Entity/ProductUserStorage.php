@@ -2,30 +2,41 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata as Api;
 use App\Repository\ProductUserStorageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
-#[ApiResource]
+#[Api\ApiResource(
+    normalizationContext: ['groups' => ['product_user_storage:read']],
+    denormalizationContext: ['groups' => ['product_user_storage:write']],
+)]
+
 class ProductUserStorage
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['product_user_storage:read'])]       
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['product_user_storage:read'])]    
     private ?\DateTimeInterface $DLC = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['product_user_storage:read'])]    
+
     private ?float $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
+    #[Groups(['product_user_storage:read'])]    
     private ?Storage $storage = null;
 
     #[ORM\OneToOne(inversedBy: 'productUserStorage', cascade: ['persist', 'remove'])]
+    #[Groups(['product_user_storage:read'])]    
     private ?Product $product = null;
 
     public function getId(): ?int

@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { WebApiService } from '../../service/web-api.service';
 import { Router } from '@angular/router';
@@ -9,22 +10,37 @@ import { Router } from '@angular/router';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit {
-  products: any;
+  productUserStorages: any;
 
 
   constructor(private webApiService: WebApiService, private router: Router) {}
 
   ngOnInit() {
-    this.getProducts();
+    this.getProductUserStorages();
   }
 
 
-
-getProducts() {
-    this.webApiService.getProducts().subscribe((data) => {
-      this.products = data['hydra:member'];
-      console.log(this.products);
-    }
-    );
+getProductUserStorages() {
+  this.webApiService.getProductUserStorages().subscribe((data) => {
+    this.productUserStorages = data['hydra:member'];
+    console.log(this.productUserStorages);
   }
+  );
 }
+
+getProductUserStorage(id: number) {
+  this.webApiService.getProductUserStorage(id).subscribe((data) => {
+    this.productUserStorages = data['hydra:member'];
+    console.log(this.productUserStorages);
+  }
+  );
+}
+// getProducts() {
+//     this.webApiService.getProducts().subscribe((data) => {
+//       this.products = data['hydra:member'];
+//       console.log(this.products);
+//     }
+//     );
+//   }
+}
+
