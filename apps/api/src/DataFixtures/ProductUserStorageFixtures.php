@@ -16,21 +16,21 @@ class ProductUserStorageFixtures extends Fixture implements DependentFixtureInte
     {
         $productUserStorage = new ProductUserStorage();
         $productUserStorage->setQuantity(1);
-        $productUserStorage->setDlc(new \DateTime('2023-07-17'));
+        $productUserStorage->setDlc(new \DateTime('2023-07-27'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_BANANE));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
         $manager->persist($productUserStorage);
 
         $productUserStorage = new ProductUserStorage();
         $productUserStorage->setQuantity(2);
-        $productUserStorage->setDlc(new \DateTime('2023-07-17'));
+        $productUserStorage->setDlc(new \DateTime('2023-08-17'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_POMME));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
         $manager->persist($productUserStorage);
 
         $productUserStorage = new ProductUserStorage();
         $productUserStorage->setQuantity(3);
-        $productUserStorage->setDlc(new \DateTime('2023-07-11'));
+        $productUserStorage->setDlc(new \DateTime('2023-08-02'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_LAIT));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
         $manager->persist($productUserStorage);
