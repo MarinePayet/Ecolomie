@@ -17,9 +17,9 @@ class Product
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['product_user_storage:read'])]
-    private ?string $id = null;
+    private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 1000)]
     #[Groups(['product_user_storage:read'])]
     private ?string $name = null;
 
@@ -40,19 +40,15 @@ class Product
     #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]
     private Collection $my_list;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $barcode = null;
+
     public function __construct()
     {
         $this->my_list = new ArrayCollection();
     }
 
-    public function setId(string $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -147,6 +143,18 @@ class Product
     public function removeMyList(MyList $myList): static
     {
         $this->my_list->removeElement($myList);
+
+        return $this;
+    }
+
+    public function getBarcode(): ?string
+    {
+        return $this->barcode;
+    }
+
+    public function setBarcode(?string $barcode): static
+    {
+        $this->barcode = $barcode;
 
         return $this;
     }
