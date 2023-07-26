@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WebApiService } from '../../service/web-api.service';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-tab1',
@@ -17,6 +18,7 @@ export class Tab1Page implements OnInit {
     private webApiService: WebApiService,
     private alertController: AlertController,
     private toastController: ToastController,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -104,5 +106,11 @@ export class Tab1Page implements OnInit {
 
     await alert.present();
   }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn;
+  }
+
+
 
 }
