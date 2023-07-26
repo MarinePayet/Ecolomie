@@ -32,7 +32,7 @@ class ImportProductsService
 
     private function readCsvFile():Reader
     {
-        $csv = Reader::createFromPath('%kerner.root_dir%/../import/test.csv', 'r');
+        $csv = Reader::createFromPath('%kerner.root_dir%/../import/output_part_aa', 'r');
         $csv->setHeaderOffset(0);
 
         return $csv;
@@ -40,17 +40,16 @@ class ImportProductsService
 
     private function createOrUpdateProduct(array $arrayProduct): Product
     {
-        // $product = $this->productRepository->findOneBy(['id' => $arrayProduct['code']]);
+        $product = $this->productRepository->findOneBy(['barcode' => $arrayProduct['code']]);
 
-        // if (!$product){
-        //     $product = new Product();
-        // }
+        if (!$product){
+            $product = new Product();
+        }
         $product = new Product();    
-        $product->setId($arrayProduct['code'])
-                // ->setNutriscore($arrayProduct['nutriscore_grade'])
-                // ->setName($arrayProduct['product_name'])
-                ->setName($arrayProduct['url']);
-                // ->setImage($arrayProduct['image_small_url']);
+        $product->setBarcode($arrayProduct['code'])
+                ->setNutriscore($arrayProduct['nutriscore_grade'])
+                ->setName($arrayProduct['product_name'])
+                ->setImage($arrayProduct['image_small_url']);
 
         return $product;
     }
