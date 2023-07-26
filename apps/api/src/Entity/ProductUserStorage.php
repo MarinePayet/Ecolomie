@@ -7,6 +7,8 @@ use App\Repository\ProductUserStorageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
 #[Api\ApiResource(

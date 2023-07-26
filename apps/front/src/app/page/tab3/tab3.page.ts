@@ -13,34 +13,30 @@ export class Tab3Page implements OnInit {
   productUserStorages: any;
 
 
-  constructor(private webApiService: WebApiService, private router: Router) {}
+  constructor(
+    private webApiService: WebApiService, private router: Router
+    ) {}
 
   ngOnInit() {
     this.getProductUserStorages();
   }
 
 
-getProductUserStorages() {
-  this.webApiService.getProductUserStorages().subscribe((data) => {
-    this.productUserStorages = data['hydra:member'];
-    console.log(this.productUserStorages);
+  getProductUserStorages() {
+    this.webApiService.getProductUserStorages().subscribe((data) => {
+      this.productUserStorages = data['hydra:member'];
+      console.log(this.productUserStorages);
+    }
+    );
   }
-  );
+
+  getProductUserStorage(id: number) {
+    this.webApiService.getProductUserStorage(id).subscribe((data) => {
+      this.productUserStorages = data['hydra:member'];
+      console.log(this.productUserStorages);
+    }
+    );
+  }
 }
 
-getProductUserStorage(id: number) {
-  this.webApiService.getProductUserStorage(id).subscribe((data) => {
-    this.productUserStorages = data['hydra:member'];
-    console.log(this.productUserStorages);
-  }
-  );
-}
-// getProducts() {
-//     this.webApiService.getProducts().subscribe((data) => {
-//       this.products = data['hydra:member'];
-//       console.log(this.products);
-//     }
-//     );
-//   }
-}
 

@@ -25,16 +25,64 @@
     </ion-toolbar>
   </ion-header>
 
+  <!-- <ion-list class="dans-1-jour">
+    <ion-list-header>
+     PERIME
+    </ion-list-header>
+    <ion-list>
+      <div *ngFor="let productUserStorage of productUserStorages"> -->
+        <!-- Filtrer les produits qui expirent dans 1 jour -->
+        <!-- <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) < 0">
+          <div class="product-thumbnail">
+            <div class="product-thumbnail-title">
+              <p> {{ productUserStorage.product.name }} </p>
+              <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p> -->
+              <!-- Afficher le nombre de jours entre la date sélectionnée et la date actuelle -->
+              <!-- <p>Nombre de jours: {{ calculateDaysDifference(productUserStorage.DLC) }}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ion-list>
+  </ion-list> -->
+
   <ion-list class="dans-1-jour">
     <ion-list-header>
       Dans 1 jour
     </ion-list-header>
+    <ion-list>
+      <div *ngFor="let productUserStorage of productUserStorages">
+        <!-- Filtrer les produits qui expirent dans 1 jour -->
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) === 1 && calculateDaysDifference(productUserStorage.DLC) >= 0">
+          <div class="product-thumbnail">
+            <div class="product-thumbnail-title">
+              <p> {{ productUserStorage.product.name }} </p>
+              <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p>
+              <p> J - {{ calculateDaysDifference(productUserStorage.DLC) }}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ion-list>
   </ion-list>
 
   <ion-list class="dans-7-jours">
     <ion-list-header>
       Dans 7 jours
     </ion-list-header>
+    <ion-list>
+      <div *ngFor="let productUserStorage of productUserStorages">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 7 && calculateDaysDifference(productUserStorage.DLC) > 2">
+          <div class="product-thumbnail">
+            <div class="product-thumbnail-title">
+              <p> {{ productUserStorage.product.name }} </p>
+              <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p>
+              <p>J - {{ calculateDaysDifference(productUserStorage.DLC) }}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ion-list>
 
   </ion-list>
 
@@ -42,7 +90,42 @@
     <ion-list-header>
       Dans 15 jours
     </ion-list-header>
+    <ion-list>
+      <div *ngFor="let productUserStorage of productUserStorages">
+        <!-- Filtrer les produits qui expirent dans 1 jour -->
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 15 && calculateDaysDifference(productUserStorage.DLC) >= 8">
+          <div class="product-thumbnail">
+            <div class="product-thumbnail-title">
+              <p> {{ productUserStorage.product.name }} </p>
+              <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p>
+              <!-- Afficher le nombre de jours entre la date sélectionnée et la date actuelle -->
+              <p> J - {{ calculateDaysDifference(productUserStorage.DLC) }}</p>
+              <ion-datetime>  </ion-datetime>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ion-list>
 
   </ion-list>
 
 </ion-content>
+
+<!-- <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3" *ngFor="let productUserStorage of productUserStorages">
+        <a [routerLink]="['/product-detail', productUserStorage.id]">
+          <div class="product-thumbnail">
+            <div class="product-thumbnail-title">
+              <p> {{ productUserStorage.storage.name }} </p>
+              <p> {{ productUserStorage.product.name }} </p>
+              <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content> -->
