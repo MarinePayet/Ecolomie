@@ -38,21 +38,6 @@ export class ExpirationProchePage implements OnInit {
     return Math.floor(daysDifference); // Arrondir le nombre de jours à l'entier inférieur
   }
 
-  
 
-  // isDlcExpiresInOneDay(dlc: Date): boolean {
-  //   const oneDayInMillis = 24 * 60 * 60 * 1000; // Nombre de millisecondes dans une journée
-  //   const oneDayFromNow = new Date().getTime() + oneDayInMillis; // Date d'aujourd'hui + 1 jour
-
-  //   return dlc.getTime() <= oneDayFromNow;
-  // }
-
-  // formatDateToDDMMYYYY(date: Date): string {
-  //   const day = date.getDate().toString().padStart(2, '0');
-  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   const year = date.getFullYear();
-
-  //   return `${day}/${month}/${year}`;
-  // }
 
 }

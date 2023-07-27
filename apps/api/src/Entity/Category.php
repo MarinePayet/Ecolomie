@@ -23,9 +23,13 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
     private Collection $products;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: ProductUserStorage::class)]
+    private Collection $productUserStorages;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->productUserStorages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,6 +73,36 @@ class Category
             // set the owning side to null (unless already changed)
             if ($product->getCategory() === $this) {
                 $product->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductUserStorage>
+     */
+    public function getProductUserStorages(): Collection
+    {
+        return $this->productUserStorages;
+    }
+
+    public function addProductUserStorage(ProductUserStorage $productUserStorage): static
+    {
+        if (!$this->productUserStorages->contains($productUserStorage)) {
+            $this->productUserStorages->add($productUserStorage);
+            $productUserStorage->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductUserStorage(ProductUserStorage $productUserStorage): static
+    {
+        if ($this->productUserStorages->removeElement($productUserStorage)) {
+            // set the owning side to null (unless already changed)
+            if ($productUserStorage->getCategory() === $this) {
+                $productUserStorage->setCategory(null);
             }
         }
 
