@@ -63,7 +63,7 @@ export class Tab1Page implements OnInit {
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000 // Durée d'affichage du toast en millisecondes
+      duration: 2000 // 2 secondes
     });
     toast.present();
   }
@@ -111,6 +111,10 @@ export class Tab1Page implements OnInit {
     return this.authService.isLoggedIn;
   }
 
-
-
+  async onLogout() {
+    this.authService.logout();
+    console.log('Logout successful');
+    this.presentToast('Logout successful');
+    this.router.navigate(['/login']);
+  }
 }

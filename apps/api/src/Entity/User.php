@@ -28,13 +28,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank]
+    #[Groups(['read_user'])]
     #[Assert\Email([
         'message' => 'The email "{{ value }}" is not a valid email.'
     ])]
+    
     private ?string $email = null;
+
 
     #[ORM\Column]
     private array $roles = [];
+    #[Groups(['read_user'])]
+
 
     /**
      * @var string The hashed password
@@ -49,10 +54,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['read_user', 'write_user'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['read_user', 'write_user'])]
     private ?string $lastname = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class)]

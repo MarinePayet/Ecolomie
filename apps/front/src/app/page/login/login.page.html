@@ -1,26 +1,41 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>LOGIN</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isRegistering ? 'INSCRIPTION' : 'LOGIN' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <ion-content>
-    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-      <ion-item>
-        <ion-input type="text" [(ngModel)]="email" name="Email" label="Email" required></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input type="password" [(ngModel)]="password" name="password" label="Password" required></ion-input>
-      </ion-item>
+<ion-header collapse="condense">
+  <ion-toolbar>
+    <ion-title size="large">{{ isRegistering ? 'inscription' : 'login' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-      <ion-button expand="full" type="submit" [disabled]="!loginForm.form.valid">Login</ion-button>
-    </form>
-  </ion-content>
+<ion-content>
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="email" name="Email" label="Email" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" [(ngModel)]="password" name="password" label="Password" required></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="isRegistering">
+      <ion-input type="text" [(ngModel)]="firstname" name="firstname" label="firstname" required></ion-input>
+    </ion-item>
+    <ion-item *ngIf="isRegistering">
+      <ion-input type="text" [(ngModel)]="lastname" name="lastname" label="lastname" required></ion-input>
+    </ion-item>
+
+    <ion-button color="success" expand="full" type="submit" [disabled]="!loginForm.form.valid">
+      {{ isRegistering ? 'Register' : 'Login' }}
+    </ion-button>
+    <ion-button expand="full" (click)="isRegistering = !isRegistering">
+      {{ isRegistering ? 'Go to Login' : 'Go to Register' }}
+    </ion-button>
+  </form>
 </ion-content>
+
