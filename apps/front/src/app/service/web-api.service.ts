@@ -75,5 +75,15 @@ export class WebApiService {
   getProductUserStorages(): Observable<any> {
     return this.http.get(`${this.apiUrl}/product_user_storages`);
   }
+
+  updateProductUserStorage(id: number, productUserStorage: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage);
+  }
+
+  deleteProductUserStorage(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
+  }
+
+  
 }
 
