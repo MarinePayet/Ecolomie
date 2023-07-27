@@ -41,6 +41,9 @@ class ProductUserStorage
     #[Groups(['product_user_storage:read'])]    
     private ?Product $product = null;
 
+    #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
+    private ?Category $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class ProductUserStorage
     public function setProduct(?Product $product): static
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
