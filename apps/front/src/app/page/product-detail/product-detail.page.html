@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title class="ion-text-center">{{ productUserStorage?.product?.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -7,10 +10,16 @@
 <ion-content>
   <ion-list *ngIf="productUserStorage">
     <ion-item>
-      <ion-label>Emplacement: </ion-label>{{ productUserStorage.storage.name }}
+      <ion-label>Emplacement: </ion-label>
+      <ion-select [(ngModel)]="productUserStorage.storage.id" placeholder={{productUserStorage.storage.name}}>
+        <ion-select-option *ngFor="let option of storageOptions" [value]="option.id">{{ option }}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Quantity: </ion-label>{{ productUserStorage.quantity }}
+      <ion-label>Quantité: </ion-label>
+      <ion-button class="button-spacing" color="white" (click)="decreaseQuantity()">-</ion-button>
+      {{ productUserStorage.quantity }}
+      <ion-button class="button-spacing" color="white" (click)="increaseQuantity()">+</ion-button>
     </ion-item>
     <ion-item>
       <ion-label>Date limite de consommation: </ion-label>{{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}
@@ -19,4 +28,6 @@
       <ion-label>Nutriscore: </ion-label>{{ productUserStorage.product.nutriscore }}
     </ion-item>
   </ion-list>
+  <ion-button color="success" (click)="updateProductUserStorage()">Modifier le produit</ion-button>
+  <ion-button color="danger" (click)="deleteProductUserStorage(productUserStorage.id)">Supprimer le produit</ion-button>
 </ion-content>
