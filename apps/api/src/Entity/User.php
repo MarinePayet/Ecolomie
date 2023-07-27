@@ -16,7 +16,11 @@ use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
-    normalizationContext:['groups' => 'read_user'])]
+    normalizationContext:['groups' => 'read_user'],
+    denormalizationContext:['groups' => 'write_user']
+    )]
+#[ORM\EntityListeners(['App\EntityListener\PasswordListener'])]
+
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -28,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank]
-    #[Groups(['read_user'])]
+    #[Groups(['read_user', 'write_user'])]
     #[Assert\Email([
         'message' => 'The email "{{ value }}" is not a valid email.'
     ])]
@@ -46,11 +50,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     // #[Assert\NotBlank]
+    private ?string $password = null;
+
     #[Assert\PasswordStrength([
         'minScore' => PasswordStrength::STRENGTH_MEDIUM,
         'message' => 'Le mot de passe est trop faible. Veuillez utiliser un mot de passe plus fort.',
     ])]
-    private ?string $password = null;
+    #[Groups(['read_user', 'write_user'])]
+    private ?string $plainTextPassword = null;
+
+
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
@@ -116,6 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -193,6 +203,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
 
+        return $this;
+    }
+
+    public function getPlainTextPassword(): string
+    {
+        return $this->plainTextPassword;
+    }
+    public function setPlainTextPassword($plaintextPassword): static
+    {
+        $this->plainTextPassword = $plaintextPassword;
         return $this;
     }
 }

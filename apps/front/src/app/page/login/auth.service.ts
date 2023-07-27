@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   register(email: string, password: string, firstname: string, lastname: string): Observable<any> {
-    const body = { email: email, password: password, firstname: firstname, lastname: lastname };
+    const body = { email: email, plainTextPassword: password, firstname: firstname, lastname: lastname };
     return this.http.post('https://127.0.0.1:8000/api/users', body);
   }
 
