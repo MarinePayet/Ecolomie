@@ -21,15 +21,15 @@ class ProductUserStorage
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product_user_storage:read'])]       
+    #[Groups(['product_user_storage:read', 'product_user_storage:write'])]       
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Groups(['product_user_storage:read'])]    
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]    
     private ?\DateTimeInterface $DLC = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['product_user_storage:read'])]    
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]    
 
     private ?float $quantity = null;
 
