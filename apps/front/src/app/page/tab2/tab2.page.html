@@ -1,8 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
-      <ion-button routerLink="/login" size="small" color="warning">
-        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      <ion-button routerLink="/login" color="warning" *ngIf="!isLoggedIn">
+        <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" *ngIf="isLoggedIn" (click)="onLogout()">
+        <ion-icon slot="icon-only" size="large" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Ecolomie</ion-title>
@@ -11,14 +14,8 @@
     <ion-button (click)="scanBarcode()">Scan Barcode</ion-button>
     <ion-button (click)="clearProduct()">Clear</ion-button>
     <ion-card-content *ngIf="showProductDetails">
-      <p>Marque: {{ product?.brands }}</p>
-      <p>Nom du produit: {{ product?.product_name }}</p>
       <p>product_name_fr: {{ product?.product_name_fr }}</p>
-      <p>Quantité: {{ product?.quantity }}</p>
-      <p>Ingrédients: {{ product?.ingredients_text }}</p>
-      <p>Catégories: {{ product?.main_category_fr }}</p>
-      <p>Origine: {{ product?.countries_fr }}</p>
-      <p>nutriscore_grade: {{ product?.nutrition_grade_fr}}</p>
+      <p>nutriscore_grade: {{ product?.nutriscore_grade}}</p>
       <img [src]="product?.image_front_url" alt="Image du produit">
     </ion-card-content>
   </ion-toolbar>

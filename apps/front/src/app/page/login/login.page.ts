@@ -44,7 +44,10 @@ export class LoginPage {
           console.log('Login successful');
           this.presentToast('Login successful');
           this.router.navigate(['/tabs/tab1']);
+          this.email = '';
+          this.password = '';
         },
+
         error => {
           console.log('Login failed', error);
           this.presentToast(error);
@@ -64,6 +67,10 @@ export class LoginPage {
         console.log('Registration successful');
         this.presentToast('Registration successful');
         this.router.navigate(['/tabs/tab1']);
+        this.email = '';
+        this.password = '';
+        this.firstname = '';
+        this.lastname = '';
       },
       error => {
         console.log('Registration failed', error);
