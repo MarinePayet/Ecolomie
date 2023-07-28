@@ -1,0 +1,21 @@
+framework:
+    notifier:
+        chatter_transports:
+            # # Send notifications to Slack and use Telegram if
+            # # Slack errored
+            # main: '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%'
+
+            # # Send notifications to the next scheduled transport calculated by round robin
+            # roundrobin: '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%'
+            firebase: '%env(FIREBASE_DSN)%'
+        texter_transports:
+            expo: '%env(EXPO_DSN)%'
+        channel_policy:
+            # use chat/slack, chat/telegram, sms/twilio or sms/nexmo
+            urgent: ['email']
+            high: ['email']
+            medium: ['email']
+            low: ['email']
+        admin_recipients:
+            - { email: admin@example.com }
+
