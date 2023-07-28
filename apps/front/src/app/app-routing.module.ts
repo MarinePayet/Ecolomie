@@ -27,12 +27,6 @@ const routes: Routes = [
     path: 'mes-listes',
     loadChildren: () => import('./page/mes-listes/mes-listes.module').then( m => m.MesListesPageModule)
   },
-  {
-    path: 'product-storage-user',
-    loadChildren: () => import('./page/product-storage-user/product-storage-user.module').then( m => m.ProductStorageUserPageModule)
-  },
-
-
 ];
 @NgModule({
   imports: [

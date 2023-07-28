@@ -26,7 +26,7 @@ export class ExpirationProchePage implements OnInit {
   }
 
   calculateDaysDifference(dateStr: string): number {
-    const today = new Date(); // Date actuelle
+    const today = new Date(); // Date du jour
     const givenDate = new Date(dateStr); // Date donnée, convertie depuis une chaîne (format 'yyyy-MM-dd')
 
     // Calcul du nombre de millisecondes entre les deux dates

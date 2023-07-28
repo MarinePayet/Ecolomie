@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { AuthService } from '../login/auth.service';
+import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -12,19 +15,16 @@ export class Tab2Page {
   product: any;
   showProductDetails = false;
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient,public authService: AuthService, private router: Router,private toastController: ToastController) {}
 
   getProduct(barcode: string) {
     this.http.get<any>(`${this.baseUrl}${barcode}`).subscribe(data => {
       this.product = {
-        marques: data.product.brands,
-        product_name: data.product.product_name,
+
+
         product_name_fr: data.product.product_name_fr,
-        quantity: data.product.quantity,
-        ingredients_text: data.product.ingredients_text,
-        categories: data.product.main_category_fr,
-        countries: data.product.countries_fr,
-        nutriscore_grade: data.product.nutrition_grade_fr,
+        nutriscore_grade: data.product.nutriscore_grade,
         image_front_url: data.product.image_front_url,
       };
       console.log(this.product);
@@ -52,5 +52,24 @@ export class Tab2Page {
 
   ngOnInit() {
 
+  }
+
+  get isLoggedIn() {
+    return this.authService.isLoggedIn;
+  }
+
+  async onLogout() {
+    this.authService.logout();
+    console.log('Logout successful');
+    await this.presentToast('Logout successful'); // This method is async now
+    this.router.navigate(['/login']);
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000
+    });
+    toast.present();
   }
 }

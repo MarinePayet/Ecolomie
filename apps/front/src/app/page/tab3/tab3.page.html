@@ -2,8 +2,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
-      <ion-button routerLink="/tabs/tab3" size="small" color="warning">
-        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      <ion-button routerLink="/login" color="warning" *ngIf="!isLoggedIn">
+        <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" *ngIf="isLoggedIn" (click)="onLogout()">
+        <ion-icon slot="icon-only" size="large" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Ecolomie</ion-title>
