@@ -34,7 +34,7 @@ class ProductUserStorage
     private ?float $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
-    #[Groups(['product_user_storage:read'])]    
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]    
     private ?Storage $storage = null;
 
     #[ORM\OneToOne(inversedBy: 'productUserStorage', cascade: ['persist', 'remove'])]
@@ -42,6 +42,7 @@ class ProductUserStorage
     private ?Product $product = null;
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
+    #[Groups(['product_user_storage:read'])]    
     private ?Category $category = null;
 
     public function getId(): ?int

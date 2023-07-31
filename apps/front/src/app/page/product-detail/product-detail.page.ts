@@ -15,8 +15,6 @@ export class ProductDetailPage implements OnInit {
 
   constructor(private route:ActivatedRoute, private webApiService: WebApiService, router: Router) {}
 
-
-
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
         let id = params.get('id');
@@ -31,15 +29,21 @@ export class ProductDetailPage implements OnInit {
   );
 }
 
-
   getProductUserStorage(id: number) {
     this.webApiService.getProductUserStorage(id).subscribe((data) => {
       this.productUserStorage = data;
       console.log(this.productUserStorage);
-    }
-    );
+      this.getStorageOptions(); // Ajoutez cette ligne pour récupérer les options d'emplacement
+      console.log(typeof(this.storageOptions));
+      console.log('porut');
+    });
   }
-
+  
+  getStorageOptions() {
+    this.webApiService.getStorages().subscribe((data) => {
+      this.storageOptions = data['hydra:member'];
+    });
+  }
 
   increaseQuantity() {
     if (this.productUserStorage && this.productUserStorage.quantity) {
@@ -53,18 +57,45 @@ export class ProductDetailPage implements OnInit {
     }
   }
 
+  // updateProductUserStorage() {
+  //   this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
+  //     .subscribe(
+  //       data => {
+  //         console.log('Product updated successfully!');
+  //         this.productUserStorage = data;
+  //       },
+  //       error => {
+  //         console.log('There was an error updating the product.');
+  //       }
+  //     );
+  // }
+
   updateProductUserStorage() {
+    // Appelez votre service pour mettre à jour les données
     this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
       .subscribe(
         data => {
           console.log('Product updated successfully!');
-          this.productUserStorage = data;
+          this.productUserStorage = data; // Mettez à jour la propriété avec les nouvelles données du serveur
         },
         error => {
           console.log('There was an error updating the product.');
         }
       );
   }
+  // updateProductUserStorage() {
+  
+  //   this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
+  //     .subscribe(
+  //       data => {
+  //         console.log('Product updated successfully!');
+  //         this.productUserStorage = data;
+  //       },
+  //       error => {
+  //         console.log('There was an error updating the product.');
+  //       }
+  //     );
+  // }
 
   updateStorage(storageId: number) {
     this.productUserStorage.storage.id = storageId;
@@ -78,6 +109,6 @@ export class ProductDetailPage implements OnInit {
     }
     );
   }
-
+ 
 }
 
