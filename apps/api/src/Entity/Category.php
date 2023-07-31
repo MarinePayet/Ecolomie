@@ -21,6 +21,7 @@ class Category
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    
     private Collection $products;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: ProductUserStorage::class)]
