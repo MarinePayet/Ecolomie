@@ -33,6 +33,7 @@ class ProductUserStorage
 
     private ?float $quantity = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'productUserStorages', cascade: ['persist', 'remove'])]
     #[Groups(['product_user_storage:read','product_user_storage:write'])]    
     private ?Storage $storage = null;
