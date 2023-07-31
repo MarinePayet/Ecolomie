@@ -33,16 +33,17 @@ class ProductUserStorage
 
     private ?float $quantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
+
+    #[ORM\ManyToOne(inversedBy: 'productUserStorages', cascade: ['persist', 'remove'])]
     #[Groups(['product_user_storage:read','product_user_storage:write'])]    
     private ?Storage $storage = null;
 
     #[ORM\OneToOne(inversedBy: 'productUserStorage', cascade: ['persist', 'remove'])]
-    #[Groups(['product_user_storage:read'])]    
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]    
     private ?Product $product = null;
 
-    #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
-    #[Groups(['product_user_storage:read'])]    
+    #[ORM\ManyToOne(inversedBy: 'productUserStorages', cascade: ['persist', 'remove'])]
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]   
     private ?Category $category = null;
 
     public function getId(): ?int

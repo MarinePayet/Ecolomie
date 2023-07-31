@@ -55,6 +55,9 @@
     <ion-item>
       <ion-label>Nutriscore: </ion-label>{{ productUserStorage.product.nutriscore }}
     </ion-item>
+    <ion-item>
+      <ion-img [src]="productUserStorage.product.image"></ion-img>
+    </ion-item>
   </ion-list>
   <ion-button color="success" (click)="updateProductUserStorage()">Modifier le produit</ion-button>
   <ion-button color="danger" (click)="deleteProductUserStorage(productUserStorage.id)">Supprimer le produit</ion-button>

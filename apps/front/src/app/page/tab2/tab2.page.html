@@ -17,6 +17,27 @@
       <p>product_name_fr: {{ product?.product_name_fr }}</p>
       <p>nutriscore_grade: {{ product?.nutriscore_grade}}</p>
       <img [src]="product?.image_front_url" alt="Image du produit">
+      <ion-item>
+        <ion-label>DLC</ion-label>
+        <ion-input label="DLC" [(ngModel)]="product.dlc" type="date"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Quantité</ion-label>
+        <ion-input label="Quantité" [(ngModel)]="product.quantity" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Storage</ion-label>
+        <ion-select label="Storage" [(ngModel)]="product.storage">
+          <ion-select-option *ngFor="let storage of storages" [value]="storage.id">{{ storage.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Category</ion-label>
+        <ion-select label="Category" [(ngModel)]="product.category">
+          <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button (click)="saveProduct()">Save</ion-button>
     </ion-card-content>
   </ion-toolbar>
 </ion-header>
