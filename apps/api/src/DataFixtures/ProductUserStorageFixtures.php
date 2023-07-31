@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\ProductUserStorage;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -19,6 +20,7 @@ class ProductUserStorageFixtures extends Fixture implements DependentFixtureInte
         $productUserStorage->setDlc(new \DateTime('2023-07-27'));
         $productUserStorage->setProduct($this->getReference(ProductFixtures::PROD_BANANE));
         $productUserStorage->setStorage($this->getReference(StorageFixtures::STORAGE_FRIGO));
+        $productUserStorage->setCategory($this->getReference(CategoryFixtures::CAT_FRUITS));
         $manager->persist($productUserStorage);
 
         $productUserStorage = new ProductUserStorage();
@@ -56,6 +58,7 @@ class ProductUserStorageFixtures extends Fixture implements DependentFixtureInte
         return [
             ProductFixtures::class,
             StorageFixtures::class,
+            CategoryFixtures::class,
         ];
     }
 }

@@ -4,6 +4,8 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AuthService } from '../login/auth.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ApiService } from '../newproduct/api.service';
+
 
 @Component({
   selector: 'app-tab2',
@@ -14,10 +16,22 @@ export class Tab2Page {
   private baseUrl = 'https://world.openfoodfacts.org/api/v2/product/';
   product: any;
   showProductDetails = false;
+  productService: any;
+  storages: any;
+  categories: any;
 
-
-  constructor(private http: HttpClient,public authService: AuthService, private router: Router,private toastController: ToastController) {}
-
+  constructor(private http: HttpClient,public authService: AuthService, private router: Router,private toastController: ToastController,
+    private apiService: ApiService) {
+      this.product = {
+        dlc: '',
+        quantity: 0,
+        storage: '',
+        product_name_fr: '',
+        nutriscore_grade: '',
+        image_front_url: '',
+        category: ''
+      };
+     }
   getProduct(barcode: string) {
     this.http.get<any>(`${this.baseUrl}${barcode}`).subscribe(data => {
       this.product = {
@@ -50,8 +64,23 @@ export class Tab2Page {
     this.showProductDetails = false;
   }
 
-  ngOnInit() {
+  getStorages() {
+    this.apiService.getStorages().subscribe((data) => {
+      this.storages = data['hydra:member'];
+      console.log(this.storages);
+    });
+  }
 
+  getCategories() {
+    this.apiService.getCategories().subscribe((data) => {
+      this.categories = data['hydra:member'];
+      console.log(this.categories);
+    });
+  }
+
+  ngOnInit() {
+    this.getStorages();
+    this.getCategories();
   }
 
   get isLoggedIn() {
@@ -72,4 +101,28 @@ export class Tab2Page {
     });
     toast.present();
   }
+
+  saveProduct() {
+    const productDetails = {
+      DLC: this.product.dlc,
+      quantity: this.product.quantity,
+      storage: this.product.storage.id,
+      product: {
+        name: this.product.product_name_fr,
+        nutriscore: this.product.nutriscore_grade,
+        image: this.product.image_front_url
+      },
+      category: this.product.category.id,
+    };
+
+    this.apiService.saveProduct(productDetails).subscribe(
+      (response: any) => {
+        console.log('Produit enregistré avec succès', response);
+      },
+      (error: any) => {
+        console.error("Erreur lors de l'enregistrement du produit', error");
+      }
+    );
+  }
+
 }

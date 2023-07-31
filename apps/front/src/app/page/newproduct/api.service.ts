@@ -18,7 +18,7 @@ export class ApiService {
 
   //private readonly API_URL = 'https://127.0.0.1:8000/api'; // for web salim A
 
-  private readonly API_URL = 'http://192.168.173.15:8000/api'; // for android emulator salim A
+  private readonly API_URL = 'http://192.168.1.57:8000/api'; // for android emulator salim A
 
 
 
@@ -36,4 +36,7 @@ export class ApiService {
     return this.http.post(`${this.API_URL}/products`, product);
   }
 
+  saveProduct(product: any): Observable<any> {
+    return this.http.post(`${this.API_URL}/product_user_storages`, product);
+  }
 }
