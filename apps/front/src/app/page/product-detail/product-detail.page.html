@@ -15,43 +15,22 @@
       </ion-select>
     </ion-item> -->
 
+    
     <ion-item>
-      <ion-label>Emplacement:</ion-label>
-      <ion-select [(ngModel)]="productUserStorage.storage.id" aria-label="Sélectionnez un emplacement">
-        <ion-select-option *ngFor="let option of storageOptions" [value]="option.id">{{ option.name }}</ion-select-option>
-      </ion-select>
+      <ion-label>Emplacement:</ion-label>{{ productUserStorage.storage.name }}
     </ion-item>
-
-<!-- 
-    <ion-list *ngIf="productUserStorage">
-      <ion-item *ngFor="let storage of storageOptions | keyvalue">
-        <ion-label>{{ storage.value.name }}</ion-label>
-        <ion-radio slot="start" [checked]="storage.key === productUserStorage.storage.id" (ionSelect)="updateStorage(storage.key)"></ion-radio>
-      </ion-item>
-    </ion-list>
-     -->
     
     
     <ion-item>
       <ion-label>Quantité: </ion-label>
-      <ion-button class="button-spacing" color="white" (click)="decreaseQuantity()">-</ion-button>
+
       {{ productUserStorage.quantity }}
-      <ion-button class="button-spacing" color="white" (click)="increaseQuantity()">+</ion-button>
+
     </ion-item>
     <ion-item>
       <ion-label>Date limite de consommation: </ion-label>{{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}
     </ion-item>
-    <ion-item>
-      <ion-label>Nouvelle date :</ion-label>
 
-      <ion-datetime presentation="date"
-        [(ngModel)]="productUserStorage.DLC"
-        displayFormat="DD/MM/YYYY"
-        placeholder="Sélectionnez une date"
-        min="2023-07-30T23:59:59"
-        max="2050-05-31T23:59:59"
-      ></ion-datetime>
-    </ion-item>
     <ion-item>
       <ion-label>Nutriscore: </ion-label>{{ productUserStorage.product.nutriscore }}
     </ion-item>
@@ -59,7 +38,17 @@
       <ion-img [src]="productUserStorage.product.image"></ion-img>
     </ion-item>
   </ion-list>
-  <ion-button color="success" (click)="updateProductUserStorage()">Modifier le produit</ion-button>
-  <ion-button color="danger" (click)="deleteProductUserStorage(productUserStorage.id)">Supprimer le produit</ion-button>
+  
+  <ion-list *ngIf="productUserStorage">
+    <ion-button color="success" [routerLink]="['/update-product', productUserStorage.id]" >
+      <ion-icon aria-hidden="true" name="update-product"></ion-icon>
+      <ion-label>Modifier le produit</ion-label>
+    </ion-button>
+  </ion-list>
+
+  <!-- <ion-button color="success" (click)="updateProductUserStorage()">Modifier le produit</ion-button> -->
+
+
+  <!-- <ion-button color="danger" (click)="deleteProductUserStorage(productUserStorage.id)">Supprimer le produit</ion-button> -->
 </ion-content>
   

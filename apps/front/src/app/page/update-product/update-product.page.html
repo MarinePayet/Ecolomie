@@ -1,0 +1,49 @@
+<ion-label> UPDATE PRODUCT</ion-label>
+
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">{{ productUserStorage?.product?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="productUserStorage">
+<!-- 
+     <ion-item>
+      <ion-label>Emplacement:</ion-label>
+      <ion-select [(ngModel)]="productUserStorage.storage.id" aria-label="Sélectionnez un emplacement">
+        <ion-select-option *ngFor="let option of storageOptions" [value]="option.id">{{ option.name }}</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+    
+    
+<ion-item>
+      <ion-label>Quantité: </ion-label>
+      <ion-button class="button-spacing" color="white" (click)="decreaseQuantity()">-</ion-button>
+      {{ productUserStorage.quantity }}
+      <ion-button class="button-spacing" color="white" (click)="increaseQuantity()">+</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date limite de consommation: </ion-label>{{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}
+    </ion-item>
+    <ion-label>Nouvelle date :</ion-label>
+    <ion-item>
+
+      <ion-datetime presentation="date"
+        [(ngModel)]="productUserStorage.DLC"
+        displayFormat="DD/MM/YYYY"
+        placeholder="Sélectionnez une date"
+        min="2023-07-30T23:59:59"
+        max="2050-05-31T23:59:59"
+      ></ion-datetime>
+    </ion-item>
+
+  </ion-list>
+  <br>
+  <ion-button color="success" (click)="updateProductUserStorage()">Valider</ion-button>
+
+  <ion-button color="danger" (click)="deleteProductUserStorage(productUserStorage.id)">Supprimer le produit</ion-button>
+</ion-content>
