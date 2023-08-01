@@ -6,7 +6,6 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ApiService } from '../newproduct/api.service';
 
-
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -16,7 +15,6 @@ export class Tab2Page {
   private baseUrl = 'https://world.openfoodfacts.org/api/v2/product/';
   product: any;
   showProductDetails = false;
-  productService: any;
   storages: any;
   categories: any;
 
@@ -35,13 +33,14 @@ export class Tab2Page {
   getProduct(barcode: string) {
     this.http.get<any>(`${this.baseUrl}${barcode}`).subscribe(data => {
       this.product = {
-
-
+        ...this.product,
         product_name_fr: data.product.product_name_fr,
         nutriscore_grade: data.product.nutriscore_grade,
         image_front_url: data.product.image_front_url,
       };
       console.log(this.product);
+    }, error => {
+      console.error('Error getting product:', error);
     });
 
   }
@@ -68,6 +67,8 @@ export class Tab2Page {
     this.apiService.getStorages().subscribe((data) => {
       this.storages = data['hydra:member'];
       console.log(this.storages);
+    }, error => {
+      console.error('Error getting storages:', error);
     });
   }
 
@@ -75,6 +76,8 @@ export class Tab2Page {
     this.apiService.getCategories().subscribe((data) => {
       this.categories = data['hydra:member'];
       console.log(this.categories);
+    }, error => {
+      console.error('Error getting categories:', error);
     });
   }
 
@@ -90,7 +93,7 @@ export class Tab2Page {
   async onLogout() {
     this.authService.logout();
     console.log('Logout successful');
-    await this.presentToast('Logout successful'); // This method is async now
+    await this.presentToast('Logout successful'); 
     this.router.navigate(['/login']);
   }
 
@@ -106,21 +109,24 @@ export class Tab2Page {
     const productDetails = {
       DLC: this.product.dlc,
       quantity: this.product.quantity,
-      storage: this.product.storage.id,
+      storage: this.product.storage,
       product: {
         name: this.product.product_name_fr,
         nutriscore: this.product.nutriscore_grade,
         image: this.product.image_front_url
       },
-      category: this.product.category.id,
+      category: this.product.category,
     };
+
+    console.log("Storage IRI: ", this.product.storage);
+    console.log("Category IRI: ", this.product.category);
 
     this.apiService.saveProduct(productDetails).subscribe(
       (response: any) => {
         console.log('Produit enregistré avec succès', response);
       },
       (error: any) => {
-        console.error("Erreur lors de l'enregistrement du produit', error");
+        console.error("Erreur lors de l'enregistrement du produit", error);
       }
     );
   }
