@@ -34,14 +34,15 @@ export class ProductDetailPage implements OnInit {
       this.productUserStorage = data;
       console.log(this.productUserStorage);
       this.getStorageOptions(); // Ajoutez cette ligne pour récupérer les options d'emplacement
-      console.log(typeof(this.storageOptions));
-      console.log('porut');
+      console.log(this.storageOptions);
+      console.log('prout');
     });
   }
   
   getStorageOptions() {
     this.webApiService.getStorages().subscribe((data) => {
       this.storageOptions = data['hydra:member'];
+      console.log(this.storageOptions)
     });
   }
 
@@ -56,51 +57,6 @@ export class ProductDetailPage implements OnInit {
       this.productUserStorage.quantity--;
     }
   }
-
-  // updateProductUserStorage() {
-  //   this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
-  //     .subscribe(
-  //       data => {
-  //         console.log('Product updated successfully!');
-  //         this.productUserStorage = data;
-  //       },
-  //       error => {
-  //         console.log('There was an error updating the product.');
-  //       }
-  //     );
-  // }
-
-  updateProductUserStorage() {
-    // Appelez votre service pour mettre à jour les données
-    this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
-      .subscribe(
-        data => {
-          console.log('Product updated successfully!');
-          this.productUserStorage = data; // Mettez à jour la propriété avec les nouvelles données du serveur
-        },
-        error => {
-          console.log('There was an error updating the product.');
-        }
-      );
-  }
-  // updateProductUserStorage() {
-  
-  //   this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
-  //     .subscribe(
-  //       data => {
-  //         console.log('Product updated successfully!');
-  //         this.productUserStorage = data;
-  //       },
-  //       error => {
-  //         console.log('There was an error updating the product.');
-  //       }
-  //     );
-  // }
-
-  updateStorage(storageId: number) {
-    this.productUserStorage.storage.id = storageId;
-  }
-
 
   deleteProductUserStorage(id: number) {
     this.webApiService.deleteProductUserStorage(id).subscribe((data) => {

@@ -38,7 +38,7 @@ class Storage
 
     public function __construct()
     {
-        $this->productUserStorages = new ArrayCollection();
+        $this->productUserStorages = new ArrayCollection(); 
     }
 
     public function getId(): ?int

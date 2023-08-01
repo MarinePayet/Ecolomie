@@ -35,7 +35,7 @@ class ProductUserStorage
 
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
-    #[Groups(['product_user_storage:read','product_user_storage:write'])]    
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]     
 
     private ?Storage $storage = null;
 
