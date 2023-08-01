@@ -10,21 +10,23 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['product:read', 'product_user_storage:read']],
+    denormalizationContext: ['groups' => ['product:write']]
+)]
 class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product_user_storage:read', 'product_user_storage:write', 'product:read', 'product:write'])]
+    #[Groups(['product:read', 'product:write', 'product_user_storage:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['product_user_storage:read', 'product_user_storage:write', 'product:read', 'product:write'])]
+    #[Groups(['product:read', 'product:write', 'product_user_storage:read'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
-    
     private Collection $products;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: ProductUserStorage::class)]
