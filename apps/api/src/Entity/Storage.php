@@ -24,7 +24,7 @@ class Storage
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['storage:read', 'storage:write'])]
+    #[Groups(['storage:read', 'storage:write', 'product_user_storage:read'])]
 
     private ?string $name = null;
 

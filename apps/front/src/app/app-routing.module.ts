@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./page/product-detail/product-detail.module').then(m => m.ProductDetailPageModule)
   },
   {
+    path: 'update-product/:id',
+    loadChildren: () => import('./page/update-product/update-product.module').then( m => m.UpdateProductPageModule)
+  },
+  {
     path: 'expiration-proche',
     loadChildren: () => import('./page/expiration-proche/expiration-proche.module').then( m => m.ExpirationProchePageModule)
   },
@@ -27,6 +31,9 @@ const routes: Routes = [
     path: 'mes-listes',
     loadChildren: () => import('./page/mes-listes/mes-listes.module').then( m => m.MesListesPageModule)
   },
+  
+
+
 ];
 @NgModule({
   imports: [
