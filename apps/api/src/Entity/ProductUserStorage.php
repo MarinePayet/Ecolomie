@@ -20,10 +20,7 @@ use ApiPlatform\Metadata\Post;
 //     denormalizationContext: ['groups' => ['product_user_storage:write', 'product_user_storage:update']],
 // )] // ORIGINAL
 
-#[Api\ApiResource(
-    // normalizationContext: ['groups' => ['product_user_storage:read']],
-    // denormalizationContext: ['groups' => ['product_user_storage:write']],
-)]
+#[Api\ApiResource()]
 #[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
 #[Post(
     normalizationContext: ['groups' => ['product_user_storage:read']],

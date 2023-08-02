@@ -22,9 +22,15 @@ export class Tab3Page implements OnInit {
     ) {}
 
   ngOnInit() {
+    this.loadProductUserStorages();
     this.getProductUserStorages();
   }
 
+  loadProductUserStorages() {
+    this.webApiService.getProductUserStorages().subscribe((data) => {
+      this.productUserStorages = data['hydra:member'];
+    });
+  }
 
   getProductUserStorages() {
     this.webApiService.getProductUserStorages().subscribe((data) => {

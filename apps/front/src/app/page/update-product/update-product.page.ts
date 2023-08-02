@@ -68,13 +68,13 @@ export class UpdateProductPage  implements OnInit {
       this.productUserStorage.storage.id = storageId;
     }
     
-    deleteProductUserStorage(id: number) {
-      this.webApiService.deleteProductUserStorage(id).subscribe((data) => {
-        this.productUserStorage = data;
-        console.log(this.productUserStorage);
-      }
-      );
-    }
+    // deleteProductUserStorage(id: number) {
+    //   this.webApiService.deleteProductUserStorage(id).subscribe((data) => {
+    //     this.productUserStorage = data;
+    //     console.log(this.productUserStorage);
+    //   }
+    //   );
+    // }
     
     increaseQuantity() {
       if (this.productUserStorage && this.productUserStorage.quantity) {
