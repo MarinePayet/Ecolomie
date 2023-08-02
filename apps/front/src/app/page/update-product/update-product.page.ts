@@ -51,8 +51,6 @@ export class UpdateProductPage  implements OnInit {
 
   
   updateProductUserStorage() {
-    console.log('Product ID to update:', this.productUserStorage.id);
-  console.log('Product data to update:', this.productUserStorage);
     // Appelez votre service pour mettre à jour les données
     this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
     .subscribe(
