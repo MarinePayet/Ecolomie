@@ -51,10 +51,12 @@ class ProductUserStorage
 
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
+
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update'])]
     private ?Storage $storage = null;
 
     #[ORM\OneToOne(inversedBy: 'productUserStorage', cascade: ['persist', 'remove'])]
+
     #[Groups(['product_user_storage:read','product_user_storage:write'])]    // LIGNE ORIGINALE  
     private ?Product $product = null;
 

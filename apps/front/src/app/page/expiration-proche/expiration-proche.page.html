@@ -16,21 +16,13 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ion-title size="large">expiration-proche</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <ion-list class="perime">
-    <ion-list-header>
-     PERIME
-    </ion-list-header>
-    <ion-list>
-      <div *ngFor="let productUserStorage of productUserStorages">
+  <ion-grid>
+    <ion-row>
+      <ion-list-header>
+        PERIME
+      </ion-list-header>
+      <ion-col size="3" *ngFor="let productUserStorage of productUserStorages" class="perime">
         <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) < 0">
           <div class="product-thumbnail">
             <div class="product-thumbnail-title">
@@ -40,17 +32,15 @@
             </div>
           </div>
         </ng-container>
-      </div>
-    </ion-list>
-  </ion-list>
+      </ion-col>
+    </ion-row>
 
-  <ion-list class="dans-1-jour">
-    <ion-list-header>
-      Dans 1 jour
-    </ion-list-header>
-    <ion-list>
-      <div *ngFor="let productUserStorage of productUserStorages">
-        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) === 1 && calculateDaysDifference(productUserStorage.DLC) >= 0">
+    <ion-row>
+      <ion-list-header>
+        Dans 1 jour
+      </ion-list-header>
+      <ion-col size="3" *ngFor="let productUserStorage of productUserStorages" class="dans-1-jours">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) === 1">
           <div class="product-thumbnail">
             <div class="product-thumbnail-title">
               <p> {{ productUserStorage.product.name }} </p>
@@ -59,37 +49,15 @@
             </div>
           </div>
         </ng-container>
-      </div>
-    </ion-list>
-  </ion-list>
+      </ion-col>
+    </ion-row>
 
-  <ion-list class="dans-7-jours">
-    <ion-list-header>
-      Dans 7 jours
-    </ion-list-header>
-    <ion-list >
-      <div *ngFor="let productUserStorage of productUserStorages">
-        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 7 && calculateDaysDifference(productUserStorage.DLC) > 2">
-          <div class=" product-thumbnail">
-            <div class="product-thumbnail-title">
-              <p class="dans-7-jours"> {{ productUserStorage.product.name }} </p>
-              <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p>
-              <p> J - {{ calculateDaysDifference(productUserStorage.DLC) }}</p>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </ion-list>
-
-  </ion-list>
-
-  <ion-list class="dans-15-jours">
-    <ion-list-header>
-      Dans 15 jours
-    </ion-list-header>
-    <ion-list>
-      <div *ngFor="let productUserStorage of productUserStorages">
-        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 15 && calculateDaysDifference(productUserStorage.DLC) >= 8">
+    <ion-row>
+      <ion-list-header>
+        Dans 7 jours
+      </ion-list-header>
+      <ion-col size="3" *ngFor="let productUserStorage of productUserStorages" class="dans-7-jours">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 7 && calculateDaysDifference(productUserStorage.DLC) > 1">
           <div class="product-thumbnail">
             <div class="product-thumbnail-title">
               <p> {{ productUserStorage.product.name }} </p>
@@ -98,11 +66,28 @@
             </div>
           </div>
         </ng-container>
-      </div>
-    </ion-list>
+      </ion-col>
+    </ion-row>
 
-  </ion-list>
+    <ion-row>
+      <ion-list-header>
+        Dans 15 jours
+      </ion-list-header>
+      <ion-col size="3" *ngFor="let productUserStorage of productUserStorages" class="dans-15-jours">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 15 && calculateDaysDifference(productUserStorage.DLC) > 7">
+          <div class="product-thumbnail">
+            <div class="product-thumbnail-title">
+              <p> {{ productUserStorage.product.name }} </p>
+              <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p>
+              <p> J - {{ calculateDaysDifference(productUserStorage.DLC) }}</p>
+            </div>
+          </div>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
+
 
 
