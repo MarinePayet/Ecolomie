@@ -1,4 +1,3 @@
-<ion-label> UPDATE PRODUCT</ion-label>
 
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
@@ -11,14 +10,16 @@
 
 <ion-content>
   <ion-list *ngIf="productUserStorage">
-<!-- 
-     <ion-item>
-      <ion-label>Emplacement:</ion-label>
-      <ion-select [(ngModel)]="productUserStorage.storage.id" aria-label="Sélectionnez un emplacement">
-        <ion-select-option *ngFor="let option of storageOptions" [value]="option.id">{{ option.name }}</ion-select-option>
-      </ion-select>
-    </ion-item> -->
+
+    <ion-label>Emplacement : {{productUserStorage.storage.name}}</ion-label>
+    <br> 
     
+    <ion-label>Nouvel emplacement : </ion-label>
+     <ion-item>
+      <ion-select [(ngModel)]="productUserStorage.storage" name="storage" aria-label="Sélectionnez un emplacement">
+        <ion-select-option *ngFor="let option of storageOptions" [value]="'/api/storages/' + option.id"> {{ option.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
     
 <ion-item>
       <ion-label>Quantité: </ion-label>
