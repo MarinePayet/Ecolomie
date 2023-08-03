@@ -4,6 +4,7 @@ import { WebApiService } from '../../service/web-api.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/auth.service';
 import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 
 
@@ -18,10 +19,15 @@ export class Tab3Page implements OnInit {
 
   constructor(
     private webApiService: WebApiService, private router: Router,
-    public authService: AuthService, private toastController: ToastController
+    public authService: AuthService, private toastController: ToastController,
+    private AlertController: AlertController
     ) {}
 
   ngOnInit() {
+    this.getProductUserStorages();
+  }
+
+  ionViewWillEnter() {
     this.getProductUserStorages();
   }
 
@@ -49,7 +55,7 @@ export class Tab3Page implements OnInit {
   async onLogout() {
     this.authService.logout();
     console.log('Logout successful');
-    await this.presentToast('Logout successful'); // This method is async now
+    await this.presentToast('Logout successful');
     this.router.navigate(['/login']);
   }
 
@@ -60,6 +66,29 @@ export class Tab3Page implements OnInit {
     });
     toast.present();
   }
+
+  async openDeleteConfirm(productId: string) {
+    const alert = await this.AlertController.create({
+        header: 'Confirmation',
+        message: 'Êtes-vous sûr de vouloir supprimer ce produit ?',
+        buttons: [
+            {
+                text: 'Annuler',
+                role: 'cancel'
+            }, {
+                text: 'Supprimer',
+                handler: () => {
+                    this.webApiService.deleteProductUserStorage(Number(productId)).subscribe(() => {
+                        this.getProductUserStorages();
+                        this.presentToast('Le produit a été supprimé avec succès.');
+                    });
+                }
+            }
+        ]
+    });
+
+    await alert.present();
 }
 
 
+}

@@ -1,21 +1,11 @@
-.product-thumbnail {
+ion-col {
+  border: solid 1px #fff;
+  color: #fff;
   text-align: center;
-  padding: 16px;
-  background-color: #80c1f0;
-  color: rgb(255, 255, 255);
-  border-radius: 8px;
-  position: relative;
-
-
-  /* Les deux lignes suivantes garantissent que la vignette reste carrée */
-  width: 100%;
-  aspect-ratio: 1 / 1;
 }
-
-.product-thumbnail-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 14px;
+ion-badge {
+  --background: rgb(166, 53, 166);
+  --color: white;
+  --padding-end: 20px;
+  --padding-start: 20px;
 }

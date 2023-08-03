@@ -44,6 +44,18 @@ export class Tab2Page {
     });
 
   }
+  resetProduct() {
+    this.product = {
+      dlc: '',
+      quantity: 0,
+      storage: '',
+      product_name_fr: '',
+      nutriscore_grade: '',
+      image_front_url: '',
+      category: ''
+    };
+  }
+
 
   async scanBarcode() {
     try {
@@ -52,6 +64,7 @@ export class Tab2Page {
         this.getProduct(result.content);
       }
       this.showProductDetails = true;
+      this.resetProduct();
 
     } catch (error) {
       console.error('Error scanning barcode:', error);
@@ -93,7 +106,7 @@ export class Tab2Page {
   async onLogout() {
     this.authService.logout();
     console.log('Logout successful');
-    await this.presentToast('Logout successful'); 
+    await this.presentToast('Logout successful');
     this.router.navigate(['/login']);
   }
 

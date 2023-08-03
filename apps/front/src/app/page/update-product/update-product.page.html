@@ -2,7 +2,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/tab3"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-text-center">{{ productUserStorage?.product?.name }}</ion-title>
   </ion-toolbar>
@@ -12,15 +12,15 @@
   <ion-list *ngIf="productUserStorage">
 
     <ion-label>Emplacement : {{productUserStorage.storage.name}}</ion-label>
-    <br> 
-    
+    <br>
+
     <ion-label>Nouvel emplacement : </ion-label>
      <ion-item>
       <ion-select [(ngModel)]="productUserStorage.storage" name="storage" aria-label="Sélectionnez un emplacement">
         <ion-select-option *ngFor="let option of storageOptions" [value]="'/api/storages/' + option.id"> {{ option.name }}</ion-select-option>
       </ion-select>
     </ion-item>
-    
+
 <ion-item>
       <ion-label>Quantité: </ion-label>
       <ion-button class="button-spacing" color="white" (click)="decreaseQuantity()">-</ion-button>
@@ -45,6 +45,4 @@
   </ion-list>
   <br>
   <ion-button color="success" (click)="updateProductUserStorage()">Valider</ion-button>
-
-  <ion-button color="danger" (click)="deleteProductUserStorage(productUserStorage.id)">Supprimer le produit</ion-button>
 </ion-content>

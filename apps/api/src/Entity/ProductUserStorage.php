@@ -15,14 +15,9 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
-// #[Api\ApiResource(
-//     normalizationContext: ['groups' => ['product_user_storage:read']],
-//     denormalizationContext: ['groups' => ['product_user_storage:write', 'product_user_storage:update']],
-// )] // ORIGINAL
+
 
 #[Api\ApiResource(
-    // normalizationContext: ['groups' => ['product_user_storage:read']],
-    // denormalizationContext: ['groups' => ['product_user_storage:write']],
 )]
 #[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
 #[Post(
