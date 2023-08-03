@@ -13,7 +13,7 @@ export class ProductDetailPage implements OnInit {
   productUserStorage: any;
   storageOptions: any;
 
-  constructor(private route:ActivatedRoute, private webApiService: WebApiService, router: Router) {}
+  constructor(private route:ActivatedRoute, private webApiService: WebApiService,  private router: Router) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -75,15 +75,14 @@ export class ProductDetailPage implements OnInit {
     this.productUserStorage.storage.id = storageId;
   }
 
-
   deleteProductUserStorage(id: number) {
     this.webApiService.deleteProductUserStorage(id).subscribe((data) => {
       this.productUserStorage = data;
       console.log(this.productUserStorage);
+      this.router.navigate(['/tabs/tab3']);
     }
     );
   }
-
-
+ 
 }
 

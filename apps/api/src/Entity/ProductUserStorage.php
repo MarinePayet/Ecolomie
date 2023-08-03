@@ -17,8 +17,8 @@ use ApiPlatform\Metadata\Post;
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
 
 
-#[Api\ApiResource(
-)]
+
+#[Api\ApiResource()]
 #[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
 #[Post(
     normalizationContext: ['groups' => ['product_user_storage:read']],

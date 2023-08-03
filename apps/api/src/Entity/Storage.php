@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['storage:read']],
     denormalizationContext: ['groups' => ['storage:write']],
 )]
+
 class Storage
 {
     #[ORM\Id]
@@ -91,7 +92,6 @@ class Storage
     public function removeProductUserStorage(ProductUserStorage $productUserStorage): static
     {
         if ($this->productUserStorages->removeElement($productUserStorage)) {
-            // set the owning side to null (unless already changed)
             if ($productUserStorage->getStorage() === $this) {
                 $productUserStorage->setStorage(null);
             }

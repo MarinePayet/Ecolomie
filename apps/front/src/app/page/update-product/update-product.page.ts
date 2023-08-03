@@ -74,6 +74,7 @@ export class UpdateProductPage  implements OnInit {
       this.productUserStorage.storage.id = storageId;
     }
 
+
     deleteProductUserStorage(id: number) {
       this.webApiService.deleteProductUserStorage(id).subscribe((data) => {
         this.productUserStorage = data;
