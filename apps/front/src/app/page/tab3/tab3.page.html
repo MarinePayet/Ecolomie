@@ -1,4 +1,4 @@
-<!-- Description: Page de la liste des produits -->
+
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
@@ -28,22 +28,21 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="3" *ngFor="let productUserStorage of productUserStorages">
-          <a [routerLink]="['/product-detail', productUserStorage.id]">
-            <div class="product-thumbnail">
-              <div class="product-thumbnail-title">
-                <p> {{ productUserStorage.quantity }} </p>
-                <p> {{ productUserStorage.storage.name }} </p>
-                <p> {{ productUserStorage.product.name }} </p>
-              </div>
-            </div>
-          </a>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
-  </ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" *ngFor="let productUserStorage of productUserStorages">
+        <ion-card color="light">
+          <ion-card-header>
+            <ion-card-subtitle>{{ productUserStorage.storage.name }}</ion-card-subtitle>
+            <ion-card-subtitle><ion-badge>{{ productUserStorage.quantity }}</ion-badge></ion-card-subtitle>
+            <ion-card-title>{{ productUserStorage.product.name }}</ion-card-title>
+          </ion-card-header>
 
+          <ion-button color="success" fill="clear"
+          [routerLink]="['/update-product', productUserStorage.id]">Modifier</ion-button>
+          <ion-button fill="clear" (click)="openDeleteConfirm(productUserStorage.id)">Supprimer</ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

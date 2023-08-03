@@ -14,9 +14,10 @@ export class UpdateProductPage  implements OnInit {
   storageOptions: any;
 
   constructor(
-    private route:ActivatedRoute, 
-    private webApiService: WebApiService, 
-    router: Router) {}
+    private route: ActivatedRoute,
+    private webApiService: WebApiService,
+    private router: Router
+    ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -49,39 +50,45 @@ export class UpdateProductPage  implements OnInit {
     });
   }
 
-  
-  updateProductUserStorage() {
-    // Appelez votre service pour mettre à jour les données
-    this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
-    .subscribe(
-      data => {
-        console.log('Product updated successfully!');
-        this.productUserStorage = data; // Mettez à jour la propriété avec les nouvelles données du serveur
-      },
-      error => {
-        console.log('There was an error updating the product.');
-      }
-      );
+
+  async updateProductUserStorage() {
+    // Prepare the data to send
+    let updatedData = {
+      ...this.productUserStorage,
+      storage: this.productUserStorage.storage // Send the full path to the storage
+    };
+
+    // Call your service to update the data
+    try {
+      let data = await this.webApiService.updateProductUserStorage(this.productUserStorage.id, updatedData).toPromise();
+      console.log('Product updated successfully!');
+      this.productUserStorage = data;
+      this.router.navigate(['/tabs/tab3']);
+    } catch (error) {
+      console.log('There was an error updating the product.');
     }
-    
+  }
+
+
     updateStorage(storageId: number) {
       this.productUserStorage.storage.id = storageId;
     }
-    
-    // deleteProductUserStorage(id: number) {
-    //   this.webApiService.deleteProductUserStorage(id).subscribe((data) => {
-    //     this.productUserStorage = data;
-    //     console.log(this.productUserStorage);
-    //   }
-    //   );
-    // }
-    
+
+
+    deleteProductUserStorage(id: number) {
+      this.webApiService.deleteProductUserStorage(id).subscribe((data) => {
+        this.productUserStorage = data;
+        console.log(this.productUserStorage);
+      }
+      );
+    }
+
     increaseQuantity() {
       if (this.productUserStorage && this.productUserStorage.quantity) {
         this.productUserStorage.quantity++;
       }
     }
-  
+
     decreaseQuantity() {
       if (this.productUserStorage && this.productUserStorage.quantity && this.productUserStorage.quantity > 0) {
         this.productUserStorage.quantity--;

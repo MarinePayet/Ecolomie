@@ -38,11 +38,41 @@ export class ProductDetailPage implements OnInit {
       console.log('porut');
     });
   }
-  
+
   getStorageOptions() {
     this.webApiService.getStorages().subscribe((data) => {
       this.storageOptions = data['hydra:member'];
     });
+  }
+
+  increaseQuantity() {
+    if (this.productUserStorage && this.productUserStorage.quantity) {
+      this.productUserStorage.quantity++;
+    }
+  }
+
+  decreaseQuantity() {
+    if (this.productUserStorage && this.productUserStorage.quantity && this.productUserStorage.quantity > 0) {
+      this.productUserStorage.quantity--;
+    }
+  }
+
+  updateProductUserStorage() {
+    // Appelez votre service pour mettre à jour les données
+    this.webApiService.updateProductUserStorage(this.productUserStorage.id, this.productUserStorage)
+      .subscribe(
+        data => {
+          console.log('Product updated successfully!');
+          this.productUserStorage = data; // Mettez à jour la propriété avec les nouvelles données du serveur
+        },
+        error => {
+          console.log('There was an error updating the product.');
+        }
+      );
+  }
+
+  updateStorage(storageId: number) {
+    this.productUserStorage.storage.id = storageId;
   }
 
   deleteProductUserStorage(id: number) {

@@ -40,7 +40,7 @@
         Dans 1 jour
       </ion-list-header>
       <ion-col size="3" *ngFor="let productUserStorage of productUserStorages" class="dans-1-jours">
-        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) === 1">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC)  === 0">
           <div class="product-thumbnail">
             <div class="product-thumbnail-title">
               <p> {{ productUserStorage.product.name }} </p>
