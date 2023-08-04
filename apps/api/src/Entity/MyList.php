@@ -29,8 +29,9 @@ class MyList
     #[ORM\ManyToOne]
     #[Groups(['my_list:read', 'my_list:write'])]
     private ?User $user = null;
-
+    
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'my_list')]
+    #[Groups(['my_list:read', 'my_list:write'])]
     private Collection $products;
 
     public function __construct()

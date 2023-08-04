@@ -35,7 +35,14 @@ export class ExpirationProchePage implements OnInit {
     // Conversion du nombre de millisecondes en jours
     const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
 
-    return Math.floor(daysDifference); // Arrondir le nombre de jours à l'entier inférieur
+    // if (daysDifference < 0){
+    //   return Math.floor(Math.abs(daysDifference))
+    // } else {
+
+      return Math.floor(daysDifference); // Arrondir le nombre de jours à l'entier inférieur
+    // }
+
+    // return Math.floor(Math.abs(daysDifference));
   }
 
 

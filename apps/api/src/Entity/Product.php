@@ -16,11 +16,11 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product_user_storage:read', 'product_user_storage:write'])]
+    #[Groups(['my_list:read','product_user_storage:read', 'product_user_storage:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 1000)]
-    #[Groups(['product_user_storage:read', 'product_user_storage:write'])]
+    #[Groups(['my_list:read','product_user_storage:read', 'product_user_storage:write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]

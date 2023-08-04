@@ -24,8 +24,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card color="warning" class="ion-padding" *ngFor="let my_list of my_lists">
-      <ion-item-sliding>
+  <ion-card color="warning" class="ion-padding" *ngFor="let my_list of my_lists" [routerLink]="['/list-detail', my_list.id]">
+      <ion-item-sliding> 
         <ion-item color="warning">
           <ion-card-header>
             <ion-card-title class="ion-text-uppercase ion-text-wrap">{{ my_list.name }}</ion-card-title>

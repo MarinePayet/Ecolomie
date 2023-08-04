@@ -23,11 +23,11 @@ export class WebApiService {
 
   constructor(private http: HttpClient) { }
 
+  // STORAGES 
 
   getStorages(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages`);
   }
-
 
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
@@ -37,6 +37,8 @@ export class WebApiService {
     const storage = { name: name };
     return this.http.post(`${this.apiUrl}/storages`, storage);
   }
+
+  // PRODUCTS 
 
   getProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/products`);
@@ -50,9 +52,13 @@ export class WebApiService {
     return this.http.post(`${this.apiUrl}/products`, product);
   }
 
+  // CATEGORIES 
+  
   getCategories(): Observable<any> {
     return this.http.get(`${this.apiUrl}/categories`);
   }
+
+  // LISTS
 
   getMyLists(): Observable<any> {
     return this.http.get(`${this.apiUrl}/my_lists`);
@@ -67,6 +73,12 @@ export class WebApiService {
     return this.http.post(`${this.apiUrl}/my_lists`, list);
   }
 
+  getProductsOfMyList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/my_lists`);
+  }
+
+  // PRODUCT_USER_STORAGE
+
   getProductUserStorage(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/product_user_storages/${id}`);
   }
@@ -75,13 +87,16 @@ export class WebApiService {
     return this.http.get(`${this.apiUrl}/product_user_storages`);
   }
 
+  
   updateProductUserStorage(id: number, productUserStorage: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage);
   }
-
+  
   deleteProductUserStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
   }
+  
+  
 
 
 }
