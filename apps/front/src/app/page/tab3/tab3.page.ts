@@ -26,7 +26,10 @@ export class Tab3Page implements OnInit {
   ngOnInit() {
     this.loadProductUserStorages();
     this.getProductUserStorages();
-    this.ionViewWillEnter();
+  }
+
+  ionViewDidEnter() {
+    this.getProductUserStorages();
   }
 
 
@@ -76,28 +79,33 @@ export class Tab3Page implements OnInit {
     toast.present();
   }
 
+  openUpdatePage(id: number) {
+    this.router.navigateByUrl('/update-product/' + id);
+}
+
+
   async openDeleteConfirm(productId: string) {
     const alert = await this.AlertController.create({
-        header: 'Confirmation',
-        message: 'Êtes-vous sûr de vouloir supprimer ce produit ?',
-        buttons: [
-            {
-                text: 'Annuler',
-                role: 'cancel'
-            }, {
-                text: 'Supprimer',
-                handler: () => {
-                    this.webApiService.deleteProductUserStorage(Number(productId)).subscribe(() => {
-                        this.getProductUserStorages();
-                        this.presentToast('Le produit a été supprimé avec succès.');
-                    });
-                }
-            }
-        ]
+      header: 'Confirmation',
+      message: 'Êtes-vous sûr de vouloir supprimer ce produit ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel'
+        }, {
+          text: 'Supprimer',
+          handler: () => {
+            this.webApiService.deleteProductUserStorage(Number(productId)).subscribe(() => {
+              this.getProductUserStorages();
+              this.presentToast('Le produit a été supprimé avec succès.');
+            });
+          }
+        }
+      ]
     });
 
     await alert.present();
-}
+  }
 
 
 }
