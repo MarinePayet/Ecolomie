@@ -27,8 +27,8 @@
           <div class="product-thumbnail">
             <div class="product-thumbnail-title">
               <p> {{ productUserStorage.product.name }} </p>
-              <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p>
-              <p> Périmé depuis: {{ calculateDaysDifference(productUserStorage.DLC) }}</p>
+              <!-- <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p> -->
+              <p> Périmé depuis: {{ calculateDaysDifference(productUserStorage.DLC)* -1 }}</p>
             </div>
           </div>
         </ng-container>

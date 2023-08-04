@@ -33,7 +33,7 @@ class ProductUserStorage
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product_user_storage:read', 'product_user_storage:write','product_user_storage:update'])]       
+    #[Groups(['my_list:read','product_user_storage:read', 'product_user_storage:write','product_user_storage:update'])]       
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

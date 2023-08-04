@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WebApiService } from '../../service/web-api.service';
 import { Router } from '@angular/router';
 
-
+ 
 @Component({
   selector: 'app-update-product',
   templateUrl: './update-product.page.html',
