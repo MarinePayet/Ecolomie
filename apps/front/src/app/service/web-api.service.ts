@@ -26,7 +26,7 @@ export class WebApiService {
   // STORAGES 
 
   getStorages(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/storages`);
+    return this.http.get(`${this.apiUrl}/storages`); 
   }
 
   deleteStorage(id: number): Observable<any> {
@@ -50,6 +50,10 @@ export class WebApiService {
 
   saveProduct(product: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/products`, product);
+  }
+  
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/products/${id}`);
   }
 
   // CATEGORIES 
@@ -76,6 +80,7 @@ export class WebApiService {
   getProductsOfMyList(): Observable<any> {
     return this.http.get(`${this.apiUrl}/my_lists`);
   }
+  
 
   // PRODUCT_USER_STORAGE
 
