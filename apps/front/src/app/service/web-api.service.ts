@@ -17,13 +17,13 @@ export class WebApiService {
   // private readonly apiUrl = 'http://192.168.1.57:8000/api'; // for android emulator salim A
   // private readonly apiUrl = 'http://192.168.173.15:8000/api'; // for android emulator salim A
 
-    // private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
-   private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
+    private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
+   //private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
 
   constructor(private http: HttpClient) { }
 
-  // STORAGES 
+  // STORAGES
 
   getStorages(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages`);
@@ -38,7 +38,7 @@ export class WebApiService {
     return this.http.post(`${this.apiUrl}/storages`, storage);
   }
 
-  // PRODUCTS 
+  // PRODUCTS
 
   getProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/products`);
@@ -52,8 +52,8 @@ export class WebApiService {
     return this.http.post(`${this.apiUrl}/products`, product);
   }
 
-  // CATEGORIES 
-  
+  // CATEGORIES
+
   getCategories(): Observable<any> {
     return this.http.get(`${this.apiUrl}/categories`);
   }
@@ -87,16 +87,16 @@ export class WebApiService {
     return this.http.get(`${this.apiUrl}/product_user_storages`);
   }
 
-  
+
   updateProductUserStorage(id: number, productUserStorage: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage);
   }
-  
+
   deleteProductUserStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
   }
-  
-  
+
+
 
 
 }

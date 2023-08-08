@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="padding">
-    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
       <div class="logo">
         <img src="assets/img/logo.png" alt="logo">
@@ -17,26 +17,33 @@
 
       <ion-item fill="solid" class="ion-margin-top">
         <ion-label position="floating">Email</ion-label>
-        <ion-input color="sucess" type="mail" [(ngModel)]="email" name="Email" placeholder="Adresse email"
-          required></ion-input>
+        <ion-input type="mail" formControlName="email" placeholder="Adresse email" required></ion-input>
       </ion-item>
+      <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+        <p *ngIf="loginForm.get('email')?.errors?.['required']">L'email est requis.</p>
+        <p *ngIf="loginForm.get('email')?.errors?.['email']">Veuillez entrer une adresse email valide.</p>
+      </div>
+
 
       <ion-item fill="solid" class="ion-margin-top">
         <ion-label position="floating">Mot de passe</ion-label>
-        <ion-input color="primary" type="password" [(ngModel)]="password" name="password" placeholder="Mot de passe"
-          required></ion-input>
-      </ion-item>
+        <ion-input color="primary" type="password" formControlName="password" placeholder="Mot de passe"></ion-input>
+        </ion-item>
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          <p *ngIf="loginForm.get('password')?.errors?.['required']">Le mot de passe est requis.</p>
+          <p *ngIf="loginForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6
+            caractères.</p>
+        </div>
+
 
       <ion-item *ngIf="isRegistering" fill="solid" class="ion-margin-top">
         <ion-label position="floating">Prenom</ion-label>
-        <ion-input color="sucess" type="text" [(ngModel)]="firstname" name="firstname" placeholder="Prénom"
-          required></ion-input>
+        <ion-input color="success" type="text" formControlName="firstname" placeholder="Prénom"></ion-input>
       </ion-item>
 
       <ion-item *ngIf="isRegistering" fill="solid" class="ion-margin-top">
         <ion-label position="floating">Nom</ion-label>
-        <ion-input color="sucess" type="text" [(ngModel)]="lastname" name="lastname" placeholder="Nom"
-          required></ion-input>
+        <ion-input color="success" type="text" formControlName="lastname" placeholder="Nom"></ion-input>
       </ion-item>
 
 
@@ -46,10 +53,9 @@
       </ion-item>
 
       <ion-button color="light" expand="block" shape="round" fill="outline" type="submit"
-        [disabled]="!loginForm.form.valid">
+        [disabled]="!loginForm.valid">
         {{ isRegistering ? 'Inscription' : 'Connexion' }}
       </ion-button>
-
       <br>
 
       <ion-button color="tertiary" expand="block" shape="round" (click)="isRegistering = !isRegistering">
