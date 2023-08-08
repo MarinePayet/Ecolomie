@@ -28,14 +28,6 @@ export class Tab3Page implements OnInit {
     this.getProductUserStorages();
   }
 
-  ionViewDidEnter() {
-    this.getProductUserStorages();
-  }
-
-
-  ionViewWillEnter() {
-    this.getProductUserStorages();
-  }
 
   loadProductUserStorages() {
     this.webApiService.getProductUserStorages().subscribe((data) => {
@@ -52,7 +44,7 @@ export class Tab3Page implements OnInit {
     );
   }
 
-  
+
 
   getProductUserStorage(id: number) {
     this.webApiService.getProductUserStorage(id).subscribe((data) => {
