@@ -98,7 +98,7 @@ export class Tab3Page implements OnInit {
       ]
     });
 
-    await alert.present();
+    await alert.present(); 
   }
 
 
