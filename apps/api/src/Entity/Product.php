@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ApiResource]
+#[ApiResource()] 
 class Product
 {
     #[ORM\Id]
@@ -37,15 +37,15 @@ class Product
     #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
     private ?ProductUserStorage $productUserStorage = null;
 
-    #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]
-    private Collection $my_list;
+    // #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]
+    // private Collection $my_list;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $barcode = null;
 
     public function __construct()
     {
-        $this->my_list = new ArrayCollection();
+        // $this->my_list = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,29 +123,29 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, MyList>
-     */
-    public function getMyList(): Collection
-    {
-        return $this->my_list;
-    }
+    // /**
+    //  * @return Collection<int, MyList>
+    //  */
+    // public function getMyList(): Collection
+    // {
+    //     return $this->my_list;
+    // }
 
-    public function addMyList(MyList $myList): static
-    {
-        if (!$this->my_list->contains($myList)) {
-            $this->my_list->add($myList);
-        }
+    // public function addMyList(MyList $myList): static
+    // {
+    //     if (!$this->my_list->contains($myList)) {
+    //         $this->my_list->add($myList);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeMyList(MyList $myList): static
-    {
-        $this->my_list->removeElement($myList);
+    // public function removeMyList(MyList $myList): static
+    // {
+    //     $this->my_list->removeElement($myList);
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getBarcode(): ?string
     {

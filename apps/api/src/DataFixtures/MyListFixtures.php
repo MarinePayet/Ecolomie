@@ -15,13 +15,15 @@ class MyListFixtures extends Fixture implements DependentFixtureInterface
         $myList->setName('Courses');
         $manager->persist($myList);
         $myList->setUser($this->getReference(UserFixtures::USER_SALIM));
-        $myList->addProduct($this->getReference(ProductFixtures::PROD_BANANE));
+        $myList->addProductForList($this->getReference(ProductForListFixtures::PROD_F_LIST_LAIT));
         
         $myList = new MyList();
         $myList->setName('Vacances');
         $manager->persist($myList);
         $myList->setUser($this->getReference(UserFixtures::USER_SALIM));
-        $myList->addProduct($this->getReference(ProductFixtures::PROD_POMME));
+        $myList->addProductForList($this->getReference(ProductForListFixtures::PROD_F_LIST_ABRICOT));
+
+
 
         $manager->flush();
     }

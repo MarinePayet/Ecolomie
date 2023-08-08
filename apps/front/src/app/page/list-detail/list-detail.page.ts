@@ -34,11 +34,12 @@ export class ListDetailPage implements OnInit {
           this.getProductsOfMyList();
       }
     });
+    console.log(this.idList)
   }
 
 
   getProductsOfMyList() {
-    this.webApiService.getProductsOfMyList().subscribe((data) => {
+    this.webApiService.getProductsForList().subscribe((data) => {
       this.productsOfMyList = data['hydra:member'];
       console.log(this.productsOfMyList);
     }
