@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ListDetailPage implements OnInit {
 
   productsOfMyList: any;
+  idList: any;
 
   constructor(
     private webApiService: WebApiService, 
@@ -22,14 +23,13 @@ export class ListDetailPage implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      let id = params.get('id');
-      console.log('Product ID:', id);
-      if (id !== null) {
+      this.idList = params.get('id');
+      if (this.idList !== null) {
           this.getProductsOfMyList();
       }
     });
-
   }
+
 
   getProductsOfMyList() {
     this.webApiService.getProductsOfMyList().subscribe((data) => {
@@ -38,4 +38,5 @@ export class ListDetailPage implements OnInit {
     }
     );
   }
+
 }
