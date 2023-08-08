@@ -15,8 +15,8 @@
     <ion-button (click)="scanBarcode()">Scan Barcode</ion-button>
     <ion-button (click)="clearProduct()">Clear</ion-button>
     <ion-card-content *ngIf="showProductDetails">
-      <p>product_name_fr: {{ product?.product_name_fr }}</p>
-      <p>nutriscore_grade: {{ product?.nutriscore_grade}}</p>
+      <p>name: {{ product?.product_name_fr }}</p>
+      <p>nutriscore: {{ product?.nutriscore_grade}}</p>
       <img [src]="product?.image_front_url" alt="Image du produit">
       <ion-item>
         <ion-label>DLC</ion-label>

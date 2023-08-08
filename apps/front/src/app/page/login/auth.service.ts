@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,14 @@ export class AuthService {
 
   logout(): void {
     this.isLoggedIn = false;
+    localStorage.removeItem('jwt');
   }
 
   register(email: string, password: string, firstname: string, lastname: string): Observable<any> {
     const body = { email: email, plainTextPassword: password, firstname: firstname, lastname: lastname };
-    return this.http.post('https://127.0.0.1:8000/api/users', body);
+    return this.http.post('https://127.0.0.1:8000/api/users', body).pipe(
+      switchMap(() => this.login(email, password))
+    );
   }
 
 }
