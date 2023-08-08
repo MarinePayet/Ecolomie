@@ -1,3 +1,4 @@
+<!-- Description: Page de la liste des produits -->
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
@@ -14,46 +15,33 @@
     <ion-title>Mes produits</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-header>
-    <ion-toolbar color="danger">
+    <ion-toolbar color="light">
       <ion-buttons slot="end">
         <ion-button size="small" color="primary" routerLink="/newproduct">
           <ion-icon name="add"></ion-icon>
-          <ion-label color="light">Ajouter un produit</ion-label>
+          <ion-label>Ajouter un produit</ion-label>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12" *ngFor="let productUserStorage of productUserStorages">
-        <ion-card color="light">
-          <ion-item-sliding>
-            <ion-item color="sucess">
-              <ion-card-header>
-                <ion-card-subtitle>{{ productUserStorage.storage.name }}</ion-card-subtitle>
-                <ion-card-subtitle><ion-badge>{{ productUserStorage.quantity }}</ion-badge></ion-card-subtitle>
-                <ion-card-title>{{ productUserStorage.product.name }}</ion-card-title>
-              </ion-card-header>
-            </ion-item>
-
-            <ion-item-options side="start">
-              <ion-item-option color="success" (click)="openUpdatePage(productUserStorage.id)">
-                <ion-icon slot="icon-only" name="create"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-
-            <ion-item-options side="end">
-              <ion-item-option color="danger" (click)="openDeleteConfirm(productUserStorage.id)">
-                <ion-icon slot="icon-only" name="trash"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+  <ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3" *ngFor="let productUserStorage of productUserStorages">
+          <a [routerLink]="['/product-detail', productUserStorage.id]">
+            <div class="product-thumbnail">
+              <div class="product-thumbnail-title">
+                <p> {{ productUserStorage.quantity }} </p>
+                <p> {{ productUserStorage.storage.name }} </p>
+                <p> {{ productUserStorage.product.name }} </p>
+              </div>
+            </div>
+          </a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  </ion-content>
