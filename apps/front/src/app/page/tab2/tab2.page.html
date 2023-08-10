@@ -17,7 +17,7 @@
     <ion-card-content *ngIf="showProductDetails">
       <p>name: {{ product?.product_name_fr }}</p>
       <p>nutriscore: {{ product?.nutriscore_grade}}</p>
-      <img [src]="product?.image_front_url" alt="Image du produit">
+      <img [src]="product?.image_front_url" alt="Image du produit"> 
       <ion-item>
         <ion-label>DLC</ion-label>
         <ion-input label="DLC" [(ngModel)]="product.dlc" type="date"></ion-input>

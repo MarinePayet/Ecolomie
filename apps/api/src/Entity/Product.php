@@ -41,6 +41,7 @@ class Product
     // private Collection $my_list;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['product_user_storage:read'])]
     private ?string $barcode = null;
 
     public function __construct()

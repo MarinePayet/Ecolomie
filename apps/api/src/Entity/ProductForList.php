@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: ProductForListRepository::class)]
 #[ApiResource(
     normalizationContext:['groups' => 'read:productForList'],
+    denormalizationContext:['groups' => 'write:productForList']
 )]
 class ProductForList
 {
@@ -26,8 +27,8 @@ class ProductForList
     private ?string $name = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:productForList'])]
-    private ?string $quantity = null;
+    #[Groups(['read:productForList', 'write:productForList'])]
+    private ?int $quantity = null;
     
     #[ORM\ManyToOne(inversedBy: 'productForLists')]
     #[Groups(['read:productForList'])]

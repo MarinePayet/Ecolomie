@@ -104,11 +104,16 @@ export class WebApiService {
   // PRODUCT_FOR_LIST
 
   getProductsForList(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product_for_lists`);
+    return this.http.get(`${this.apiUrl}/product_for_lists`); 
+  }
+  
+  getProductForList(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/product_for_lists/${id}`); 
   }
 
-
-
+  updateProductForList(id: number, productForList: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/product_for_lists/${id}`, productForList); 
+  }
 
 }
 
