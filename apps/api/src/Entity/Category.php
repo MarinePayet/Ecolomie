@@ -19,11 +19,11 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product:read', 'product:write', 'product_user_storage:read'])]
+    #[Groups(['product:read', 'product:write', 'product_user_storage:read','read:productForList'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['product:read', 'product:write', 'product_user_storage:read'])]
+    #[Groups(['product:read', 'product:write', 'product_user_storage:read','read:productForList'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
@@ -32,10 +32,14 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: ProductUserStorage::class)]
     private Collection $productUserStorages;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: ProductForList::class)]
+    private Collection $productForLists;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->productUserStorages = new ArrayCollection();
+        $this->productForLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +113,36 @@ class Category
             // set the owning side to null (unless already changed)
             if ($productUserStorage->getCategory() === $this) {
                 $productUserStorage->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductForList>
+     */
+    public function getProductForLists(): Collection
+    {
+        return $this->productForLists;
+    }
+
+    public function addProductForList(ProductForList $productForList): static
+    {
+        if (!$this->productForLists->contains($productForList)) {
+            $this->productForLists->add($productForList);
+            $productForList->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductForList(ProductForList $productForList): static
+    {
+        if ($this->productForLists->removeElement($productForList)) {
+            // set the owning side to null (unless already changed)
+            if ($productForList->getCategory() === $this) {
+                $productForList->setCategory(null);
             }
         }
 
