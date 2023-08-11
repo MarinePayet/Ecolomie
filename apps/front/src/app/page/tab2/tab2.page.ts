@@ -1,10 +1,20 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AuthService } from '../login/auth.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ApiService } from '../newproduct/api.service';
+
+
+interface Product {
+  name: string;
+  nutriscore: string;
+  image: string;
+  dlc?: string;
+  quantity?: number;
+  storage?: string;
+  category?: string;
+}
 
 @Component({
   selector: 'app-tab2',
@@ -12,49 +22,38 @@ import { ApiService } from '../newproduct/api.service';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  private baseUrl = 'https://world.openfoodfacts.org/api/v2/product/';
-  product: any;
+  products: Product[] = [];
+
+  product: Product = {
+    name: '',
+    nutriscore: '',
+    image: '',
+  };
+  storages: any[] = [];
+  categories: any[] = []
   showProductDetails = false;
-  storages: any;
-  categories: any;
 
-  constructor(private http: HttpClient,public authService: AuthService, private router: Router,private toastController: ToastController,
-    private apiService: ApiService) {
-      this.product = {
-        dlc: '',
-        quantity: 0,
-        storage: '',
-        product_name_fr: '',
-        nutriscore_grade: '',
-        image_front_url: '',
-        category: ''
-      };
-     }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastController: ToastController,
+    private apiService: ApiService
+  ) {
+  }
+
   getProduct(barcode: string) {
-    this.http.get<any>(`${this.baseUrl}${barcode}`).subscribe(data => {
-      this.product = {
-        ...this.product,
-        product_name_fr: data.product.product_name_fr,
-        nutriscore_grade: data.product.nutriscore_grade,
-        image_front_url: data.product.image_front_url,
-      };
-      console.log(this.product);
-    }, error => {
-      console.error('Error getting product:', error);
-    });
+    this.apiService.getProduct(barcode).subscribe(
+      (data) => {
+        this.product = data;
+        console.log(this.product);
+        this.showProductDetails = true;
+      },
+      (error) => {
+        console.error('Error getting product:', error);
+      }
+    );
+  }
 
-  }
-  resetProduct() {
-    this.product = {
-      dlc: '',
-      quantity: 0,
-      storage: '',
-      product_name_fr: '',
-      nutriscore_grade: '',
-      image_front_url: '',
-      category: ''
-    };
-  }
 
 
   async scanBarcode() {
@@ -64,34 +63,33 @@ export class Tab2Page {
         this.getProduct(result.content);
       }
       this.showProductDetails = true;
-      this.resetProduct();
-
     } catch (error) {
       console.error('Error scanning barcode:', error);
     }
   }
 
-  clearProduct() {
-    this.product = null;
-    this.showProductDetails = false;
-  }
-
   getStorages() {
-    this.apiService.getStorages().subscribe((data) => {
-      this.storages = data['hydra:member'];
-      console.log(this.storages);
-    }, error => {
-      console.error('Error getting storages:', error);
-    });
+    this.apiService.getStorages().subscribe(
+      (data) => {
+        this.storages = data['hydra:member'];
+        console.log(this.storages);
+      },
+      (error) => {
+        console.error('Error getting storages:', error);
+      }
+    );
   }
 
   getCategories() {
-    this.apiService.getCategories().subscribe((data) => {
-      this.categories = data['hydra:member'];
-      console.log(this.categories);
-    }, error => {
-      console.error('Error getting categories:', error);
-    });
+    this.apiService.getCategories().subscribe(
+      (data) => {
+        this.categories = data['hydra:member'];
+        console.log(this.categories);
+      },
+      (error) => {
+        console.error('Error getting categories:', error);
+      }
+    );
   }
 
   ngOnInit() {
@@ -118,30 +116,34 @@ export class Tab2Page {
     toast.present();
   }
 
+  resetProduct() {
+    this.product = {
+      name: '',
+      nutriscore: '',
+      image: '',
+    };
+    this.showProductDetails = false;
+  }
+
   saveProduct() {
     const productDetails = {
       DLC: this.product.dlc,
       quantity: this.product.quantity,
       storage: this.product.storage,
-      product: {
-        name: this.product.product_name_fr,
-        nutriscore: this.product.nutriscore_grade,
-        image: this.product.image_front_url
-      },
       category: this.product.category,
+      
     };
 
-    console.log("Storage IRI: ", this.product.storage);
-    console.log("Category IRI: ", this.product.category);
+    this.apiService.saveProduct(productDetails).subscribe(response => {
+      console.log('Produit enregistré avec succès', response);
 
-    this.apiService.saveProduct(productDetails).subscribe(
-      (response: any) => {
-        console.log('Produit enregistré avec succès', response);
-      },
-      (error: any) => {
-        console.error("Erreur lors de l'enregistrement du produit", error);
-      }
-    );
+    }, error => {
+      console.error("Erreur lors de l'enregistrement du produit', error");
+
+    });
   }
+
+
+
 
 }

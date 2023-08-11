@@ -28,7 +28,9 @@ class ProductImporter
                 continue;
             }
 
-            $this->logger->debug('Parse row' .$i, $row);
+            $this->logger->debug('Parse row' .$i, [
+                'name' => $row[8],
+            ]);
             
             $product = new Product();
             $product->setBarcode($row[0])
