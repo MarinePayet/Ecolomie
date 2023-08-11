@@ -12,39 +12,38 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MyListWithProductRepository::class)]
 #[ApiResource(
-    normalizationContext:['groups' => 'read:MyListWithProductRepository'],
+    normalizationContext:['groups' => 'read:MyListWithProduct'],
 )]
 class MyListWithProduct
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read:MyListWithProductRepository'])]
+    #[Groups(['read:MyListWithProduct'])]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:MyListWithProductRepository'])]
-    private ?MyList $list = null;
-
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:MyListWithProductRepository'])]
+    #[Groups(['read:MyListWithProduct'])]
     private ?string $text = null;
 
     #[ORM\Column]
-    #[Groups(['read:MyListWithProductRepository'])]
+    #[Groups(['read:MyListWithProduct'])]
     private ?bool $is_product_buy = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['read:MyListWithProductRepository'])]
+    #[Groups(['read:MyListWithProduct'])]
     private ?\DateTimeInterface $updated_at = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['read:MyListWithProductRepository'])]
+    #[Groups(['read:MyListWithProduct'])]
     private ?\DateTimeInterface $created_at = null;
+    
+    #[ORM\ManyToOne(inversedBy: 'myListWithProducts')]
+    #[Groups(['read:MyListWithProduct'])]
+    private ?ProductForList $productForList = null;
 
     #[ORM\ManyToOne(inversedBy: 'myListWithProducts')]
-    private ?ProductForList $productForList = null;
+    private ?MyList $myList = null;
 
     public function __construct()
     {
@@ -53,18 +52,6 @@ class MyListWithProduct
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getList(): ?MyList
-    {
-        return $this->list;
-    }
-
-    public function setList(MyList $list): static
-    {
-        $this->list = $list;
-
-        return $this;
     }
 
     /**
@@ -127,6 +114,18 @@ class MyListWithProduct
     public function setProductForList(?ProductForList $productForList): static
     {
         $this->productForList = $productForList;
+
+        return $this;
+    }
+
+    public function getMyList(): ?MyList
+    {
+        return $this->myList;
+    }
+
+    public function setMyList(?MyList $myList): static
+    {
+        $this->myList = $myList;
 
         return $this;
     }
