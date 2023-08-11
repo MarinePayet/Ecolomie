@@ -12,34 +12,38 @@
   </ion-toolbar>
   <ion-toolbar color="danger">
     idList : {{ idList}} //
-    <!-- test idList : {{ productsOfMyList[0].myList | json }} -->
-    <!-- test idList : {{ productsOfMyList.index.myList.index.idList | json }} -->
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-col size="12" *ngFor="let productOfMyList of productsOfMyList">
+  <ion-col size="12" *ngFor="let productOfMyList of productsOfMyList, let i = index">
     <ion-col size="12" *ngFor="let list of productOfMyList.myList">
-      <ion-list>
-        id: {{ productOfMyList.id }}
-      </ion-list>
-      <ion-list>
-        name : {{ productOfMyList.name }}
-      </ion-list>
-      <ion-list>
-        qtt: {{ productOfMyList.quantity }}
-      </ion-list>
-      <ion-list>
-        categorie : {{ productOfMyList.category.name }}
-      </ion-list>
-      <ion-list>
+      <ng-container *ngIf="list.id == idList">  
+        <ion-list>
+          id: {{ productOfMyList.id }}
+        </ion-list>
+        <ion-list>
+          name : {{ productOfMyList.name }}
+        </ion-list>
+        <ion-list>
+          qtt: 
+          <ion-button class="button-spacing" color="white" (click)="decreaseQuantity(productOfMyList, i)">-</ion-button>
+            {{ productOfMyList.quantity }}
+          <ion-button class="button-spacing" color="white" (click)="increaseQuantity(productOfMyList, i)">+</ion-button>
+
+        </ion-list>
+        <ion-list>
+          categorie : {{ productOfMyList.category.name }}
+        </ion-list>
+        <ion-list>
           {{ list.name }}
-      </ion-list>
-      
+          {{ list.id }}
+        </ion-list>
+      </ng-container>
     </ion-col>
   </ion-col>
-
 </ion-content>  
+
+
 
 

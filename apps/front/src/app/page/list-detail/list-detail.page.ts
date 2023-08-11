@@ -18,7 +18,6 @@
     productOfMyList: any;
     idList?: number;
 
-
     constructor(
       private webApiService: WebApiService, 
       private router: Router,
@@ -35,10 +34,7 @@
                   this.getProductsOfMyList();
                 }
       });
-      console.log(this.idList)
-      console.log(typeof(this.idList))
     }
-
 
     getProductsOfMyList() {
       this.webApiService.getProductsForList().subscribe((data) => {
@@ -79,48 +75,31 @@
       await alert.present();
     }
 
+    decreaseQuantity(product: any, index: number) {
+      if (product.quantity > 0) {
+        product.quantity--;
+        this.updateProductForList(product);
+      }
+    }
     
-    async updateProductForList() {
-      // Prepare the data to send
-      let updatedData = {
-        ...this.productOfMyList,
-      };
-  
-      // Call your service to update the data
+    increaseQuantity(product: any, index: number) {
+      product.quantity++;
+      this.updateProductForList(product);
+    }
+    
+    async updateProductForList(product: any) {
       try {
-        let data = await this.webApiService.updateProductForList(this.productOfMyList.id, updatedData).toPromise();
-        console.log('Product updated successfully!');
-        this.productOfMyList = data;
-        this.router.navigate(['/tabs/tab3']);
+        const updatedData = {
+          ...product,
+        };
+    
+        let updatedProduct = await this.webApiService.updateProductForList(product.id, updatedData).toPromise();
+        console.log('Product updated successfully!', updatedProduct);
+        this.presentToast('La quantité du produit a été mise à jour.');
       } catch (error) {
-        console.log('There was an error updating the product.');
+        console.log('There was an error updating the product.', error);
+        this.presentToast("Une erreur s'est produite lors de la mise à jour de la quantité.");
       }
     }
     
-    decreaseQuantity() {
-      // console.log(this.productsOfMyList.quantity)
-      console.log(this.productsOfMyList)
-      console.log(this.productsOfMyList[0].quantity)
-      console.log(typeof(Number(this.productsOfMyList[0].quantity)))
-      console.log(this.productsOfMyList[0].name)
-      // console.log(typeof (this.productsOfMyList))
-      // for (const property in this.productsOfMyList) {
-      //   console.log(`${property}: ${this.productsOfMyList[property]}`);
-      // }
-      if (Number(this.productsOfMyList.quantity) > 0) {
-        Number(this.productsOfMyList.quantity--);
-      }
-      console.log('--');
-    }
-    
-    increaseQuantity() {
-      this.productsOfMyList.quantity++;
-      console.log(this.productsOfMyList.quantity)
-      console.log('++');
-      // this.productsOfMyList[.quantity++;
-      // console.log('++');
-    }
-    
-  
-
   }

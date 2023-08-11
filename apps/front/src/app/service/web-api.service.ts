@@ -67,19 +67,16 @@ export class WebApiService {
   getMyLists(): Observable<any> {
     return this.http.get(`${this.apiUrl}/my_lists`);
   }
-
+  
   deleteList(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
   }
-
+  
   createList(name: string): Observable<any> {
     const list = { name: name };
     return this.http.post(`${this.apiUrl}/my_lists`, list);
   }
-
-  getProductsOfMyList(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/my_lists`);
-  }
+  
   
 
   // PRODUCT_USER_STORAGE
