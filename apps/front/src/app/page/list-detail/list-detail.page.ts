@@ -52,7 +52,7 @@
       toast.present();
     }
 
-    async openDeleteConfirm(productId: string) {
+    async openDeleteConfirm(productId: number) {
       const alert = await this.AlertController.create({
         header: 'Confirmation',
         message: 'Êtes-vous sûr de vouloir supprimer ce produit ?',
@@ -63,7 +63,7 @@
           }, {
             text: 'Supprimer',
             handler: () => {
-              this.webApiService.deleteProduct(Number(productId)).subscribe(() => {
+              this.webApiService.deleteProductFromList(Number(this.idList), Number(productId) ).subscribe(() => {
                 this.getProductsOfMyList();
                 this.presentToast('Le produit a été supprimé avec succès.');
               });

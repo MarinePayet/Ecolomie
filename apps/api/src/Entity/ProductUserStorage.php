@@ -52,11 +52,11 @@ class ProductUserStorage
 
     #[ORM\OneToOne(inversedBy: 'productUserStorage', cascade: ['persist', 'remove'])]
 
-    #[Groups(['product_user_storage:read','product_user_storage:write'])]    // LIGNE ORIGINALE  
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]   
     private ?Product $product = null;
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
-    #[Groups(['product_user_storage:read','product_user_storage:write'])]    // LIGNE ORIGINALE  
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]    
     private ?Category $category = null;
 
     public function getId(): ?int

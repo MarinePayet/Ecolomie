@@ -34,13 +34,13 @@ class ProductForList
     #[Groups(['read:productForList', 'my_list:read'])]
     private ?Category $category = null;
 
-    #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'productForLists')]
-    #[Groups(['read:productForList', 'my_list:read'])]
-    private Collection $myList;
+    #[ORM\OneToMany(mappedBy: 'productForList', targetEntity: MyListWithProduct::class)]
+    private Collection $myListWithProducts;
 
     public function __construct()
     {
-        $this->myList = new ArrayCollection();
+
+        $this->myListWithProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,25 +85,31 @@ class ProductForList
     }
 
     /**
-     * @return Collection<int, MyList>
+     * @return Collection<int, MyListWithProduct>
      */
-    public function getMyList(): Collection
+    public function getMyListWithProducts(): Collection
     {
-        return $this->myList;
+        return $this->myListWithProducts;
     }
 
-    public function addMyList(MyList $myList): static
+    public function addMyListWithProduct(MyListWithProduct $myListWithProduct): static
     {
-        if (!$this->myList->contains($myList)) {
-            $this->myList->add($myList);
+        if (!$this->myListWithProducts->contains($myListWithProduct)) {
+            $this->myListWithProducts->add($myListWithProduct);
+            $myListWithProduct->setProductForList($this);
         }
 
         return $this;
     }
 
-    public function removeMyList(MyList $myList): static
+    public function removeMyListWithProduct(MyListWithProduct $myListWithProduct): static
     {
-        $this->myList->removeElement($myList);
+        if ($this->myListWithProducts->removeElement($myListWithProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($myListWithProduct->getProductForList() === $this) {
+                $myListWithProduct->setProductForList(null);
+            }
+        }
 
         return $this;
     }
