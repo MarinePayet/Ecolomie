@@ -54,8 +54,12 @@ class MyList
     #[Groups(['my_list:read', 'my_list:write'])]
     private ?User $user = null;
 
+    #[ORM\OneToMany(mappedBy: 'myList', targetEntity: MyListWithProduct::class)]
+    private Collection $myListWithProducts;
+
     public function __construct()
     {
+        $this->myListWithProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +87,36 @@ class MyList
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MyListWithProduct>
+     */
+    public function getMyListWithProducts(): Collection
+    {
+        return $this->myListWithProducts;
+    }
+
+    public function addMyListWithProduct(MyListWithProduct $myListWithProduct): static
+    {
+        if (!$this->myListWithProducts->contains($myListWithProduct)) {
+            $this->myListWithProducts->add($myListWithProduct);
+            $myListWithProduct->setMyList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMyListWithProduct(MyListWithProduct $myListWithProduct): static
+    {
+        if ($this->myListWithProducts->removeElement($myListWithProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($myListWithProduct->getMyList() === $this) {
+                $myListWithProduct->setMyList(null);
+            }
+        }
 
         return $this;
     }
