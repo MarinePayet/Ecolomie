@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,32 +17,35 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['my_list:read','product_user_storage:read', 'product_user_storage:write'])]
+    #[ApiProperty(identifier:false)]
+    #[Groups(['my_list:read','product_user_storage:read','product_user_storage:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 1000)]
-    #[Groups(['my_list:read','product_user_storage:read', 'product_user_storage:write'])]
+    #[Groups(['my_list:read','product_user_storage:read','product_user_storage:write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['product_user_storage:read', 'product_user_storage:write'])]
+    #[Groups(['product_user_storage:read','prduct:read','product_user_storage:write'])]
     private ?string $nutriscore = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['product_user_storage:read', 'product_user_storage:write'])]
+    #[Groups(['product_user_storage:read','product_user_storage:write'])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Category $category = null;
 
-    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
-    private ?ProductUserStorage $productUserStorage = null;
 
     #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]
     private Collection $my_list;
-
+    
     #[ORM\Column(length: 255, nullable: true)]
+    #[ApiProperty(identifier:true)]
     private ?string $barcode = null;
+
+    #[ORM\ManyToOne(inversedBy: 'product')]
+    private ?ProductUserStorage $productUserStorageId = null;
 
     public function __construct()
     {
@@ -101,28 +105,6 @@ class Product
         return $this;
     }
 
-    public function getProductUserStorage(): ?ProductUserStorage
-    {
-        return $this->productUserStorage;
-    }
-
-    public function setProductUserStorage(?ProductUserStorage $productUserStorage): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($productUserStorage === null && $this->productUserStorage !== null) {
-            $this->productUserStorage->setProduct(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($productUserStorage !== null && $productUserStorage->getProduct() !== $this) {
-            $productUserStorage->setProduct($this);
-        }
-
-        $this->productUserStorage = $productUserStorage;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, MyList>
      */
@@ -155,6 +137,18 @@ class Product
     public function setBarcode(?string $barcode): static
     {
         $this->barcode = $barcode;
+
+        return $this;
+    }
+
+    public function getProductUserStorageId(): ?ProductUserStorage
+    {
+        return $this->productUserStorageId;
+    }
+
+    public function setProductUserStorageId(?ProductUserStorage $productUserStorageId): static
+    {
+        $this->productUserStorageId = $productUserStorageId;
 
         return $this;
     }
