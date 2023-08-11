@@ -3,40 +3,59 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata as Api;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\MyListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+
 #[ORM\Entity(repositoryClass: MyListRepository::class)]
-#[Api\ApiResource (
+#[Api\ApiResource ()]
+#[GetCollection(
+    normalizationContext: ['groups' => ['my_list:read']],
+)]
+#[Get(
     normalizationContext: ['groups' => ['my_list:read']],
     denormalizationContext: ['groups' => ['my_list:write']],
 )]
+#[Put(
+    denormalizationContext: ['groups' => ['my_list:write']],
+    )]
+
+#[Delete(
+    normalizationContext: ['groups' => ['removeProductFromList:read']],
+    denormalizationContext: ['groups' => ['removeProductFromList:write']],
+)]
+
+#[Post(
+    normalizationContext: ['groups' => ['my_list:read']],
+    denormalizationContext: ['groups' => ['my_list:write']],
+)]
+
 class MyList
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['my_list:read' , 'my_list:write'])]
+    #[Groups(['my_list:read' , 'my_list:write', 'read:productForList'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['my_list:read', 'my_list:write'])]
+    #[Groups(['my_list:read', 'my_list:write', 'read:productForList'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne]
     #[Groups(['my_list:read', 'my_list:write'])]
     private ?User $user = null;
-    
-    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'my_list')]
-    #[Groups(['my_list:read', 'my_list:write'])]
-    private Collection $products;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,30 +87,4 @@ class MyList
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): static
-    {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $product->addMyList($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): static
-    {
-        if ($this->products->removeElement($product)) {
-            $product->removeMyList($this);
-        }
-
-        return $this;
-    }
 }

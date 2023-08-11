@@ -11,12 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ApiResource]
+#[ApiResource()] 
 class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+
     #[ApiProperty(identifier:false)]
     #[Groups(['my_list:read','product_user_storage:read','product_user_storage:write'])]
     private ?int $id = null;
@@ -37,11 +38,13 @@ class Product
     private ?Category $category = null;
 
 
+
     #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]
     private Collection $my_list;
     
     #[ORM\Column(length: 255, nullable: true)]
     #[ApiProperty(identifier:true)]
+
     private ?string $barcode = null;
 
     #[ORM\ManyToOne(inversedBy: 'product')]
@@ -49,7 +52,6 @@ class Product
 
     public function __construct()
     {
-        $this->my_list = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,6 +106,7 @@ class Product
 
         return $this;
     }
+
 
     /**
      * @return Collection<int, MyList>

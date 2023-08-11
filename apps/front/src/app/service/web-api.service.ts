@@ -68,20 +68,19 @@ export class WebApiService {
   getMyLists(): Observable<any> {
     return this.http.get(`${this.apiUrl}/my_lists`);
   }
-
+  
   deleteList(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
   }
-
+  
   createList(name: string): Observable<any> {
     const list = { name: name };
     return this.http.post(`${this.apiUrl}/my_lists`, list);
   }
 
-  getProductsOfMyList(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/my_lists`);
+  deleteProductFromList(idList: number, productId: number): Observable <any> {
+    return this.http.delete(`${this.apiUrl}/my_lists/${idList}/${productId}`);
   }
-
 
   // PRODUCT_USER_STORAGE
 
@@ -102,6 +101,23 @@ export class WebApiService {
     return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
   }
 
+  // PRODUCT_FOR_LIST
+
+  getProductsForList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/product_for_lists`); 
+  }
+  
+  getProductForList(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/product_for_lists/${id}`); 
+  }
+
+  updateProductForList(id: number, productForList: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/product_for_lists/${id}`, productForList); 
+  }
+
+  deleteProductForList(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/product_for_lists/${id}`);
+  }
 
 }
 
