@@ -76,9 +76,11 @@ export class WebApiService {
     const list = { name: name };
     return this.http.post(`${this.apiUrl}/my_lists`, list);
   }
-  
-  
 
+  deleteProductFromList(idList: number, productId: number): Observable <any> {
+    return this.http.delete(`${this.apiUrl}/my_lists/${idList}/${productId}`);
+  }
+  
   // PRODUCT_USER_STORAGE
 
   getProductUserStorage(id: number): Observable<any> {
@@ -110,6 +112,10 @@ export class WebApiService {
 
   updateProductForList(id: number, productForList: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/product_for_lists/${id}`, productForList); 
+  }
+
+  deleteProductForList(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/product_for_lists/${id}`);
   }
 
 }

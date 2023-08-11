@@ -16,11 +16,11 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['my_list:read','product_user_storage:read', 'product_user_storage:write'])]
+    #[Groups(['product_user_storage:read', 'product_user_storage:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 1000)]
-    #[Groups(['my_list:read','product_user_storage:read', 'product_user_storage:write'])]
+    #[Groups(['product_user_storage:read', 'product_user_storage:write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -37,16 +37,12 @@ class Product
     #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
     private ?ProductUserStorage $productUserStorage = null;
 
-    // #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]
-    // private Collection $my_list;
-
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['product_user_storage:read'])]
     private ?string $barcode = null;
 
     public function __construct()
     {
-        // $this->my_list = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,29 +120,6 @@ class Product
         return $this;
     }
 
-    // /**
-    //  * @return Collection<int, MyList>
-    //  */
-    // public function getMyList(): Collection
-    // {
-    //     return $this->my_list;
-    // }
-
-    // public function addMyList(MyList $myList): static
-    // {
-    //     if (!$this->my_list->contains($myList)) {
-    //         $this->my_list->add($myList);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeMyList(MyList $myList): static
-    // {
-    //     $this->my_list->removeElement($myList);
-
-    //     return $this;
-    // }
 
     public function getBarcode(): ?string
     {
