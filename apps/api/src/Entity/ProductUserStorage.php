@@ -61,6 +61,7 @@ class ProductUserStorage
     #[Groups(['product_user_storage:read','product_user_storage:write',])]    // LIGNE ORIGINALE  
     private ?Category $category = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'product_user_storage')]
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]
     private ?Product $product = null;
@@ -142,6 +143,19 @@ class ProductUserStorage
 
         return $this;
     }
+
+    //public function removeProduct(Product $product): static
+    //{
+       // if ($this->product->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+          //  if ($product->getProductUserStorageId() === $this) {
+          //      $product->setProductUserStorageId(null);
+         //   }
+       // }
+
+       // return $this;
+   // }
+
 
     
 }

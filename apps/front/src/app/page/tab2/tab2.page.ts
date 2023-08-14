@@ -30,9 +30,10 @@ export class Tab2Page {
     nutriscore: '',
     image: '',
   };
-  storages: any[] = [];
-  categories: any[] = []
+  storages: Array<any> = [];
+  categories: Array<any> = [];
   showProductDetails = false;
+
 
   constructor(
     private authService: AuthService,
@@ -95,6 +96,7 @@ export class Tab2Page {
     );
   }
 
+
   ngOnInit() {
     this.getStorages();
     this.getCategories();
@@ -134,16 +136,15 @@ export class Tab2Page {
 
   saveProduct() {
     const productDetails = {
-      DLC: this.product.dlc,
+      name: this.product.name,
+      nutriscore: this.product.nutriscore,
+      image: this.product.image,
+      dlc: this.product.dlc,
       quantity: this.product.quantity,
       storage: this.product.storage,
       category: this.product.category,
-      product: {
-        name: this.product.name,
-        nutriscore: this.product.nutriscore,
-        image: this.product.image,
-      }
     };
+
 
     console.log("Storage IRI: ", this.product.storage);
     console.log("Category IRI: ", this.product.category);

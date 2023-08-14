@@ -179,6 +179,11 @@ class Product
         return $this;
     }
 
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
     public function removeProductUserStorage(ProductUserStorage $productUserStorage): static
     {
         if ($this->product_user_storage->removeElement($productUserStorage)) {
