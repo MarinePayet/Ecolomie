@@ -59,7 +59,7 @@ class ProductUserStorage
     private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'productUserStorageId', targetEntity: Product::class)]
-    #[Groups(['product_user_storage:read','product_user_storage:write','product:read'])]
+    #[Groups(['product_user_storage:read','product_user_storage:write','product:read',])]
     private Collection $product;
 
 
@@ -150,4 +150,6 @@ class ProductUserStorage
 
         return $this;
     }
+
+
 }

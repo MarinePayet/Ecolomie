@@ -1,6 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+interface Product {
+
+  name: string;
+  nutriscore: string;
+  image: string;
+  dlc?: string;
+  quantity?: number;
+  storage?: string;
+  category?: string;
+}
+
+interface Category {
+  name: string;
+}
+
+interface Storage {
+  name: string;
+}
+
+interface ApiResponse<T> {
+  "hydra:member": T[];
+  // autres propriétés si nécessaire...
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,34 +43,33 @@ export class ApiService {
    //  private readonly API_URL = 'https://127.0.0.1:8000/api'; // for web salim A
     // private readonly API_URL = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
 
-       private readonly API_URL = 'http://192.168.1.21:8000/api'; // for android emulator salim A
-
+    private readonly apiUrl = environment.apiUrl;
 
 
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<any> {
-    return this.http.get(`${this.API_URL}/products`);
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/products`);
   }
 
-  getProduct(barcode:string): Observable<any> {
-    return this.http.get(`${this.API_URL}/products/${barcode}`);
+  getProduct(barcode: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/products/${barcode}`);
   }
 
-  getCategories(): Observable<any> {
-    return this.http.get(`${this.API_URL}/categories`);
+  addProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(`${this.apiUrl}/products`, product);
+  }
+  getStorages(): Observable<ApiResponse<Storage>> {
+    return this.http.get<ApiResponse<Storage>>(`${this.apiUrl}/storages`);
   }
 
-  getStorages(): Observable<any> {
-    return this.http.get(`${this.API_URL}/storages`);
+  getCategories(): Observable<ApiResponse<Category>> {
+    return this.http.get<ApiResponse<Category>>(`${this.apiUrl}/categories`);
   }
 
-  addProduct(product: any): Observable<any> {
-    return this.http.post(`${this.API_URL}/products`, product);
+  saveProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(`${this.apiUrl}/products_user_storage `, product);
   }
 
-  saveProduct(product: any): Observable<any> {
-    return this.http.post(`${this.API_URL}/product_user_storages`, product);
-  }
 }
