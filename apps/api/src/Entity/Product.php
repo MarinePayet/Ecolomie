@@ -27,7 +27,7 @@ class Product
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['product_user_storage:read','prduct:read','product_user_storage:write'])]
+    #[Groups(['product_user_storage:read','product:read','product_user_storage:write'])]
     private ?string $nutriscore = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -47,11 +47,18 @@ class Product
 
     private ?string $barcode = null;
 
-    #[ORM\ManyToOne(inversedBy: 'product')]
-    private ?ProductUserStorage $productUserStorageId = null;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductUserStorage::class)]
+    #[Groups(['product:read'])]
+    private Collection $product_user_storage;
+
+
+
+    // #[ORM\ManyToOne(inversedBy: 'product')]
+    // private ?ProductUserStorage $productUserStorageId = null;
 
     public function __construct()
     {
+        $this->product_user_storage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,15 +151,47 @@ class Product
         return $this;
     }
 
-    public function getProductUserStorageId(): ?ProductUserStorage
+    // public function getProductUserStorageId(): ?ProductUserStorage
+    // {
+    //     return $this->productUserStorageId;
+    // }
+
+    // public function setProductUserStorageId(?ProductUserStorage $productUserStorageId): static
+    // {
+    //     $this->productUserStorageId = $productUserStorageId;
+
+    //     return $this;
+    // }
+
+    /**
+     * @return Collection<int, ProductUserStorage>
+     */
+    public function getProductUserStorage(): Collection
     {
-        return $this->productUserStorageId;
+        return $this->product_user_storage;
     }
 
-    public function setProductUserStorageId(?ProductUserStorage $productUserStorageId): static
+    public function addProductUserStorage(ProductUserStorage $productUserStorage): static
     {
-        $this->productUserStorageId = $productUserStorageId;
+        if (!$this->product_user_storage->contains($productUserStorage)) {
+            $this->product_user_storage->add($productUserStorage);
+            $productUserStorage->setProduct($this);
+        }
 
         return $this;
     }
+
+    public function removeProductUserStorage(ProductUserStorage $productUserStorage): static
+    {
+        if ($this->product_user_storage->removeElement($productUserStorage)) {
+            // set the owning side to null (unless already changed)
+            if ($productUserStorage->getProduct() === $this) {
+                $productUserStorage->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 }
