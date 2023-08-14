@@ -14,11 +14,11 @@ export class WebApiService {
 
 
 
-   //  private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
+    private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
   // private readonly apiUrl = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
 
-  private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
+  // private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
    //private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
 
@@ -68,11 +68,11 @@ export class WebApiService {
   getMyLists(): Observable<any> {
     return this.http.get(`${this.apiUrl}/my_lists`);
   }
-  
+
   deleteList(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
   }
-  
+
   createList(name: string): Observable<any> {
     const list = { name: name };
     return this.http.post(`${this.apiUrl}/my_lists`, list);
@@ -104,15 +104,15 @@ export class WebApiService {
   // PRODUCT_FOR_LIST
 
   getProductsForList(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product_for_lists`); 
+    return this.http.get(`${this.apiUrl}/product_for_lists`);
   }
-  
+
   getProductForList(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product_for_lists/${id}`); 
+    return this.http.get(`${this.apiUrl}/product_for_lists/${id}`);
   }
 
   updateProductForList(id: number, productForList: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/product_for_lists/${id}`, productForList); 
+    return this.http.put(`${this.apiUrl}/product_for_lists/${id}`, productForList);
   }
 
   deleteProductForList(id: number): Observable<any> {

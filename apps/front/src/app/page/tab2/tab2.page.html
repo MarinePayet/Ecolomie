@@ -8,16 +8,12 @@
         <ion-icon slot="icon-only" size="large" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+
     <ion-title>Ecolomie</ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
   <ion-toolbar color="light">
     <ion-button (click)="scanBarcode()">Scan Barcode</ion-button>
-
     <ion-button (click)="resetProduct()">Clear</ion-button>
-
   </ion-toolbar>
 
   <ion-card *ngIf="showProductDetails">
@@ -53,5 +49,5 @@
         <ion-button (click)="resetProduct()">Clear</ion-button>
       </ion-card-content>
     </ion-card>
-  </ion-content>
+
 
