@@ -41,8 +41,9 @@ class MyListWithProduct
     #[ORM\ManyToOne(inversedBy: 'myListWithProducts')]
     #[Groups(['read:MyListWithProduct'])]
     private ?ProductForList $productForList = null;
-
+    
     #[ORM\ManyToOne(inversedBy: 'myListWithProducts')]
+    #[Groups(['read:MyListWithProduct'])]
     private ?MyList $myList = null;
 
     public function __construct()
