@@ -7,6 +7,7 @@ import { ApiService } from '../newproduct/api.service';
 
 
 interface Product {
+
   name: string;
   nutriscore: string;
   image: string;
@@ -22,7 +23,7 @@ interface Product {
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  products: Product[] = [];
+
 
   product: Product = {
     name: '',
@@ -44,6 +45,7 @@ export class Tab2Page {
   getProduct(barcode: string) {
     this.apiService.getProduct(barcode).subscribe(
       (data) => {
+        console.log('API Response:', data);
         this.product = data;
         console.log(this.product);
         this.showProductDetails = true;
@@ -53,6 +55,7 @@ export class Tab2Page {
       }
     );
   }
+
 
 
 
@@ -121,6 +124,10 @@ export class Tab2Page {
       name: '',
       nutriscore: '',
       image: '',
+      dlc: '',
+      quantity: 0,
+      storage: '',
+      category: '',
     };
     this.showProductDetails = false;
   }
@@ -131,19 +138,23 @@ export class Tab2Page {
       quantity: this.product.quantity,
       storage: this.product.storage,
       category: this.product.category,
-      
+      product: {
+        name: this.product.name,
+        nutriscore: this.product.nutriscore,
+        image: this.product.image,
+      }
     };
 
+    console.log("Storage IRI: ", this.product.storage);
+    console.log("Category IRI: ", this.product.category);
+
+    console.log("Product Details to Save:", productDetails); // Ajout du log ici
+
     this.apiService.saveProduct(productDetails).subscribe(response => {
-      console.log('Produit enregistré avec succès', response);
-
+      console.log('Product saved successfully', response);
     }, error => {
-      console.error("Erreur lors de l'enregistrement du produit', error");
-
+      console.error("Error saving product", error);
     });
   }
-
-
-
 
 }
