@@ -17,26 +17,24 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-
     #[ApiProperty(identifier:false)]
     #[Groups(['my_list:read','product_user_storage:read','product_user_storage:write'])]
     private ?int $id = null;
-
+    
     #[ORM\Column(length: 1000)]
     #[Groups(['my_list:read','product_user_storage:read','product_user_storage:write'])]
     private ?string $name = null;
-
+    
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['product_user_storage:read','product:read','product_user_storage:write'])]
     private ?string $nutriscore = null;
-
+    
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['product_user_storage:read','product_user_storage:write'])]
     private ?string $image = null;
-
+    
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Category $category = null;
-
 
 
     #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]

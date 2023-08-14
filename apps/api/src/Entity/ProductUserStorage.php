@@ -130,35 +130,6 @@ class ProductUserStorage
         return $this;
     }
 
-    // /**
-    //  * @return Collection<int, Product>
-    //  */
-    // public function getProduct(): Collection
-    // {
-    //     return $this->product;
-    // }
-
-    // public function addProduct(Product $product): static
-    // {
-    //     if (!$this->product->contains($product)) {
-    //         $this->product->add($product);
-    //         $product->setProductUserStorageId($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeProduct(Product $product): static
-    // {
-    //     if ($this->product->removeElement($product)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($product->getProductUserStorageId() === $this) {
-    //             $product->setProductUserStorageId(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 
     public function getProduct(): ?Product
     {

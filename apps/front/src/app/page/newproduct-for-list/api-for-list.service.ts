@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiForListService {
 
 
     // private readonly API_URL = 'http://192.168.50.39:8000/api'; //url salim B ANDROID
@@ -18,8 +18,6 @@ export class ApiService {
     // private readonly API_URL = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
 
       //  private readonly API_URL = 'http://192.168.1.21:8000/api'; // for android emulator salim A
-
-
 
 
   constructor(private http: HttpClient) { }

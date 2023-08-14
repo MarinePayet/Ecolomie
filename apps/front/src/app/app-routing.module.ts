@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'list-detail/:id',
     loadChildren: () => import('./page/list-detail/list-detail.module').then( m => m.ListDetailPageModule)
   },
+  {
+    path: 'newproduct-for-list',
+    loadChildren: () => import('./page/newproduct-for-list/newproduct-for-list.module').then( m => m.NewproductForListPageModule)
+  },
   
 
 
