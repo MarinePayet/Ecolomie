@@ -120,7 +120,7 @@ class ProductUserStorage
 
         return $this;
     }
-
+ 
     /**
      * @return Collection<int, Product>
      */
