@@ -19,19 +19,19 @@ class ProductForList
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read:productForList', 'my_list:read'])]
+    #[Groups(['read:productForList', 'my_list:read','read:MyListWithProduct'])]
     private ?int $id = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:productForList', 'my_list:read'])]
+    #[Groups(['read:productForList', 'my_list:read','read:MyListWithProduct'])]
     private ?string $name = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:productForList', 'write:productForList', 'my_list:read'])]
+    #[Groups(['read:productForList', 'write:productForList', 'my_list:read','read:MyListWithProduct'])]
     private ?int $quantity = null;
     
     #[ORM\ManyToOne(inversedBy: 'productForLists')]
-    #[Groups(['read:productForList', 'my_list:read'])]
+    #[Groups(['read:productForList', 'my_list:read','read:MyListWithProduct'])]
     private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'productForList', targetEntity: MyListWithProduct::class)]

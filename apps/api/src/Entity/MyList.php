@@ -43,11 +43,11 @@ class MyList
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['my_list:read' , 'my_list:write', 'read:productForList'])]
+    #[Groups(['my_list:read' , 'my_list:write', 'read:productForList','read:MyListWithProduct'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['my_list:read', 'my_list:write', 'read:productForList'])]
+    #[Groups(['my_list:read', 'my_list:write', 'read:productForList', 'read:MyListWithProduct'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne]
