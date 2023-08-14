@@ -17,33 +17,41 @@
     productsOfMyList: any;
     productOfMyList: any;
     idList?: number;
+    myListproducts: any;
 
     constructor(
       private webApiService: WebApiService, 
       private router: Router,
-      public authService: AuthService,
+      public authService: AuthService, 
       private route: ActivatedRoute,
       private AlertController: AlertController,
       private toastController: ToastController,
       ) {}
 
-        ngOnInit() {
-          this.route.paramMap.subscribe(params => {
-              this.idList = Number(params.get('id'));
-              if (this.idList !== null) {
-                  this.getProductsOfMyList();
-                }
+    ngOnInit() {
+      this.route.paramMap.subscribe(params => {
+        this.idList = Number(params.get('id'));
+        if (this.idList !== null) {
+            this.getProductsOfMyList();
+          }
+          console.log(this.getMyListWithProducts());
       });
     }
-
+        
     getProductsOfMyList() {
       this.webApiService.getProductsForList().subscribe((data) => {
         this.productsOfMyList = data['hydra:member'];
         console.log(this.productsOfMyList);
-      }
-      );
+      });
     }
 
+    getMyListWithProducts() {
+      this.webApiService.getMyListWithProducts().subscribe((data) => {
+        this.myListproducts = data['hydra:member'];
+        console.log(this.myListproducts);
+      });
+    }
+    
     async presentToast(message: string) {
       const toast = await this.toastController.create({
         message,
