@@ -27,7 +27,7 @@ export class Tab3Page implements OnInit {
     this.loadProductUserStorages();
     this.getProductUserStorages();
   }
-
+ 
 
   loadProductUserStorages() {
     this.webApiService.getProductUserStorages().subscribe((data) => {

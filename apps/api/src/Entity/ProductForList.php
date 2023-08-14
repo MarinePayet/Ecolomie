@@ -26,9 +26,6 @@ class ProductForList
     #[Groups(['read:productForList', 'my_list:read','read:MyListWithProduct'])]
     private ?string $name = null;
     
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:productForList', 'write:productForList', 'my_list:read','read:MyListWithProduct'])]
-    private ?int $quantity = null;
     
     #[ORM\ManyToOne(inversedBy: 'productForLists')]
     #[Groups(['read:productForList', 'my_list:read','read:MyListWithProduct'])]
@@ -56,18 +53,6 @@ class ProductForList
     public function setName(?string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?string
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(?string $quantity): static
-    {
-        $this->quantity = $quantity;
 
         return $this;
     }

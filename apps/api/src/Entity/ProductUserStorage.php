@@ -20,14 +20,17 @@ use ApiPlatform\Metadata\Post;
 
 
 
-#[Api\ApiResource()]
-#[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
-#[Post(
+#[Api\ApiResource(
     normalizationContext: ['groups' => ['product_user_storage:read']],
-    denormalizationContext: ['groups' => ['product_user_storage:write']],)]
-#[GetCollection(normalizationContext: ['groups' => ['product_user_storage:read']],)] 
-#[Delete()] 
-#[Put(denormalizationContext: ['groups' => ['product_user_storage:update']],)]
+    denormalizationContext: ['groups' => ['product_user_storage:write']],
+)]
+// #[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
+// #[Post(
+//     normalizationContext: ['groups' => ['product_user_storage:read']],
+//     denormalizationContext: ['groups' => ['product_user_storage:write']],)]
+// #[GetCollection(normalizationContext: ['groups' => ['product_user_storage:read']],)] 
+// #[Delete()] 
+// #[Put(denormalizationContext: ['groups' => ['product_user_storage:update']],)]
 
 
 
@@ -58,15 +61,22 @@ class ProductUserStorage
     #[Groups(['product_user_storage:read','product_user_storage:write',])]    // LIGNE ORIGINALE  
     private ?Category $category = null;
 
-    #[ORM\OneToMany(mappedBy: 'productUserStorageId', targetEntity: Product::class)]
-    #[Groups(['product_user_storage:read','product_user_storage:write','product:read',])]
-    private Collection $product;
+
+    #[ORM\ManyToOne(inversedBy: 'product_user_storage')]
+    #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]
+    private ?Product $product = null;
+
+    
+
+    // #[ORM\OneToMany(mappedBy: 'productUserStorageId', targetEntity: Product::class)]
+    // #[Groups(['product_user_storage:read','product_user_storage:write','product:read'])]
+    // private Collection $product;
 
 
-    public function __construct()
-    {
-        $this->product = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->product = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -121,35 +131,31 @@ class ProductUserStorage
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProduct(): Collection
+
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function addProduct(Product $product): static
+    public function setProduct(?Product $product): static
     {
-        if (!$this->product->contains($product)) {
-            $this->product->add($product);
-            $product->setProductUserStorageId($this);
-        }
+        $this->product = $product;
 
         return $this;
     }
 
-    public function removeProduct(Product $product): static
-    {
-        if ($this->product->removeElement($product)) {
+    //public function removeProduct(Product $product): static
+    //{
+       // if ($this->product->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getProductUserStorageId() === $this) {
-                $product->setProductUserStorageId(null);
-            }
-        }
+          //  if ($product->getProductUserStorageId() === $this) {
+          //      $product->setProductUserStorageId(null);
+         //   }
+       // }
 
-        return $this;
-    }
+       // return $this;
+   // }
 
 
+    
 }

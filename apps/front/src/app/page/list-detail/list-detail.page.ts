@@ -17,7 +17,7 @@
     productsOfMyList: any;
     productOfMyList: any;
     idList?: number;
-    myListproducts: any;
+    myListProducts: any;
 
     constructor(
       private webApiService: WebApiService, 
@@ -41,14 +41,14 @@
     getProductsOfMyList() {
       this.webApiService.getProductsForList().subscribe((data) => {
         this.productsOfMyList = data['hydra:member'];
-        console.log(this.productsOfMyList);
+        // console.log(this.productsOfMyList);
       });
     }
 
     getMyListWithProducts() {
       this.webApiService.getMyListWithProducts().subscribe((data) => {
-        this.myListproducts = data['hydra:member'];
-        console.log(this.myListproducts);
+        this.myListProducts = data['hydra:member'];
+        console.log(this.myListProducts);
       });
     }
     
@@ -71,7 +71,7 @@
           }, {
             text: 'Supprimer',
             handler: () => {
-              this.webApiService.deleteProductFromList(Number(this.idList), Number(productId) ).subscribe(() => {
+              this.webApiService.deleteMyListWithProducts( Number(productId) ).subscribe(() => {
                 this.getProductsOfMyList();
                 this.presentToast('Le produit a été supprimé avec succès.');
               });
@@ -83,25 +83,25 @@
       await alert.present();
     }
 
-    decreaseQuantity(product: any, index: number) {
+    decreaseQuantity(product: any) {
       if (product.quantity > 0) {
         product.quantity--;
-        this.updateProductForList(product);
+        this.onUpdateMyListWithProducts(product);
       }
     }
     
-    increaseQuantity(product: any, index: number) {
+    increaseQuantity(product: any) {
       product.quantity++;
-      this.updateProductForList(product);
+      this.onUpdateMyListWithProducts(product);
     }
-    
-    async updateProductForList(product: any) {
+  
+    async onUpdateMyListWithProducts(product: any) {
       try {
         const updatedData = {
           ...product,
         };
     
-        let updatedProduct = await this.webApiService.updateProductForList(product.id, updatedData).toPromise();
+        let updatedProduct = await this.webApiService.updateMyListWithProducts(product.id, updatedData).toPromise();
         console.log('Product updated successfully!', updatedProduct);
         this.presentToast('La quantité du produit a été mise à jour.');
       } catch (error) {
@@ -109,5 +109,6 @@
         this.presentToast("Une erreur s'est produite lors de la mise à jour de la quantité.");
       }
     }
+
     
   }
