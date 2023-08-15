@@ -43,7 +43,7 @@ class MyList
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['my_list:read' , 'my_list:write', 'read:productForList','read:MyListWithProduct'])]
+    #[Groups(['my_list:read' , 'my_list:write', 'read:productForList','read:MyListWithProduct','write:MyListWithProduct'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

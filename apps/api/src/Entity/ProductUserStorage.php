@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata as Api;
 use App\Repository\ProductUserStorageRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;    
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
