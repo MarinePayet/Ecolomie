@@ -2,9 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+interface Category {
+  name: string;
+}
+
+interface ApiResponse<T> {
+  "hydra:member": T[];
+  // autres propriétés si nécessaire...
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiForListService {
 
 
@@ -30,16 +40,17 @@ export class ApiForListService {
     return this.http.get(`${this.API_URL}/products/${barcode}`);
   }
 
-  getCategories(): Observable<any> {
-    return this.http.get(`${this.API_URL}/categories`);
-  }
-
-  getStorages(): Observable<any> {
-    return this.http.get(`${this.API_URL}/storages`);
+  getCategories(): Observable<ApiResponse<Category>> {
+    return this.http.get<ApiResponse<Category>>(`${this.API_URL}/categories`);
   }
 
   addProduct(product: any): Observable<any> {
-    return this.http.post(`${this.API_URL}/products`, product);
+    return this.http.post(`${this.API_URL}/product_for_lists`, product);
+  }
+
+
+  addMyListWithProduct(myListData: any) {
+    return this.http.post(`${this.API_URL}/my_list_with_products`, myListData);
   }
 
   saveProduct(product: any): Observable<any> {

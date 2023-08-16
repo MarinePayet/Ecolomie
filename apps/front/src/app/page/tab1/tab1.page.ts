@@ -13,7 +13,7 @@ export class Tab1Page implements OnInit {
   storages: any;
   isEditing: boolean = false;
   selectedStorageId: number | null = null;
-
+ 
   constructor(
     private webApiService: WebApiService,
     private alertController: AlertController,
