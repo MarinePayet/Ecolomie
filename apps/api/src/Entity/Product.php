@@ -18,22 +18,23 @@ class Product
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[ApiProperty(identifier:false)]
-    #[Groups(['my_list:read','product_user_storage:read','product_user_storage:write'])]
+    #[Groups(['my_list:read','product_user_storage:read',])]
     private ?int $id = null;
     
     #[ORM\Column(length: 1000)]
-    #[Groups(['my_list:read','product_user_storage:read','product_user_storage:write'])]
+    #[Groups(['my_list:read','product_user_storage:read',])]
     private ?string $name = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['product_user_storage:read','product:read','product_user_storage:write'])]
+    #[Groups(['product_user_storage:read','product:read',])]
     private ?string $nutriscore = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['product_user_storage:read','product_user_storage:write'])]
+    #[Groups(['product_user_storage:read',])]
     private ?string $image = null;
     
     #[ORM\ManyToOne(inversedBy: 'products')]
+    #[Groups(['product_user_storage:read',])]
     private ?Category $category = null;
 
 
@@ -42,7 +43,7 @@ class Product
     
     #[ORM\Column(length: 255, nullable: true)]
     #[ApiProperty(identifier:true)]
-
+    #[Groups(['product_user_storage:read','product:read',])]
     private ?string $barcode = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductUserStorage::class)]

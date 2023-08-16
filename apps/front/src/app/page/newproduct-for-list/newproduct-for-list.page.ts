@@ -39,6 +39,7 @@ export class NewproductForListPage implements OnInit {
   }
 
 
+
   async addProduct() {
 
     this.product.category = '/api/categories/' + this.product.category;
