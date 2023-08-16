@@ -38,7 +38,8 @@
                 name : {{ myListProduct.productForList.name }}
                 qtt : {{ myListProduct.quantity }}
                 courseId : {{ myListProduct.myList.id }}
-                <ion-checkbox (click)="onClickCheckBox(myListProduct)">
+                <ion-checkbox (ionChange)="onClickCheckBox($event, myListProduct)">
+
 
                     buy : {{ myListProduct.is_product_buy === 1 ? 'Yes' : 'No' }}
 

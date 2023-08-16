@@ -114,16 +114,22 @@
       this.router.navigate(['/newproduct-for-list', this.idList]);
     }
 
-    onClickCheckBox(product: any){
-      if(product.is_product_buy == 0){
-        product.is_product_buy = 1;
-      } else if(product.is_product_buy == 1){
-        product.is_product_buy = 0
-      }
+    onClickCheckBox(event: any, product: any) {
+      event.stopPropagation();
+
+
+      product.is_product_buy = !product.is_product_buy
+
+      // if (product.is_product_buy === 0) {
+      //   product.is_product_buy = 1;
+      // } else if (product.is_product_buy === 1) {
+      //   product.is_product_buy = 0;
+      // }
 
       this.onUpdateMyListWithProducts(product);
 
-      console.log(product.is_product_buy);
+      console.log('onClickCheckBox');
+      console.log(product);
     }
 
 

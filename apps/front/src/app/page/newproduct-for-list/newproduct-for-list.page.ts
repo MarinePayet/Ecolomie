@@ -55,7 +55,7 @@ export class NewproductForListPage implements OnInit {
         myList: '/api/my_lists/' + this.idList,
         updated_at: '2023-08-15 08:48:34',
         created_at: '2023-08-15 08:48:34',
-        text: 'blibl  ablou',
+        text: 'bliblablou',
 
 
       };
