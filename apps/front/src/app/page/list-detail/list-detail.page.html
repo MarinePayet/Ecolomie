@@ -11,12 +11,12 @@
     <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
   </ion-toolbar>
   <ion-toolbar color="danger">
-    idList : {{ idList}} // 
+    idList : {{ idList}} //
   </ion-toolbar>
   <ion-header>
     <ion-toolbar color="light">
       <ion-buttons slot="end">
-        <ion-button size="small" color="primary" routerLink="/newproduct-for-list">
+        <ion-button size="small" color="primary" routerLink="/newproduct-for-list/{{idList}}">
           <ion-icon name="add"></ion-icon>
           <ion-label>Ajouter un produit</ion-label>
         </ion-button>
@@ -29,34 +29,39 @@
 
   <ion-grid>
     <ion-col *ngFor="let myListProduct of myListProducts, let i = index">
-        <ng-container *ngIf="myListProduct.myList.id == idList">  
-          <ion-list>
-            <ion-item-sliding>
-              <ion-item color="primary">
-                  <ion-list >
-                    id: {{ myListProduct.id }}
-                  name : {{ myListProduct.productForList.name }} 
-                  qtt : {{ myListProduct.quantity }} 
-                  courseId : {{ myListProduct.myList.id }}
-                  buy : {{ myListProduct.is_product_buy }} 
+      <ng-container *ngIf="myListProduct.myList.id === idList">
+        <ion-list>
+          <ion-item-sliding>
+            <ion-item color="primary">
+              <ion-list >
+                id: {{ myListProduct.id }}
+                name : {{ myListProduct.productForList.name }}
+                qtt : {{ myListProduct.quantity }}
+                courseId : {{ myListProduct.myList.id }}
+                <ion-checkbox (ionChange)="onClickCheckBox($event, myListProduct)">
+
+
+                    buy : {{ myListProduct.is_product_buy === 1 ? 'Yes' : 'No' }}
+
+                </ion-checkbox>
                   <ion-button class="button-spacing" color="white" (click)="decreaseQuantity(myListProduct)">-</ion-button>
-                    {{ myListProduct.quantity }} 
+                    {{ myListProduct.quantity }}
                   <ion-button class="button-spacing" color="white" (click)="increaseQuantity(myListProduct)">+</ion-button>
-                    
+
                 </ion-list>
               </ion-item>
               <ion-item-options>
                 <ion-item-option color="danger" (click)="openDeleteConfirm( myListProduct.id)">
-                  <ion-icon slot="icon-only" name="trash"></ion-icon> 
+                  <ion-icon slot="icon-only" name="trash"></ion-icon>
                 </ion-item-option>
 
               </ion-item-options>
               </ion-item-sliding>
-          </ion-list>        
+          </ion-list>
         </ng-container>
     </ion-col>
   </ion-grid>
-</ion-content>  
+</ion-content>
 
 
 
