@@ -17,7 +17,7 @@
     productsOfMyList: any;
     productOfMyList: any;
     idList?: number;
-    myListProducts: any;
+    myListProducts: any; 
 
     constructor(
       private webApiService: WebApiService, 
@@ -36,7 +36,7 @@
           }
           console.log(this.getMyListWithProducts());
       });
-    }
+    } 
         
     getProductsOfMyList() {
       this.webApiService.getProductsForList().subscribe((data) => {
@@ -48,7 +48,7 @@
     getMyListWithProducts() {
       this.webApiService.getMyListWithProducts().subscribe((data) => {
         this.myListProducts = data['hydra:member'];
-        console.log(this.myListProducts);
+        console.log(this.myListProducts); 
       });
     }
     
@@ -108,7 +108,7 @@
         console.log('There was an error updating the product.', error);
         this.presentToast("Une erreur s'est produite lors de la mise à jour de la quantité.");
       }
-    }
+    } 
 
     
   }

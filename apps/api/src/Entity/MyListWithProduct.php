@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\MyListWithProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,36 +16,58 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MyListWithProductRepository::class)]
-#[ApiResource(
+#[ApiResource()]
+#[Get(
     normalizationContext:['groups' => 'read:MyListWithProduct'],
     denormalizationContext:['groups' => 'write:MyListWithProduct']
 )]
+#[Post(
+    normalizationContext:['groups' => 'read:MyListWithProduct'],
+    denormalizationContext:['groups' => 'write:MyListWithProduct']
+)]
+#[GetCollection(
+    normalizationContext:['groups' => 'read:MyListWithProduct'],
+    denormalizationContext:['groups' => 'write:MyListWithProduct']
+)]
+#[Put(
+    normalizationContext:['groups' => 'read:MyListWithProduct'],
+    denormalizationContext:['groups' => 'update:MyListWithProduct']
+)]
+#[Delete(
+    normalizationContext:['groups' => 'read:MyListWithProduct'],
+    denormalizationContext:['groups' => 'write:MyListWithProduct']
+)]
+
+
+
 class MyListWithProduct
 {
+    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read:MyListWithProduct'])]
+    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:MyListWithProduct'])]
+    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList'])]
     private ?string $text = null;
 
-    #[ORM\Column]
-    #[Groups(['read:MyListWithProduct'])]
+    #[ORM\Column(nullable: true)]
+    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList'])]
     private ?bool $is_product_buy = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['read:MyListWithProduct'])]
+    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct'])]
     private ?\DateTimeInterface $updated_at = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['read:MyListWithProduct'])]
+    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct'])]
     private ?\DateTimeInterface $created_at = null;
     
     #[ORM\ManyToOne(inversedBy: 'myListWithProducts')]
-    #[Groups(['read:MyListWithProduct'])]
+    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList'])]
     private ?ProductForList $productForList = null;
     
     #[ORM\ManyToOne(inversedBy: 'myListWithProducts')]
@@ -48,13 +75,15 @@ class MyListWithProduct
     private ?MyList $myList = null;
     
     #[ORM\Column(nullable: true)]
-    #[Groups(['my_list:read','read:MyListWithProduct', 'write:MyListWithProduct'])]
+    #[Groups(['my_list:read','read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList', 'update:MyListWithProduct'])]
     private ?int $quantity = null;
 
     public function __construct()
     {
+        $this->updated_at = new \DateTime(); 
+        $this->created_at = new \DateTime(); 
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;

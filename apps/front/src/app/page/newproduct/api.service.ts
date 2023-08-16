@@ -50,11 +50,11 @@ export class ApiService {
    //  private readonly API_URL = 'https://127.0.0.1:8000/api'; // for web salim A
     // private readonly API_URL = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
 
+
    // private readonly apiUrl = environment.apiUrl;
 
+
        private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
-
-
 
 
       constructor(private http: HttpClient) { }
@@ -66,6 +66,7 @@ export class ApiService {
       getProduct(barcode: string): Observable<Product> {
         return this.http.get<Product>(`${this.apiUrl}/products/${barcode}`);
       }
+
 
 
 

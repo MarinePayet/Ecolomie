@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-button routerLink="/login" color="warning">
+        <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="danger">
+    storage :  {{ idStorage }}
+  </ion-toolbar>
+
+
+ 
+<!-- <ion-content > -->
+  <!-- <ion-grid> -->
+    <ion-col *ngFor="let product of productsUserStorage">
+      <!-- <ion-col *ngFor="let prod of product.product"> -->
+        <ng-container *ngIf="product.storage.id == idStorage">  
+          <!-- <ion-list> -->
+
+              <ion-item color="primary">
+                <ion-list >
+                   id pdt :  {{ product.id }}
+                   <br>
+                   DLC pdt :  {{ product.dlc }}
+                   <br>
+                   Qtté pdt :  {{ product.quantity }}
+                   <br>
+                   Storage ID : {{ product.storage.id }}
+                   <br>
+                   Storage NAME : {{ product.storage.name }}
+                   <br>
+                   Cat id : {{ product.category.id }}
+                   <br>
+                   Cat name : {{ product.category.name }}
+                   <br>
+                   Pdt id : {{ product.product.id }}
+                   <br>
+                   Pdt name : {{ product.product.name }}
+                    
+                </ion-list>
+              </ion-item>
+
+          <!-- </ion-list>         -->
+        </ng-container>
+      <!-- </ion-col> -->
+    </ion-col>
+  <!-- </ion-grid> -->
+<!-- </ion-content>   -->

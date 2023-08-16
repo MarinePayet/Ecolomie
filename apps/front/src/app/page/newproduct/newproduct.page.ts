@@ -14,7 +14,7 @@ export class NewproductPage {
     dlc: string;
     nutriscore: string;
     category: string;
-    storage: string;
+    storage: string; 
     name: string;
   };
 
@@ -56,7 +56,7 @@ export class NewproductPage {
         color: 'danger'
       });
       toast.present();
-    }
+    } 
   }
 
   getCategories() {

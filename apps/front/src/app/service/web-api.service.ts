@@ -21,6 +21,7 @@ export class WebApiService {
 
    // private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
+
    // private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
 
