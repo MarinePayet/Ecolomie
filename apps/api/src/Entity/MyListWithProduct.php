@@ -44,7 +44,7 @@ class MyListWithProduct
     private ?ProductForList $productForList = null;
     
     #[ORM\ManyToOne(inversedBy: 'myListWithProducts')]
-    #[Groups(['read:MyListWithProduct'])]
+    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct'])]
     private ?MyList $myList = null;
     
     #[ORM\Column(nullable: true)]

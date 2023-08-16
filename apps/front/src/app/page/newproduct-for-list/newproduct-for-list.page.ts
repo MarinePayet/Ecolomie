@@ -13,7 +13,7 @@ export class NewproductForListPage implements OnInit {
     category: string;
     name: string;
   };
-  
+
   categories: any[] = [];
 
   constructor(private apiForListService: ApiForListService, private toastController: ToastController) {
@@ -29,30 +29,30 @@ export class NewproductForListPage implements OnInit {
 
 }
 
-async addProduct() {
+// async addProduct() {
 
-  this.product.category = '/api/categories/' + this.product.category;
+//   this.product.category = '/api/categories/' + this.product.category;
 
-  try {
-    const response = await this.apiForListService.addProduct(this.product).toPromise();
+//   try {
+//     const response = await this.apiForListService.addProduct(this.product).toPromise();
 
-    const toast = await this.toastController.create({
-      message: 'Produit ajouté avec succès.',
-      duration: 2000,
-      position: 'bottom'
-    });
-    toast.present();
-  } catch (error) {
+//     const toast = await this.toastController.create({
+//       message: 'Produit ajouté avec succès.',
+//       duration: 2000,
+//       position: 'bottom'
+//     });
+//     toast.present();
+//   } catch (error) {
 
-    const toast = await this.toastController.create({
-      message: 'Une erreur est survenue lors de l\'ajout du produit.',
-      duration: 2000,
-      position: 'bottom',
-      color: 'danger'
-    });
-    toast.present();
-  }
-}
+//     const toast = await this.toastController.create({
+//       message: 'Une erreur est survenue lors de l\'ajout du produit.',
+//       duration: 2000,
+//       position: 'bottom',
+//       color: 'danger'
+//     });
+//     toast.present();
+//   }
+// }
 // export class NewproductPage {
 
 

@@ -3,7 +3,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AuthService } from '../login/auth.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { ApiService } from '../newproduct/api.service';
+import { ApiService , } from '../newproduct/api.service';
 
 
 interface Product {
@@ -15,6 +15,15 @@ interface Product {
   quantity?: number;
   storage?: string;
   category?: string;
+  barcode?: string;
+}
+
+interface SaveProductRequest {
+  DLC: string;
+  quantity: number;
+  storage: string;
+  category: string;
+  product: string;
 }
 
 @Component({
@@ -44,6 +53,7 @@ export class Tab2Page {
   }
 
   getProduct(barcode: string) {
+    console.log('Getting product with barcode:', barcode); // Log the barcode
     this.apiService.getProduct(barcode).subscribe(
       (data) => {
         console.log('API Response:', data);
@@ -56,6 +66,7 @@ export class Tab2Page {
       }
     );
   }
+
 
 
 
@@ -135,21 +146,13 @@ export class Tab2Page {
   }
 
   saveProduct() {
-    const productDetails = {
-      name: this.product.name,
-      nutriscore: this.product.nutriscore,
-      image: this.product.image,
-      dlc: this.product.dlc,
-      quantity: this.product.quantity,
-      storage: this.product.storage,
-      category: this.product.category,
+    const productDetails: SaveProductRequest = {
+      DLC: this.product.dlc || '', // Valeur par défaut si undefined
+      quantity: this.product.quantity || 0, // Valeur par défaut si undefined
+      storage: this.product.storage || '', // Valeur par défaut si undefined
+      category: this.product.category || '', // Valeur par défaut si undefined
+      product: '/api/products/' + (this.product.barcode || '') // Valeur par défaut si undefined
     };
-
-
-    console.log("Storage IRI: ", this.product.storage);
-    console.log("Category IRI: ", this.product.category);
-
-    console.log("Product Details to Save:", productDetails); // Ajout du log ici
 
     this.apiService.saveProduct(productDetails).subscribe(response => {
       console.log('Product saved successfully', response);
@@ -157,5 +160,6 @@ export class Tab2Page {
       console.error("Error saving product", error);
     });
   }
+
 
 }
