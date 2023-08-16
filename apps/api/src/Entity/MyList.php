@@ -43,17 +43,17 @@ class MyList
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['my_list:read' , 'my_list:write', 'read:productForList','read:MyListWithProduct','write:MyListWithProduct'])]
+    #[Groups(['my_list:read' , 'my_list:write', 'read:productForList','read:MyListWithProduct'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['my_list:read', 'my_list:write', 'read:productForList', 'read:MyListWithProduct'])]
     private ?string $name = null;
-
+    
     #[ORM\ManyToOne]
     #[Groups(['my_list:read', 'my_list:write'])]
     private ?User $user = null;
-
+    
     #[ORM\OneToMany(mappedBy: 'myList', targetEntity: MyListWithProduct::class)]
     private Collection $myListWithProducts;
 

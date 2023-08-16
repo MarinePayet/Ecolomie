@@ -18,16 +18,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: MyListWithProductRepository::class)]
 #[ApiResource()]
 #[Get(
-    normalizationContext:['groups' => 'read:MyListWithProduct'],
-    denormalizationContext:['groups' => 'write:MyListWithProduct']
+    normalizationContext:['groups' => 'read:MyListWithProduct']
+    // ,
+    // denormalizationContext:['groups' => 'write:MyListWithProduct']
 )]
 #[Post(
     normalizationContext:['groups' => 'read:MyListWithProduct'],
     denormalizationContext:['groups' => 'write:MyListWithProduct']
 )]
 #[GetCollection(
-    normalizationContext:['groups' => 'read:MyListWithProduct'],
-    denormalizationContext:['groups' => 'write:MyListWithProduct']
+    normalizationContext:['groups' => 'read:MyListWithProduct']
+    // ,
+    // denormalizationContext:['groups' => 'write:MyListWithProduct']
 )]
 #[Put(
     normalizationContext:['groups' => 'read:MyListWithProduct'],
@@ -42,7 +44,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 class MyListWithProduct
 {
-    
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -71,7 +72,7 @@ class MyListWithProduct
     private ?ProductForList $productForList = null;
     
     #[ORM\ManyToOne(inversedBy: 'myListWithProducts')]
-    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList'])]
+    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct'])]
     private ?MyList $myList = null;
     
     #[ORM\Column(nullable: true)]

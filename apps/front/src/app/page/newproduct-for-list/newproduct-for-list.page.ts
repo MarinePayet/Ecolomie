@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { ApiForListService } from './api-for-list.service'; 
+import { ApiForListService } from './api-for-list.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-newproduct-for-list',
@@ -13,47 +14,54 @@ export class NewproductForListPage implements OnInit {
     category: string;
     name: string;
   };
- 
+
 
   categories: any[] = [];
+  idList?: number
 
-  constructor(private apiForListService: ApiForListService, private toastController: ToastController) {
-    this.product = {
-      quantity: 0,
-      category: '',
-      name: '',
-    };
-   }
-   
+  constructor(
+    private apiForListService: ApiForListService,
+    private toastController: ToastController,
+    private route: ActivatedRoute)
+      {
+        this.product = {
+          quantity: 0,
+          category: '',
+          name: '',
+        };
+      }
 
   ngOnInit() {
-    console.log(this.categories)
-
+    this.route.paramMap.subscribe(params => {
+      this.idList = Number(params.get('id'));
+      console.log(this.idList);
+    });
   }
 
+
   async addProduct() {
-    
+
     this.product.category = '/api/categories/' + this.product.category;
 
     try {
       const productResponse = await this.apiForListService.addProduct(this.product).toPromise();
       console.log("productResponse : ")
       console.log(productResponse);
-      
+
       const myListData = {
         quantity: this.product.quantity,
         is_product_buy: false,
         productForList: '/api/product_for_lists/' + productResponse.id,
-        my_list_id: '/api/my_lists/60',
+        myList: '/api/my_lists/' + this.idList,
         updated_at: '2023-08-15 08:48:34',
         created_at: '2023-08-15 08:48:34',
         text: 'blibl  ablou',
 
-        
+
       };
       console.log("myListData : ")
       console.log(myListData);
-      
+
       const myListResponse = await this.apiForListService.addMyListWithProduct(myListData).toPromise();
 
       const toast = await this.toastController.create({
@@ -63,7 +71,7 @@ export class NewproductForListPage implements OnInit {
       });
       toast.present();
     } catch (error) {
-      
+
       const toast = await this.toastController.create({
         message: 'Une erreur est survenue lors de l\'ajout du produit.',
         duration: 2000,
@@ -79,7 +87,7 @@ export class NewproductForListPage implements OnInit {
         this.categories = data['hydra:member'];
         console.log(this.categories)
       });
-      
+
     }
 
     ionViewWillEnter() {
