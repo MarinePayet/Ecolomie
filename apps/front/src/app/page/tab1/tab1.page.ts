@@ -3,6 +3,7 @@ import { WebApiService } from '../../service/web-api.service';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/auth.service';
+import { LocalNotifications, ScheduleOptions } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-tab1',
@@ -13,7 +14,7 @@ export class Tab1Page implements OnInit {
   storages: any;
   isEditing: boolean = false;
   selectedStorageId: number | null = null;
- 
+
   constructor(
     private webApiService: WebApiService,
     private alertController: AlertController,
@@ -116,5 +117,27 @@ export class Tab1Page implements OnInit {
     console.log('Logout successful');
     this.presentToast('Logout successful');
     this.router.navigate(['/login']);
+  }
+
+  async scheduleNotification()
+  {
+    let options:ScheduleOptions={
+      notifications:[
+        {
+          id:444,
+          title:"Reminder Notification",
+          body:"Explore new variety and offers",
+          largeBody: "Get 30% discount on new products",
+          summaryText:"Exciting offers !!!"
+        }
+      ]
+    }
+    try{
+      await LocalNotifications.schedule(options)
+    }
+    catch(ex)
+    {
+      alert(JSON.stringify(ex));
+    }
   }
 }

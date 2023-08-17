@@ -114,22 +114,39 @@
       this.router.navigate(['/newproduct-for-list', this.idList]);
     }
 
-    onClickCheckBox(event: any, product: any) {
+    // onClickCheckBox(event: any, product: any) {
+    //   event.stopPropagation();
+
+
+    //   product.is_product_buy = !product.is_product_buy
+
+    //   // if (product.is_product_buy === 0) {
+    //   //   product.is_product_buy = 1;
+    //   // } else if (product.is_product_buy === 1) {
+    //   //   product.is_product_buy = 0;
+    //   // }
+
+    //   this.onUpdateMyListWithProducts(product);
+
+    //   console.log('onClickCheckBox');
+    //   console.log(product);
+    // }
+
+    async onClickCheckBox(event: any, product: any) {
       event.stopPropagation();
 
+      product.is_product_buy = !product.is_product_buy;
 
-      product.is_product_buy = !product.is_product_buy
+      try {
+        await this.webApiService.updateIsProductBuy(product.id, product.is_product_buy).toPromise();
+        console.log('is_product_buy updated successfully!', product);
+        this.presentToast('État d\'achat du produit mis à jour.');
+      } catch (error) {
+        console.log('There was an error updating is_product_buy.', error);
+        this.presentToast('Une erreur s\'est produite lors de la mise à jour de l\'état d\'achat du produit.');
+      }
 
-      // if (product.is_product_buy === 0) {
-      //   product.is_product_buy = 1;
-      // } else if (product.is_product_buy === 1) {
-      //   product.is_product_buy = 0;
-      // }
-
-      this.onUpdateMyListWithProducts(product);
-
-      console.log('onClickCheckBox');
-      console.log(product);
+      console.log('onClickCheckBox', product);
     }
 
 

@@ -7,7 +7,15 @@ const config: CapacitorConfig = {
   server: {
     androidScheme: 'http',
     iosScheme: 'http'
-  }
+  },
+
+  plugins: {
+    LocalNotifications: {
+      iconColor: "#488AFF",
+    },
+  },
 };
+
+
 
 export default config;
