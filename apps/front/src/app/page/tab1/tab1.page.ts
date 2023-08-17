@@ -4,6 +4,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/auth.service';
 import { LocalNotifications, ScheduleOptions } from '@capacitor/local-notifications';
+import { ApiService } from '../newproduct/api.service';
 
 @Component({
   selector: 'app-tab1',
@@ -17,6 +18,7 @@ export class Tab1Page implements OnInit {
 
   constructor(
     private webApiService: WebApiService,
+    private apiService: ApiService,
     private alertController: AlertController,
     private toastController: ToastController,
     private authService: AuthService,
@@ -119,6 +121,34 @@ export class Tab1Page implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  async scheduleNotificationForExpiration(expirationDate: Date) {
+    const heureActuelle = new Date();
+    const differenceDeTemps = expirationDate.getTime() - heureActuelle.getTime();
+
+    if (differenceDeTemps <= 0) {
+      console.log('Le produit est déjà expiré');
+      return;
+    }
+
+    const options: ScheduleOptions = {
+      notifications: [
+        {
+          id: 44, // Vous pouvez utiliser un ID unique pour chaque produit
+          title: "Expiration du Produit",
+          body: "Le produit est sur le point d'expirer !",
+          schedule: { at: new Date(heureActuelle.getTime() + differenceDeTemps) }
+        }
+      ]
+    };
+
+    try {
+      await LocalNotifications.schedule(options);
+      console.log("Notification planifiée pour l'expiration du produit");
+    } catch (ex) {
+      console.error('Erreur lors de la planification de la notification :', ex);
+    }
+  }
+
   async scheduleNotification()
   {
     let options:ScheduleOptions={
@@ -140,4 +170,15 @@ export class Tab1Page implements OnInit {
       alert(JSON.stringify(ex));
     }
   }
+
+  createNewProduct(product: any) {
+    this.apiService.saveProduct(product).subscribe(() => {
+      console.log('Produit créé avec succès.');
+      this.scheduleNotificationForExpiration(product.DLC); // Planifier la notification
+    }, erreur => {
+      console.log('Erreur lors de la création du produit :', erreur);
+    });
+  }
+
+
 }

@@ -11,8 +11,8 @@ export class WebApiService {
    //private readonly apiUrl = 'http://192.168.50.39:8000/api'; //URL Android en dev selon l'IP salim B
 
   //  private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
-   private readonly apiUrl = 'http://192.168.1.9:8000/api'; //URL Android en dev selon l'IP marine
-  //  private readonly apiUrl = 'http://192.168.1.255:8000/api'; //URL Android en dev selon l'IP marine
+  //  private readonly apiUrl = 'http://192.168.1.9:8000/api'; //URL Android en dev selon l'IP marine domicile
+
 
 
 
@@ -24,7 +24,7 @@ export class WebApiService {
    // private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
 
-  //  private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
+   private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
 
 

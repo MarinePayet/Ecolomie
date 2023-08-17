@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Odm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,6 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['product:read', 'product_user_storage:read']],
     denormalizationContext: ['groups' => ['product:write']]
 )]
+#[ApiFilter(OrderFilter::class, properties: ['name' => 'ASC'])]
 class Category
 {
     #[ORM\Id]

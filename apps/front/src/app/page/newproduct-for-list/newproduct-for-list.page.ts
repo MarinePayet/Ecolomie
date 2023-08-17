@@ -54,8 +54,8 @@ export class NewproductForListPage implements OnInit {
         is_product_buy: false,
         productForList: '/api/product_for_lists/' + productResponse.id,
         myList: '/api/my_lists/' + this.idList,
-        updated_at: '2023-08-15 08:48:34',
-        created_at: '2023-08-15 08:48:34',
+        updated_at: '',
+        created_at: '',
         text: 'bliblablou',
 
 
