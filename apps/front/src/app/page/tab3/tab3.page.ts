@@ -58,7 +58,6 @@ export class Tab3Page implements OnInit {
   }
 
 
-
   getProductUserStorage(id: number) {
     this.webApiService.getProductUserStorage(id).subscribe((data) => {
       this.productUserStorages = data['hydra:member'];
