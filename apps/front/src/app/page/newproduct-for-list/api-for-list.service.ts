@@ -20,7 +20,7 @@ export class ApiForListService {
 
     // private readonly API_URL = 'http://192.168.50.39:8000/api'; //url salim B ANDROID
 
-    // private readonly API_URL = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP
+    // private readonly API_URL = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP Marine
 
     private readonly API_URL = 'http://127.0.0.1:8000/api';  // URL de dev pour Marine
 

@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,11 +10,13 @@ export class WebApiService {
 
    //private readonly apiUrl = 'http://192.168.50.39:8000/api'; //URL Android en dev selon l'IP salim B
 
-   //private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
+  //  private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
+  //  private readonly apiUrl = 'http://192.168.1.9:8000/api'; //URL Android en dev selon l'IP marine domicile
 
 
 
-   private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
+
+  //  private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
 
   // private readonly apiUrl = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
@@ -22,7 +24,7 @@ export class WebApiService {
    // private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
 
-   // private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
+   private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
 
 
@@ -105,6 +107,12 @@ export class WebApiService {
     return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
   }
 
+  getProductUserStoragesSorted(order: string): Observable<any> {
+    const params = new HttpParams().set('order[id]', order);
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
+
+
   // PRODUCT_FOR_LIST
 
   getProductsForList(): Observable<any> {
@@ -133,8 +141,13 @@ export class WebApiService {
     return this.http.put(`${this.apiUrl}/my_list_with_products/${id}`, myListWithProduct);
   }
 
+  public updateIsProductBuy(id: number, myListWithProduct: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/my_list_with_products/${id}`,myListWithProduct );
+  }
+  
   deleteMyListWithProducts(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_list_with_products/${id}`);
   }
+
 }
 

@@ -10,11 +10,14 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Doctrine\Odm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter as FilterOrderFilter;
 
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
 
@@ -32,8 +35,7 @@ use ApiPlatform\Metadata\Post;
 // #[Delete()] 
 // #[Put(denormalizationContext: ['groups' => ['product_user_storage:update']],)]
 
-
-
+#[ApiFilter(FilterOrderFilter::class, properties: ['id'], arguments: ['orderParameterName' => 'order'])]
 
 class ProductUserStorage
 {
@@ -66,17 +68,6 @@ class ProductUserStorage
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]
     private ?Product $product = null;
 
-    
-
-    // #[ORM\OneToMany(mappedBy: 'productUserStorageId', targetEntity: Product::class)]
-    // #[Groups(['product_user_storage:read','product_user_storage:write','product:read'])]
-    // private Collection $product;
-
-
-    // public function __construct()
-    // {
-    //     $this->product = new ArrayCollection();
-    // }
 
     public function getId(): ?int
     {
