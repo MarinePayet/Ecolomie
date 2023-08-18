@@ -1,5 +1,9 @@
+
+
+
+
 <!-- Description: Page de la liste des produits -->
-<ion-header [translucent]="true">
+ <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
       <ion-button routerLink="/login" color="warning" *ngIf="!isLoggedIn">
@@ -15,7 +19,7 @@
     <ion-title>Mes produits</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<!-- <ion-content>
   <ion-header>
     <ion-toolbar color="light">
       <ion-buttons slot="end">
@@ -26,6 +30,8 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
+
+
 
   <ion-content>
     <ion-grid>
@@ -44,4 +50,39 @@
       </ion-row>
     </ion-grid>
   </ion-content>
-  </ion-content>
+  </ion-content> -->
+
+
+  <!-- ... -->
+<ion-content>
+  <ion-header>
+    <ion-toolbar color="light">
+      <ion-buttons slot="end">
+        <ion-button size="small" color="primary" routerLink="/newproduct">
+          <ion-icon name="add"></ion-icon>
+          <ion-label>Ajouter un produit</ion-label>
+        </ion-button>
+        <ion-button (click)="changeOrder()">
+          Changer l'ordre ({{ order }})
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3" *ngFor="let productUserStorage of productUserStorages">
+        <a [routerLink]="['/product-detail', productUserStorage.id]">
+          <div class="product-thumbnail">
+            <div class="product-thumbnail-title">
+              <p> {{ productUserStorage.quantity }} </p>
+              <p> {{ productUserStorage.storage.name }} </p>
+              <p> {{ productUserStorage.product.name }} </p>
+            </div>
+          </div>
+        </a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!-- ... -->

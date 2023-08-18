@@ -51,7 +51,7 @@ export class NewproductForListPage implements OnInit {
 
       const myListData = {
         quantity: this.product.quantity,
-        is_product_buy: false,
+        isProductBuy: false,
         productForList: '/api/product_for_lists/' + productResponse.id,
         myList: '/api/my_lists/' + this.idList,
         updated_at: '',

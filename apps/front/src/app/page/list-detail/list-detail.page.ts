@@ -12,6 +12,11 @@
     templateUrl: './list-detail.page.html',
     styleUrls: ['./list-detail.page.scss'],
   })
+
+  // interface CheckboxChangeEventDetail<T = any> {
+  //   value: T;
+  //   checked: boolean;
+  // }
   export class ListDetailPage implements OnInit {
 
     productsOfMyList: any;
@@ -114,35 +119,23 @@
       this.router.navigate(['/newproduct-for-list', this.idList]);
     }
 
-    // onClickCheckBox(event: any, product: any) {
-    //   event.stopPropagation();
-
-
-    //   product.is_product_buy = !product.is_product_buy
-
-    //   // if (product.is_product_buy === 0) {
-    //   //   product.is_product_buy = 1;
-    //   // } else if (product.is_product_buy === 1) {
-    //   //   product.is_product_buy = 0;
-    //   // }
-
-    //   this.onUpdateMyListWithProducts(product);
-
-    //   console.log('onClickCheckBox');
-    //   console.log(product);
-    // }
 
     async onClickCheckBox(event: any, product: any) {
       event.stopPropagation();
 
-      product.is_product_buy = !product.is_product_buy;
-
+      product.isProductBuy = !product.isProductBuy;
       try {
-        await this.webApiService.updateIsProductBuy(product.id, product.is_product_buy).toPromise();
-        console.log('is_product_buy updated successfully!', product);
+            const updatedData = {
+              ...product,
+            };
+            console.log('updatedData')
+            console.log(updatedData)
+
+      let updatedBuying: any = await this.webApiService.updateIsProductBuy(product.id, updatedData).toPromise();
+        console.log('isProductBuy updated successfully!', updatedBuying);
         this.presentToast('État d\'achat du produit mis à jour.');
       } catch (error) {
-        console.log('There was an error updating is_product_buy.', error);
+        console.log('There was an error updating isProductBuy.', error);
         this.presentToast('Une erreur s\'est produite lors de la mise à jour de l\'état d\'achat du produit.');
       }
 

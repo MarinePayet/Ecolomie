@@ -10,6 +10,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Doctrine\Odm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Get;
@@ -32,8 +34,7 @@ use ApiPlatform\Metadata\Post;
 // #[Delete()] 
 // #[Put(denormalizationContext: ['groups' => ['product_user_storage:update']],)]
 
-
-
+#[ApiFilter(OrderFilter::class, properties: ['id' => 'ASC'])]
 
 class ProductUserStorage
 {

@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['product:read', 'product_user_storage:read']],
     denormalizationContext: ['groups' => ['product:write']]
 )]
-#[ApiFilter(OrderFilter::class, properties: ['name' => 'ASC'])]
+// #[ApiFilter(OrderFilter::class, properties: ['name' => 'ASC'])]
 class Category
 {
     #[ORM\Id]

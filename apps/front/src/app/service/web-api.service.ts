@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -107,6 +107,12 @@ export class WebApiService {
     return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
   }
 
+  getProductUserStoragesSorted(order: string): Observable<any> {
+    const params = new HttpParams().set('order[id]', order);
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
+
+
   // PRODUCT_FOR_LIST
 
   getProductsForList(): Observable<any> {
@@ -135,12 +141,13 @@ export class WebApiService {
     return this.http.put(`${this.apiUrl}/my_list_with_products/${id}`, myListWithProduct);
   }
 
+  public updateIsProductBuy(id: number, myListWithProduct: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/my_list_with_products/${id}`,myListWithProduct );
+  }
+  
   deleteMyListWithProducts(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_list_with_products/${id}`);
   }
 
-  public updateIsProductBuy(id: number, isProductBuy: boolean): Observable<any> {
-    return this.http.put(`${this.apiUrl}/my_list_with_products/${id}`, { is_product_buy: isProductBuy });
-  }
 }
 
