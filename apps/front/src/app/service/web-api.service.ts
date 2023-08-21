@@ -6,8 +6,6 @@ import { Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 
 interface StorageCreationRequest {
@@ -24,32 +22,21 @@ export class WebApiService {
 
   //private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
 
-
-
   // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
-  //  private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
   //  private readonly apiUrl = 'http://192.168.1.9:8000/api'; //URL Android en dev selon l'IP marine domicile
-
-
-
 
   //  private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
-
-
   // private readonly apiUrl = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
-
 
   private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
-
-  // private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
-
-   private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
+  //private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
 
-   //private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
+
+
 
 
 

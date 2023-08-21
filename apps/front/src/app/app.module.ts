@@ -9,7 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './page/login/interceptors/jwt.interceptor';
-import { JwtModule } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -23,11 +22,7 @@ export function tokenGetter() {
     AppRoutingModule,
     HttpClientModule,
     ScrollingModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-      },
-    }),
+ 
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
