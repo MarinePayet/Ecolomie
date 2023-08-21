@@ -1,22 +1,13 @@
-.product-thumbnail {
-  text-align: center;
-  padding: 16px;
-  background-color: #80c1f0;
-  color: rgb(255, 255, 255);
-  border-radius: 8px;
-  position: relative;
-
-
-  /* Les deux lignes suivantes garantissent que la vignette reste carrée */
-  width: 100%;
-  aspect-ratio: 1 / 1;
+.ion-text-center h3, .ion-text-center h4 {
+  font-weight: bold;            /* Appliquer le gras */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);  /* Ombre portée pour améliorer le contraste */
 }
 
-.product-thumbnail-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 14px;
+.ion-text-center h3 {
+  font-size: 1.2em;   /* Augmenter légèrement la taille de la police pour le nom du produit */
+}
+
+.ion-text-center h4 {
+  font-size: 1.1em;   /* Augmenter légèrement la taille de la police pour le stockage */
 }
 

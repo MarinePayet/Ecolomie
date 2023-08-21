@@ -21,10 +21,10 @@ export class WebApiService {
 
   // private readonly apiUrl = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
 
-   // private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
+   private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
 
-   private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
+   //private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
 
 
@@ -144,7 +144,7 @@ export class WebApiService {
   public updateIsProductBuy(id: number, myListWithProduct: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/my_list_with_products/${id}`,myListWithProduct );
   }
-  
+
   deleteMyListWithProducts(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_list_with_products/${id}`);
   }
