@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WebApiService } from '../../service/web-api.service';
 import { Router } from '@angular/router';
 
- 
+
 @Component({
   selector: 'app-update-product',
   templateUrl: './update-product.page.html',
@@ -20,18 +20,18 @@ export class UpdateProductPage  implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-        let id = params.get('id');
-        console.log('Product ID:', id);
-        if (id !== null) {
-            this.getProductUserStorage(Number(id)); // Conversion de la chaîne en nombre
-        }
-    });
+  //   this.route.paramMap.subscribe(params => {
+  //       let id = params.get('id');
+  //       console.log('Product ID:', id);
+  //       if (id !== null) {
+  //           this.getProductUserStorage(Number(id)); // Conversion de la chaîne en nombre
+  //       }
+  //   });
 
-    this.webApiService.getStorages().subscribe((data) => {
-      this.storageOptions = data;
-  }
-    );
+  //   this.webApiService.getStorages().subscribe((data) => {
+  //     this.storageOptions = data;
+  // }
+  //   );
   }
 
   getProductUserStorage(id: number) {
@@ -45,9 +45,9 @@ export class UpdateProductPage  implements OnInit {
   }
 
   getStorageOptions() {
-    this.webApiService.getStorages().subscribe((data) => {
-      this.storageOptions = data['hydra:member'];
-    });
+    // this.webApiService.getStorages().subscribe((data) => {
+    //   this.storageOptions = data['hydra:member'];
+    // });
   }
 
 

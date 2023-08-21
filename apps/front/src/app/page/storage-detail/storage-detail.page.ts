@@ -21,7 +21,7 @@ export class StorageDetailPage implements OnInit {
   constructor(
     private webApiService: WebApiService,
       private router: Router,
-      public authService: AuthService, 
+      public authService: AuthService,
       private route: ActivatedRoute,
       private AlertController: AlertController,
       private toastController: ToastController,
@@ -36,16 +36,16 @@ export class StorageDetailPage implements OnInit {
         }
         console.log(this.getStorages());
     });
-    this.getProductUserStorage()  
+    this.getProductUserStorage()
   }
 
   getStorages() {
-    this.webApiService.getStorages().subscribe((data) => {
-      this.storages = data['hydra:member'];
-      console.log(this.storages);
-    });
+    // this.webApiService.getStorages().subscribe((data) => {
+    //   this.storages = data['hydra:member'];
+    //   console.log(this.storages);
+    // });
   }
-  
+
   getProductUserStorage(){
     this.webApiService.getProductUserStorages().subscribe((data) => {
       this.productsUserStorage = data['hydra:member'];

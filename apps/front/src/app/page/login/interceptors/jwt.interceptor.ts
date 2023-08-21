@@ -1,3 +1,5 @@
+// JwtInterceptor
+
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -24,10 +26,9 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401 || err.status === 403) {
-
+          localStorage.removeItem('jwt');
           this.router.navigate(['/login']);
         }
-
 
         return throwError(err);
       })

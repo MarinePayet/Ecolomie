@@ -2,7 +2,9 @@
 
 namespace App\Security;
 
+use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,21 +42,28 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
                 new RememberMeBadge(),
             ]
         );
+
+        
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-    {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
+{
+    $user = $token->getUser();
 
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_login'));
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+    if ($user instanceof User) { // Assurez-vous d'importer votre classe User au début du fichier
+        return new JsonResponse([
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            // Ajoutez d'autres détails si nécessaire.
+        ]);
     }
 
-    protected function getLoginUrl(Request $request): string
-    {
-        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
-    }
+    // Gérez le cas où $user n'est pas une instance de votre classe User si nécessaire.
+    // Par exemple, vous pouvez renvoyer une erreur ou rediriger vers une autre page.
+}
+
+public function getLoginUrl(Request $request): string
+{
+    return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+}
 }

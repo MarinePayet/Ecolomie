@@ -20,14 +20,12 @@ class Storage
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-
     #[Groups(['storage:read', 'product_user_storage:read','storage:write','product_user_storage:update'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['storage:read', 'storage:write', 'product_user_storage:read','product_user_storage:update'])]
-
-    private ?string $name = null;
+    private ?string $name = null; 
 
     #[ORM\ManyToOne(inversedBy: 'storages')]
     #[Groups(['storage:read', 'storage:write','product_user_storage:read'])]
