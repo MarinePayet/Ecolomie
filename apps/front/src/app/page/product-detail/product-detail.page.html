@@ -9,12 +9,12 @@
 
 <ion-content>
   <ion-list *ngIf="productUserStorage">
-    
+
     <ion-item>
       <ion-label>Emplacement:</ion-label>{{ productUserStorage.storage.name }}
     </ion-item>
-    
-    
+
+
     <ion-item>
       <ion-label>Quantité: </ion-label>
 
@@ -32,7 +32,7 @@
       <ion-img [src]="productUserStorage.product.image"></ion-img>
     </ion-item>
   </ion-list>
-  
+
   <ion-list *ngIf="productUserStorage">
     <ion-button color="success" [routerLink]="['/update-product', productUserStorage.id]" >
       <ion-icon aria-hidden="true" name="update-product"></ion-icon>
@@ -42,4 +42,4 @@
 
   <ion-button color="danger" (click)="deleteProductUserStorage(productUserStorage.id)">Supprimer le produit</ion-button>
 </ion-content>
-  
+
