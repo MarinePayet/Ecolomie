@@ -34,14 +34,33 @@
           <ion-item-sliding>
             <ion-item color="primary">
               <ion-list >
-                id: {{ myListProduct.id }}
-                name : {{ myListProduct.productForList.name }}
-                qtt : {{ myListProduct.quantity }}
-                courseId : {{ myListProduct.myList.id }}
                 <ion-checkbox (ionChange)="onClickCheckBox($event, myListProduct)">
-
-
-                    buy : {{ myListProduct.is_product_buy === 1 ? 'Yes' : 'No' }}
+                  <ng-container *ngIf="myListProduct.isProductBuy === true">
+                    <ion-item class="rayer">
+                      id: {{ myListProduct.id }}
+                      <br>
+                      name : {{ myListProduct.productForList.name }}
+                      <br>
+                      qtt : {{ myListProduct.quantity }}
+                      <br>
+                      courseId : {{ myListProduct.myList.id }}
+                      <br>
+                      buy : {{ myListProduct.isProductBuy === true ? 'Yes' : 'No' }}
+                    </ion-item>
+                  </ng-container>
+                  <ng-container *ngIf="myListProduct.isProductBuy === false">
+                    <ion-item >
+                      id: {{ myListProduct.id }}
+                      <br>
+                      name : {{ myListProduct.productForList.name }}
+                      <br>
+                      qtt : {{ myListProduct.quantity }}
+                      <br>
+                      courseId : {{ myListProduct.myList.id }}
+                      <br>
+                      buy : {{ myListProduct.isProductBuy === true ? 'Yes' : 'No' }}
+                    </ion-item>
+                  </ng-container>
 
                 </ion-checkbox>
                   <ion-button class="button-spacing" color="white" (click)="decreaseQuantity(myListProduct)">-</ion-button>

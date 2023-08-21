@@ -21,12 +21,12 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header> 
+</ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card color="warning" class="ion-padding" *ngFor="let my_list of my_lists" [routerLink]="['/list-detail', my_list.id]">
-      <ion-item-sliding> 
-        <ion-item color="warning">
+  <ion-card color="success" class="ion-padding" *ngFor="let my_list of my_lists" [routerLink]="['/list-detail', my_list.id]">
+      <ion-item-sliding>
+        <ion-item color="success">
           <ion-card-header>
             <ion-card-title class="ion-text-uppercase ion-text-wrap">{{ my_list.name }}</ion-card-title>
           </ion-card-header>

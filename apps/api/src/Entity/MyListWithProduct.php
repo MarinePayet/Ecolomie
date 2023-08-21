@@ -55,10 +55,6 @@ class MyListWithProduct
     #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList'])]
     private ?string $text = null;
 
-    #[ORM\Column(nullable: true)]
-    #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList'])]
-    private ?bool $is_product_buy = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(['read:MyListWithProduct', 'write:MyListWithProduct'])]
     private ?\DateTimeInterface $updated_at = null;
@@ -78,6 +74,10 @@ class MyListWithProduct
     #[ORM\Column(nullable: true)]
     #[Groups(['my_list:read','read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList', 'update:MyListWithProduct'])]
     private ?int $quantity = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['my_list:read','read:MyListWithProduct', 'write:MyListWithProduct', 'write:productForList', 'update:MyListWithProduct'])]
+    private ?bool $isProductBuy = null;
 
     public function __construct()
     {
@@ -106,17 +106,6 @@ class MyListWithProduct
         return $this;
     }
 
-    public function isIsProductBuy(): ?bool
-    {
-        return $this->is_product_buy;
-    }
-
-    public function setIsProductBuy(bool $is_product_buy): static
-    {
-        $this->is_product_buy = $is_product_buy;
-
-        return $this;
-    }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -174,6 +163,18 @@ class MyListWithProduct
     public function setQuantity(?int $quantity): static
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function isIsProductBuy(): ?bool
+    {
+        return $this->isProductBuy;
+    }
+
+    public function setIsProductBuy(?bool $isProductBuy): static
+    {
+        $this->isProductBuy = $isProductBuy;
 
         return $this;
     }

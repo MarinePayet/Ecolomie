@@ -1,47 +1,25 @@
-<!-- Description: Page de la liste des produits -->
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
-    <ion-buttons slot="secondary">
-      <ion-button routerLink="/login" color="warning" *ngIf="!isLoggedIn">
-        <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
-      </ion-button>
-      <ion-button color="danger" *ngIf="isLoggedIn" (click)="onLogout()">
-        <ion-icon slot="icon-only" size="large" name="log-out-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Ecolomie</ion-title>
-  </ion-toolbar>
-  <ion-toolbar color="light">
-    <ion-title>Mes produits</ion-title>
+    <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-header>
-    <ion-toolbar color="light">
-      <ion-buttons slot="end">
-        <ion-button size="small" color="primary" routerLink="/newproduct">
-          <ion-icon name="add"></ion-icon>
-          <ion-label>Ajouter un produit</ion-label>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
 
-  <ion-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="3" *ngFor="let productUserStorage of productUserStorages">
-          <a [routerLink]="['/product-detail', productUserStorage.id]">
-            <div class="product-thumbnail">
-              <div class="product-thumbnail-title">
-                <p> {{ productUserStorage.quantity }} </p>
-                <p> {{ productUserStorage.storage.name }} </p>
-                <p> {{ productUserStorage.product.name }} </p>
-              </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let productUserStorage of productUserStorages">
+        <ion-card style="background-color: var(--ion-color-secondary);" [routerLink]="['/product-detail', productUserStorage.id]">
+          <ion-card-content>
+            <div class="ion-text-center">
+              <h3 style="color: var(--ion-color-danger-contrast);">{{ productUserStorage.product.name }}</h3>
+              <h4 style="color: var(--ion-color-warning);">{{ productUserStorage.storage.name }}</h4>
+              <h1 style="color: var(--ion-color-danger-contrast);">{{ productUserStorage.quantity }}</h1>
             </div>
-          </a>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
-  </ion-content>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
