@@ -54,7 +54,7 @@ export class ApiService {
     // private readonly API_URL = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
 
 
-        private readonly apiUrl = environment.apiUrl;
+        //private readonly apiUrl = environment.apiUrl;
 
 
 
