@@ -4,7 +4,19 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
+  <ion-header>
+    <ion-toolbar color="light">
+      <ion-buttons slot="end">
+        <!-- <ion-button size="small" color="primary" routerLink="/newproduct">
+          <ion-icon name="add"></ion-icon>
+          <ion-label>Ajouter un produit</ion-label>
+        </ion-button> -->
+        <ion-button (click)="changeOrder()">
+          Changer l'ordre ({{ order }})
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let productUserStorage of productUserStorages">

@@ -67,8 +67,6 @@ export class MesListesPage implements OnInit {
     toast.present();
   }
 
-
-
   createNewListPrompt() {
     this.alertController
       .create({
