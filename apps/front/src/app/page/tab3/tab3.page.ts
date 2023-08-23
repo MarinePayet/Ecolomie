@@ -27,6 +27,15 @@ export class Tab3Page implements OnInit {
     this.getProductUserStorages();
   }
 
+
+//FONCTION ORIGINALE
+  // loadProductUserStorage() {
+  //   this.webApiService.getProductUserStorages().subscribe((data) => {
+  //     this.productUserStorages = data['hydra:member'];
+  //   });
+  // }
+
+
   loadProductUserStorages() {
     this.webApiService.getProductUserStoragesSorted(this.order, this.searchQuery).subscribe((data: any) => {
       this.productUserStorages = data['hydra:member'];

@@ -69,7 +69,7 @@ export class AuthService {
         return this.http.get<any>(`${this.API_URL}/api/users/${74}`);
       }),
       tap((user) => {
-        // Supposons que l'ID de l'utilisateur se trouve dans la propriété 'id'
+        
         const userId = user.id;
         if (userId) {
           localStorage.setItem('userId', userId.toString());

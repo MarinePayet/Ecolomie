@@ -20,19 +20,19 @@ export class UpdateProductPage  implements OnInit {
     ) {}
 
   ngOnInit() {
-  //   this.route.paramMap.subscribe(params => {
-  //       let id = params.get('id');
-  //       console.log('Product ID:', id);
-  //       if (id !== null) {
-  //           this.getProductUserStorage(Number(id)); // Conversion de la chaîne en nombre
-  //       }
-  //   });
+    this.route.paramMap.subscribe(params => {
+        let id = params.get('id');
+        console.log('Product ID:', id);
+        if (id !== null) {
+            this.getProductUserStorage(Number(id)); // Conversion de la chaîne en nombre
+        }
+    });
 
-  //   this.webApiService.getStorages().subscribe((data) => {
-  //     this.storageOptions = data;
-  // }
-  //   );
+    this.webApiService.getStorage().subscribe((data) => {
+      this.storageOptions = data;
   }
+    );
+}
 
   getProductUserStorage(id: number) {
     this.webApiService.getProductUserStorage(id).subscribe((data) => {
@@ -45,9 +45,9 @@ export class UpdateProductPage  implements OnInit {
   }
 
   getStorageOptions() {
-    // this.webApiService.getStorages().subscribe((data) => {
-    //   this.storageOptions = data['hydra:member'];
-    // });
+    this.webApiService.getStorage().subscribe((data) => {
+      this.storageOptions = data['hydra:member'];
+    });
   }
 
 
