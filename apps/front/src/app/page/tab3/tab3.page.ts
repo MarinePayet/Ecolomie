@@ -15,7 +15,8 @@ import { AlertController } from '@ionic/angular';
 })
 export class Tab3Page implements OnInit {
   productUserStorages: any;
-  order: string = 'ASC'; // Par défaut, tri croissant
+  order: string = 'ASC';
+  searchQuery: string = '';
 
 
 
@@ -32,16 +33,17 @@ export class Tab3Page implements OnInit {
 
 //FONCTION ORIGINALE
   // loadProductUserStorages() {
-  //   this.webApiService.getProductUserStorages().subscribe((data) => {
+  //   this.webApiService.getProductUserStorages(this.order, this.searchQuery).subscribe((data) => {
   //     this.productUserStorages = data['hydra:member'];
   //   });
   // }
 
   loadProductUserStorages() {
-    this.webApiService.getProductUserStoragesSorted(this.order).subscribe((data) => {
+    this.webApiService.getProductUserStoragesSorted(this.order, this.searchQuery).subscribe((data: any) => {
       this.productUserStorages = data['hydra:member'];
     });
   }
+
 
   changeOrder() {
     this.order = this.order === 'ASC' ? 'DESC' : 'ASC';
@@ -113,7 +115,10 @@ export class Tab3Page implements OnInit {
     await alert.present();
   }
 
-
+  onSearchBar(event: any) {
+    this.searchQuery = event.target.value;
+    this.loadProductUserStorages();
+  }
 
 
 
