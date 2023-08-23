@@ -1,12 +1,9 @@
 
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-
-
 
 interface StorageCreationRequest {
   name: string;
@@ -19,8 +16,9 @@ export class WebApiService {
 
   //private readonly apiUrl = 'http://192.168.50.39:8000/api'; //URL Android en dev selon l'IP salim B
 
+  // private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
 
-  //private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
+  // private readonly apiUrl = 'http://192.168.50.118:8000/api'; //URL Android en dev selon l'IP marine DONKEY
 
   // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
@@ -34,16 +32,7 @@ export class WebApiService {
 
   private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
-
-
-
-
-
-
-
   constructor(private http: HttpClient) { }
-
-
 
   // STORAGES
 
@@ -61,8 +50,6 @@ export class WebApiService {
     );
   }
 
-
-
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
   }
@@ -74,7 +61,6 @@ export class WebApiService {
     };
     return this.http.post(`${this.apiUrl}/storages`, storage);
   }
-
 
   // PRODUCTS
 
@@ -129,7 +115,6 @@ export class WebApiService {
     return this.http.get(`${this.apiUrl}/product_user_storages`);
   }
 
-
   updateProductUserStorage(id: number, productUserStorage: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage);
   }
@@ -149,8 +134,6 @@ export class WebApiService {
 
     return this.http.get(this.apiUrl + '/product_user_storages', { params });
   }
-
-
 
   // PRODUCT_FOR_LIST
 

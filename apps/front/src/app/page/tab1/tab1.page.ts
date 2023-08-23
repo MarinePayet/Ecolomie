@@ -48,9 +48,6 @@ export class Tab1Page implements OnInit {
     });
 }
 
-
-
-
   async deleteStorage(storage: any) {
     const alert = await this.alertController.create({
       header: 'Confirmation',
@@ -105,8 +102,6 @@ export class Tab1Page implements OnInit {
     });
   }
 
-
-
   async createNewStoragePrompt() {
     const alert = await this.alertController.create({
       header: 'Nouveau Stockage',
@@ -152,7 +147,7 @@ export class Tab1Page implements OnInit {
     const heureActuelle = new Date();
     const differenceDeTemps = expirationDate.getTime() - heureActuelle.getTime();
 
-    if (differenceDeTemps <= 0) {
+    if (differenceDeTemps <= 1) {
       console.log('Le produit est déjà expiré');
       return;
     }
@@ -179,13 +174,21 @@ export class Tab1Page implements OnInit {
   async scheduleNotification()
   {
     let options:ScheduleOptions={
-      notifications:[
+      // notifications:[
+      //   {
+      //     id:444,
+      //     title:"Reminder Notification",
+      //     body:"Explore new variety and offers",
+      //     largeBody: "Get 30% discount on new products",
+      //     summaryText:"Exciting offers !!!"
+      //   }
+      // ]
+      notifications: [
         {
-          id:444,
-          title:"Reminder Notification",
-          body:"Explore new variety and offers",
-          largeBody: "Get 30% discount on new products",
-          summaryText:"Exciting offers !!!"
+          id: 44, // Vous pouvez utiliser un ID unique pour chaque produit
+          title: "Expiration du Produit",
+          body: "Le produit est sur le point d'expirer !",
+          // schedule: { at: new Date(heureActuelle.getTime() + differenceDeTemps) }
         }
       ]
     }

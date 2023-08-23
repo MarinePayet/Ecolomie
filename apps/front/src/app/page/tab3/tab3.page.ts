@@ -4,9 +4,7 @@ import { WebApiService } from '../../service/web-api.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/auth.service';
 import { ToastController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-
-
+import { AlertController } from '@ionic/angular'
 
 @Component({
   selector: 'app-tab3',
@@ -17,8 +15,6 @@ export class Tab3Page implements OnInit {
   productUserStorages: any;
   order: string = 'ASC';
   searchQuery: string = '';
-
-
 
   constructor(
     private webApiService: WebApiService, private router: Router,
@@ -31,25 +27,16 @@ export class Tab3Page implements OnInit {
     this.getProductUserStorages();
   }
 
-//FONCTION ORIGINALE
-  // loadProductUserStorages() {
-  //   this.webApiService.getProductUserStorages(this.order, this.searchQuery).subscribe((data) => {
-  //     this.productUserStorages = data['hydra:member'];
-  //   });
-  // }
-
   loadProductUserStorages() {
     this.webApiService.getProductUserStoragesSorted(this.order, this.searchQuery).subscribe((data: any) => {
       this.productUserStorages = data['hydra:member'];
     });
   }
 
-
   changeOrder() {
     this.order = this.order === 'ASC' ? 'DESC' : 'ASC';
     this.loadProductUserStorages();
   }
-
 
   getProductUserStorages() {
     this.webApiService.getProductUserStorages().subscribe((data) => {
@@ -58,7 +45,6 @@ export class Tab3Page implements OnInit {
     }
     );
   }
-
 
   getProductUserStorage(id: number) {
     this.webApiService.getProductUserStorage(id).subscribe((data) => {
@@ -90,8 +76,6 @@ export class Tab3Page implements OnInit {
   openUpdatePage(id: number) {
     this.router.navigateByUrl('/update-product/' + id);
 }
-
-
   async openDeleteConfirm(productId: string) {
     const alert = await this.AlertController.create({
       header: 'Confirmation',
@@ -119,7 +103,5 @@ export class Tab3Page implements OnInit {
     this.searchQuery = event.target.value;
     this.loadProductUserStorages();
   }
-
-
 
 }
