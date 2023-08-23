@@ -4,7 +4,20 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
+  <ion-header>
+    <!-- <ion-toolbar color="light"> -->
+      <!-- <ion-buttons slot="end"> -->
+        <!-- <ion-button size="small" color="primary" routerLink="/newproduct">
+          <ion-icon name="add"></ion-icon>
+          <ion-label>Ajouter un produit</ion-label>
+        </ion-button> -->
+        <!-- <ion-button (click)="changeOrder()">
+          Changer l'ordre ({{ order }})
+        </ion-button> -->
+      <!-- </ion-buttons> -->
+    <!-- </ion-toolbar> -->
+    <ion-searchbar placeholder="Rechercher un produit" (ionInput)="onSearchBar($event)"></ion-searchbar>
+  </ion-header>
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let productUserStorage of productUserStorages">
@@ -12,6 +25,7 @@
           <ion-card-content>
             <div class="ion-text-center">
               <h3 style="color: var(--ion-color-danger-contrast);">{{ productUserStorage.product.name }}</h3>
+              <!-- <h3 style="color: var(--ion-color-danger-contrast);">{{ productUserStorage.DLC | date:'short' }}</h3> -->
               <h4 style="color: var(--ion-color-warning);">{{ productUserStorage.storage.name }}</h4>
               <h1 style="color: var(--ion-color-danger-contrast);">{{ productUserStorage.quantity }}</h1>
             </div>
