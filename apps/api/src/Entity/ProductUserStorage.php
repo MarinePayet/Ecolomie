@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Put;
@@ -36,9 +37,10 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 #[ApiFilter(
     SearchFilter::class,
     properties:[
-        'product.name' => SearchFilter::STRATEGY_PARTIAL
-    ]
+        'product.name' => SearchFilter::STRATEGY_PARTIAL,
+    ]  
 )]
+#[ApiFilter(DateFilter::class, properties: ['DLC'])]
 
 class ProductUserStorage
 {

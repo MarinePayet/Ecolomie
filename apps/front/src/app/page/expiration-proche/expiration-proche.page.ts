@@ -8,6 +8,9 @@ import { WebApiService } from 'src/app/service/web-api.service';
 })
 export class ExpirationProchePage implements OnInit {
   productUserStorages: any;
+  days7: number = 7;
+  today: Date = new Date;
+  dlcMinus7: any
 
   constructor(
     private webApiService: WebApiService,
@@ -16,6 +19,16 @@ export class ExpirationProchePage implements OnInit {
   ngOnInit() {
     this.getProductUserStorages();
   }
+
+  getProductUserStoragesByDLC() {
+    this.webApiService.getProductUserStorageByDLC().subscribe((data: any) => {
+      this.dlcMinus7 = data['hydra:member'];
+      
+      console.log(this.productUserStorages);
+    }
+    );
+  }
+
 
   getProductUserStorages() {
     this.webApiService.getProductUserStorages().subscribe((data) => {

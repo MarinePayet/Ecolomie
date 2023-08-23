@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -35,8 +34,6 @@ export class WebApiService {
   constructor(private http: HttpClient) { }
 
 
-
-
   // STORAGES user
 
 
@@ -55,14 +52,11 @@ export class WebApiService {
   }
 
 
-   createStorage(name: string, userId: string): Observable<any> {
-
-  deleteStorage(id: number): Observable<any> {
+  deleteStorages(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
   }
 
   createStorage(name: string, userId: string): Observable<any> {
-
     const storage: StorageCreationRequest = {
       name: name,
       user: `/api/users/${userId}`,
@@ -79,11 +73,6 @@ export class WebApiService {
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
   }
-
-
-
-
-
 
   // PRODUCTS
 
@@ -151,6 +140,7 @@ export class WebApiService {
   //   const params = new HttpParams().set('order[id]', order);
   //   return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
   // }
+
   getProductUserStoragesSorted(order: string, searchQuery: string) {
     const params = new HttpParams()
       .set('order', order)
@@ -158,6 +148,13 @@ export class WebApiService {
 
     return this.http.get(this.apiUrl + '/product_user_storages', { params });
   }
+
+getProductUserStorageByDLC(){
+  const params = new HttpParams()
+  .set('DLC', minus7days);
+  
+  return this.http.get(this.apiUrl + '/product_user_storages', { params });
+}
 
   // PRODUCT_FOR_LIST
 
@@ -196,4 +193,3 @@ export class WebApiService {
   }
 
 }
-

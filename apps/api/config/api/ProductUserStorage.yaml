@@ -1,0 +1,5 @@
+App\Entity\ProductUserStorage:
+    # ...
+    operations:
+        ApiPlatform\Metadata\GetCollection:
+            filters: ['productUserStorage.date_filter']
