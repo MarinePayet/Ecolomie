@@ -10,7 +10,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Doctrine\Odm\Filter\OrderFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Put;
@@ -18,14 +17,13 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter as FilterOrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
-
-
-
 #[Api\ApiResource(
     normalizationContext: ['groups' => ['product_user_storage:read']],
     denormalizationContext: ['groups' => ['product_user_storage:write']],
+    order: ['storage.name']
 )]
 // #[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
 // #[Post(
@@ -35,7 +33,12 @@ use ApiPlatform\Doctrine\Orm\Filter\OrderFilter as FilterOrderFilter;
 // #[Delete()] 
 // #[Put(denormalizationContext: ['groups' => ['product_user_storage:update']],)]
 
-#[ApiFilter(FilterOrderFilter::class, properties: ['id'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(
+    SearchFilter::class,
+    properties:[
+        'product.name' => SearchFilter::STRATEGY_PARTIAL
+    ]
+)]
 
 class ProductUserStorage
 {
@@ -53,21 +56,17 @@ class ProductUserStorage
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]    
     private ?float $quantity = null;
 
-
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]
     private ?Storage $storage = null;
-    
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
-    #[Groups(['product_user_storage:read','product_user_storage:write',])]    // LIGNE ORIGINALE  
+    #[Groups(['product_user_storage:read','product_user_storage:write',])]  
     private ?Category $category = null;
-
 
     #[ORM\ManyToOne(inversedBy: 'product_user_storage')]
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]
     private ?Product $product = null;
-
 
     public function getId(): ?int
     {
@@ -122,7 +121,6 @@ class ProductUserStorage
         return $this;
     }
 
-
     public function getProduct(): ?Product
     {
         return $this->product;
@@ -146,7 +144,5 @@ class ProductUserStorage
 
        // return $this;
    // }
-
-
-    
+   
 }

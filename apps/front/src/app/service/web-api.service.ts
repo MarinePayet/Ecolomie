@@ -1,12 +1,9 @@
 
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-
-
 
 interface StorageCreationRequest {
   name: string;
@@ -19,8 +16,9 @@ export class WebApiService {
 
   //private readonly apiUrl = 'http://192.168.50.39:8000/api'; //URL Android en dev selon l'IP salim B
 
+  // private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
 
-  //private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
+  // private readonly apiUrl = 'http://192.168.50.118:8000/api'; //URL Android en dev selon l'IP marine DONKEY
 
   // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
@@ -30,22 +28,17 @@ export class WebApiService {
 
   // private readonly apiUrl = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
 
-  private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
+  // private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
-  //private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
-
-
-
-
-
-
-
+  private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
 
   constructor(private http: HttpClient) { }
 
 
 
+
   // STORAGES user
+
 
   getStorages(userId: string): Observable<any> {
     const params = new HttpParams().set('user', userId);
@@ -61,13 +54,22 @@ export class WebApiService {
     );
   }
 
+
    createStorage(name: string, userId: string): Observable<any> {
+
+  deleteStorage(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/storages/${id}`);
+  }
+
+  createStorage(name: string, userId: string): Observable<any> {
+
     const storage: StorageCreationRequest = {
       name: name,
       user: `/api/users/${userId}`,
     };
     return this.http.post(`${this.apiUrl}/storages`, storage);
   }
+
 
   getStorage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages/`);
@@ -77,6 +79,8 @@ export class WebApiService {
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
   }
+
+
 
 
 
@@ -135,7 +139,6 @@ export class WebApiService {
     return this.http.get(`${this.apiUrl}/product_user_storages`);
   }
 
-
   updateProductUserStorage(id: number, productUserStorage: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage);
   }
@@ -143,12 +146,18 @@ export class WebApiService {
   deleteProductUserStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
   }
+// ORIGINAL
+  // getProductUserStoragesSorted(order: string): Observable<any> {
+  //   const params = new HttpParams().set('order[id]', order);
+  //   return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  // }
+  getProductUserStoragesSorted(order: string, searchQuery: string) {
+    const params = new HttpParams()
+      .set('order', order)
+      .set('product.name', searchQuery); // Passez la requête de recherche à l'API
 
-  getProductUserStoragesSorted(order: string): Observable<any> {
-    const params = new HttpParams().set('order[id]', order);
-    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+    return this.http.get(this.apiUrl + '/product_user_storages', { params });
   }
-
 
   // PRODUCT_FOR_LIST
 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WebApiService } from '../../service/web-api.service';
 import { AlertController, ToastController } from '@ionic/angular';
-
 @Component({
   selector: 'app-mes-listes',
   templateUrl: './mes-listes.page.html',
@@ -10,7 +9,6 @@ import { AlertController, ToastController } from '@ionic/angular';
 export class MesListesPage implements OnInit {
 
   my_lists: any;
-
 
   constructor(
     private webApiService: WebApiService,
@@ -66,8 +64,6 @@ export class MesListesPage implements OnInit {
     });
     toast.present();
   }
-
-
 
   createNewListPrompt() {
     this.alertController
