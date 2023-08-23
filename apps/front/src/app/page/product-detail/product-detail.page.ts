@@ -16,17 +16,17 @@ export class ProductDetailPage implements OnInit {
   constructor(private route:ActivatedRoute, private webApiService: WebApiService,  private router: Router) {}
 
   ngOnInit() {
-  //   this.route.paramMap.subscribe(params => {
-  //       let id = params.get('id');
-  //       if (id !== null) {
-  //           this.getProductUserStorage(Number(id)); // Conversion de la chaîne en nombre
-  //       }
-  //   });
+    this.route.paramMap.subscribe(params => {
+        let id = params.get('id');
+        if (id !== null) {
+            this.getProductUserStorage(Number(id)); // Conversion de la chaîne en nombre
+        }
+    });
 
-  //   this.webApiService.getStorages().subscribe((data) => {
-  //     this.storageOptions = data;
-  // }
-  //   );
+    this.webApiService.getStorage().subscribe((data) => {
+      this.storageOptions = data;
+  }
+    );
   }
 
   getProductUserStorage(id: number) {
@@ -40,9 +40,9 @@ export class ProductDetailPage implements OnInit {
   }
 
   getStorageOptions() {
-    // this.webApiService.getStorages().subscribe((data) => {
-    //   this.storageOptions = data['hydra:member'];
-    // });
+    this.webApiService.getStorage().subscribe((data) => {
+      this.storageOptions = data['hydra:member'];
+    });
   }
 
   increaseQuantity() {
