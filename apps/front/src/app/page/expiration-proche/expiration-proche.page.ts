@@ -19,21 +19,12 @@ export class ExpirationProchePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.getProductUserStorages();
     this.getProductUserStoragesExpiringIn7Days();
     this.getProductUserStoragesExpired();
     this.getProductUserStoragesExpiringIn1Day();
     this.getProductUserStoragesExpiringIn15Days();
   }
 
-
-  // getProductUserStorages() {
-  //   this.webApiService.getProductUserStorages().subscribe((data) => {
-  //     this.productUserStorages = data['hydra:member'];
-  //     console.log(this.productUserStorages);
-  //   }
-  //   );
-  // }
   getProductUserStoragesExpiringIn7Days() {
     this.webApiService.getProductUserStoragesExpiringIn7Days().subscribe((data: any) => {
       this.productUserStoragesExpiringIn7Days = data['hydra:member'];
@@ -55,7 +46,6 @@ export class ExpirationProchePage implements OnInit {
     });
   }
 
-
   getProductUserStoragesExpired() {
     this.webApiService.getProductUserStoragesExpired().subscribe((data: any) => {
       this.productUserStoragesExpired = data['hydra:member'];
@@ -64,25 +54,10 @@ export class ExpirationProchePage implements OnInit {
   }
 
   calculateDaysDifference(dateStr: string): number {
-    const today = new Date(); // Date du jour
-    const givenDate = new Date(dateStr); // Date donnée, convertie depuis une chaîne (format 'yyyy-MM-dd')
-
-    // Calcul du nombre de millisecondes entre les deux dates
+    const today = new Date();
+    const givenDate = new Date(dateStr);
     const timeDifference = givenDate.getTime() - today.getTime();
-
-    // Conversion du nombre de millisecondes en jours
     const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-
-    // if (daysDifference < 0){
-    //   return Math.floor(Math.abs(daysDifference))
-    // } else {
-
-      return Math.floor(daysDifference); // Arrondir le nombre de jours à l'entier inférieur
-    // }
-
-    // return Math.floor(Math.abs(daysDifference));
+    return Math.floor(daysDifference);
   }
-
-
-
 }

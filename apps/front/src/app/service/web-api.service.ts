@@ -36,7 +36,6 @@ export class WebApiService {
 
   // STORAGES user
 
-
   getStorages(userId: string): Observable<any> {
     const params = new HttpParams().set('user', userId);
 
@@ -51,7 +50,6 @@ export class WebApiService {
     );
   }
 
-
   deleteStorages(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
   }
@@ -64,11 +62,9 @@ export class WebApiService {
     return this.http.post(`${this.apiUrl}/storages`, storage);
   }
 
-
   getStorage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages/`);
   }
-
 
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
@@ -87,7 +83,6 @@ export class WebApiService {
   saveProduct(product: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/products`, product);
   }
-
 
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/products/${id}`);
@@ -134,11 +129,6 @@ export class WebApiService {
   deleteProductUserStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
   }
-// ORIGINAL
-  // getProductUserStoragesSorted(order: string): Observable<any> {
-  //   const params = new HttpParams().set('order[id]', order);
-  //   return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
-  // }
 
   getProductUserStoragesSorted(order: string, searchQuery: string) {
     const params = new HttpParams()
@@ -147,42 +137,36 @@ export class WebApiService {
 
     return this.http.get(this.apiUrl + '/product_user_storages', { params });
   }
+  
+  protected today = new Date();
+  protected sevenDaysFromNow = new Date(this.today.getTime() + 7 * 24 * 60 * 60 * 1000);
+  protected oneDayFromNow = new Date(this.today.getTime() + 1 * 24 * 60 * 60 * 1000);
+  protected fifteenDaysFromNow = new Date(this.today.getTime() + 15 * 24 * 60 * 60 * 1000);
 
   getProductUserStoragesExpiringIn7Days(): Observable<any> {
-    const today = new Date();
-    const sevenDaysFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 jours en millisecondes
-    const oneDayFromNow = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000); // 7 jours en millisecondes
     const params = new HttpParams()
-      .set('DLC[strictly_after]', oneDayFromNow.toISOString())
-      .set('DLC[before]', sevenDaysFromNow.toISOString());
+      .set('DLC[strictly_after]',this.oneDayFromNow.toISOString())
+      .set('DLC[before]', this.sevenDaysFromNow.toISOString());
     return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
   }
 
   getProductUserStoragesExpiringIn15Days(): Observable<any> {
-    const today = new Date();
-    const sevenDaysFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-    const fifteenDaysFromNow = new Date(today.getTime() + 15 * 24 * 60 * 60 * 1000);
     const params = new HttpParams()
-      .set('DLC[strictly_after]', sevenDaysFromNow.toISOString())
-      .set('DLC[before]', fifteenDaysFromNow.toISOString());
+      .set('DLC[strictly_after]', this.sevenDaysFromNow.toISOString())
+      .set('DLC[before]', this.fifteenDaysFromNow.toISOString());
     return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
   }
 
   getProductUserStoragesExpiringIn1Day(): Observable<any> {
-    const today = new Date();
-    const oneDayFromNow = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000); // 7 jours en millisecondes
-    console.log('Date limite de consommation (1 jours) :', oneDayFromNow.toISOString());
-    console.log('Date du jour :', today.toISOString());
     const params = new HttpParams()
-      .set('DLC[strictly_after]', today.toISOString())
-      .set('DLC[before]', oneDayFromNow.toISOString());
+      .set('DLC[strictly_after]', this.today.toISOString())
+      .set('DLC[before]', this.oneDayFromNow.toISOString());
     return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
   }
 
   getProductUserStoragesExpired(): Observable<any> {
-    const today = new Date();
     const params = new HttpParams()
-      .set('DLC[before]', today.toISOString());
+      .set('DLC[before]', this.today.toISOString());
     return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
   }
 
