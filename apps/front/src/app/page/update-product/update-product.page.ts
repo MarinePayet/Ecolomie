@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WebApiService } from '../../service/web-api.service';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class UpdateProductPage  implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private webApiService: WebApiService,
-    private router: Router
+    private router: Router,
+    private toastController: ToastController
     ) {}
 
   ngOnInit() {
@@ -89,9 +91,16 @@ export class UpdateProductPage  implements OnInit {
       }
     }
 
-    decreaseQuantity() {
+    async decreaseQuantity() {
       if (this.productUserStorage && this.productUserStorage.quantity && this.productUserStorage.quantity > 0) {
         this.productUserStorage.quantity--;
+      } else {
+        const toast = await this.toastController.create({
+          message: 'Produit terminé !',
+          duration: 2000,
+          position: 'bottom'
+        });
+        toast.present();
       }
     }
 
