@@ -8,34 +8,59 @@ import { WebApiService } from 'src/app/service/web-api.service';
 })
 export class ExpirationProchePage implements OnInit {
   productUserStorages: any;
-  days7: number = 7;
-  today: Date = new Date;
-  dlcMinus7: any
+  productUserStoragesExpiringIn7Days: any;
+  productUserStoragesExpiringIn1Day: any;
+  productUserStoragesExpired: any;
+  productUserStoragesExpiringIn15Days: any;
+
 
   constructor(
     private webApiService: WebApiService,
   ) { }
 
   ngOnInit() {
-    this.getProductUserStorages();
-  }
-
-  getProductUserStoragesByDLC() {
-    this.webApiService.getProductUserStorageByDLC().subscribe((data: any) => {
-      this.dlcMinus7 = data['hydra:member'];
-      
-      console.log(this.productUserStorages);
-    }
-    );
+    // this.getProductUserStorages();
+    this.getProductUserStoragesExpiringIn7Days();
+    this.getProductUserStoragesExpired();
+    this.getProductUserStoragesExpiringIn1Day();
+    this.getProductUserStoragesExpiringIn15Days();
   }
 
 
-  getProductUserStorages() {
-    this.webApiService.getProductUserStorages().subscribe((data) => {
-      this.productUserStorages = data['hydra:member'];
-      console.log(this.productUserStorages);
-    }
-    );
+  // getProductUserStorages() {
+  //   this.webApiService.getProductUserStorages().subscribe((data) => {
+  //     this.productUserStorages = data['hydra:member'];
+  //     console.log(this.productUserStorages);
+  //   }
+  //   );
+  // }
+  getProductUserStoragesExpiringIn7Days() {
+    this.webApiService.getProductUserStoragesExpiringIn7Days().subscribe((data: any) => {
+      this.productUserStoragesExpiringIn7Days = data['hydra:member'];
+      console.log('Produits expirant dans 7 jours :', this.productUserStoragesExpiringIn7Days);
+    });
+  }
+
+  getProductUserStoragesExpiringIn1Day() {
+    this.webApiService.getProductUserStoragesExpiringIn1Day().subscribe((data: any) => {
+      this.productUserStoragesExpiringIn1Day = data['hydra:member'];
+      console.log('Produits expirant dans 1 jours :', this.productUserStoragesExpiringIn1Day);
+    });
+  }
+
+  getProductUserStoragesExpiringIn15Days() {
+    this.webApiService.getProductUserStoragesExpiringIn15Days().subscribe((data: any) => {
+      this.productUserStoragesExpiringIn15Days = data['hydra:member'];
+      console.log('Produits expirant dans 1 jours :', this.productUserStoragesExpiringIn15Days);
+    });
+  }
+
+
+  getProductUserStoragesExpired() {
+    this.webApiService.getProductUserStoragesExpired().subscribe((data: any) => {
+      this.productUserStoragesExpired = data['hydra:member'];
+      console.log('Produits périmés :', this.productUserStoragesExpired);
+    });
   }
 
   calculateDaysDifference(dateStr: string): number {

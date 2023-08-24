@@ -1,13 +1,5 @@
 .perime .product-thumbnail {
-    background-color: #8062D6;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    padding: 16px;
-    color: rgb(25, 24, 24);
-    border-radius: 8px;
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
+  background-color: #8062D6;
 }
 
 .dans-1-jour .product-thumbnail {
@@ -19,10 +11,9 @@
 }
 
 .dans-15-jours .product-thumbnail  {
-
   background-color: yellow;
-
 }
+
 .product-thumbnail-title {
   position: absolute;
   top: 50%;

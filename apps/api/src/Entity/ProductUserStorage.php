@@ -24,7 +24,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 #[Api\ApiResource(
     normalizationContext: ['groups' => ['product_user_storage:read']],
     denormalizationContext: ['groups' => ['product_user_storage:write']],
-    order: ['storage.name']
+    order: ['storage.name', 'DLC' => 'ASC']
 )]
 // #[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
 // #[Post(

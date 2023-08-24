@@ -82,9 +82,8 @@ export class WebApiService {
 
   getProduct(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/products/${id}`);
-
-
   }
+
   saveProduct(product: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/products`, product);
   }
@@ -144,17 +143,48 @@ export class WebApiService {
   getProductUserStoragesSorted(order: string, searchQuery: string) {
     const params = new HttpParams()
       .set('order', order)
-      .set('product.name', searchQuery); // Passez la requête de recherche à l'API
+      .set('product.name', searchQuery);
 
     return this.http.get(this.apiUrl + '/product_user_storages', { params });
   }
 
-getProductUserStorageByDLC(){
-  const params = new HttpParams()
-  .set('DLC', minus7days);
-  
-  return this.http.get(this.apiUrl + '/product_user_storages', { params });
-}
+  getProductUserStoragesExpiringIn7Days(): Observable<any> {
+    const today = new Date();
+    const sevenDaysFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 jours en millisecondes
+    const oneDayFromNow = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000); // 7 jours en millisecondes
+    const params = new HttpParams()
+      .set('DLC[strictly_after]', oneDayFromNow.toISOString())
+      .set('DLC[before]', sevenDaysFromNow.toISOString());
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
+
+  getProductUserStoragesExpiringIn15Days(): Observable<any> {
+    const today = new Date();
+    const sevenDaysFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const fifteenDaysFromNow = new Date(today.getTime() + 15 * 24 * 60 * 60 * 1000);
+    const params = new HttpParams()
+      .set('DLC[strictly_after]', sevenDaysFromNow.toISOString())
+      .set('DLC[before]', fifteenDaysFromNow.toISOString());
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
+
+  getProductUserStoragesExpiringIn1Day(): Observable<any> {
+    const today = new Date();
+    const oneDayFromNow = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000); // 7 jours en millisecondes
+    console.log('Date limite de consommation (1 jours) :', oneDayFromNow.toISOString());
+    console.log('Date du jour :', today.toISOString());
+    const params = new HttpParams()
+      .set('DLC[strictly_after]', today.toISOString())
+      .set('DLC[before]', oneDayFromNow.toISOString());
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
+
+  getProductUserStoragesExpired(): Observable<any> {
+    const today = new Date();
+    const params = new HttpParams()
+      .set('DLC[before]', today.toISOString());
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
 
   // PRODUCT_FOR_LIST
 
