@@ -26,11 +26,18 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Nutriscore: </ion-label>{{ productUserStorage.product.nutriscore }}
+      <ion-label>Nutriscore: </ion-label>{{ productUserStorage.product.nutriscore | uppercase}}
     </ion-item>
     <ion-item>
-      <ion-img [src]="productUserStorage.product.image"></ion-img>
+      <ng-container *ngIf="!productUserStorage.product.image">
+        <ion-img
+          src="https://ionicframework.com/docs/img/demos/card-media.png"
+          alt="Mountain icon"
+        ></ion-img>
+      </ng-container>
+      <ion-img *ngIf="productUserStorage.product.image" [src]="productUserStorage.product.image"></ion-img>
     </ion-item>
+
   </ion-list>
 
   <ion-list *ngIf="productUserStorage">

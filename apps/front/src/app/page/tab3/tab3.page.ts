@@ -27,15 +27,6 @@ export class Tab3Page implements OnInit {
     this.getProductUserStorages();
   }
 
-
-//FONCTION ORIGINALE
-  // loadProductUserStorage() {
-  //   this.webApiService.getProductUserStorages().subscribe((data) => {
-  //     this.productUserStorages = data['hydra:member'];
-  //   });
-  // }
-
-
   loadProductUserStorages() {
     this.webApiService.getProductUserStoragesSorted(this.order, this.searchQuery).subscribe((data: any) => {
       this.productUserStorages = data['hydra:member'];
@@ -111,6 +102,14 @@ export class Tab3Page implements OnInit {
   onSearchBar(event: any) {
     this.searchQuery = event.target.value;
     this.loadProductUserStorages();
+  }
+
+  calculateDaysDifference(dateStr: string): number {
+    const today = new Date();
+    const givenDate = new Date(dateStr);
+    const timeDifference = givenDate.getTime() - today.getTime();
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+    return Math.floor(daysDifference);
   }
 
 }
