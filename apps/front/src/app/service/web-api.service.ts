@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -35,10 +34,7 @@ export class WebApiService {
   constructor(private http: HttpClient) { }
 
 
-
-
   // STORAGES user
-
 
   getStorages(userId: string): Observable<any> {
     const params = new HttpParams().set('user', userId);
@@ -54,15 +50,11 @@ export class WebApiService {
     );
   }
 
-
-   createStorage(name: string, userId: string): Observable<any> {
-
-  deleteStorage(id: number): Observable<any> {
+  deleteStorages(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
   }
 
   createStorage(name: string, userId: string): Observable<any> {
-
     const storage: StorageCreationRequest = {
       name: name,
       user: `/api/users/${userId}`,
@@ -70,20 +62,13 @@ export class WebApiService {
     return this.http.post(`${this.apiUrl}/storages`, storage);
   }
 
-
   getStorage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages/`);
   }
 
-
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
   }
-
-
-
-
-
 
   // PRODUCTS
 
@@ -93,13 +78,11 @@ export class WebApiService {
 
   getProduct(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/products/${id}`);
-
-
   }
+
   saveProduct(product: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/products`, product);
   }
-
 
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/products/${id}`);
@@ -146,17 +129,45 @@ export class WebApiService {
   deleteProductUserStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
   }
-// ORIGINAL
-  // getProductUserStoragesSorted(order: string): Observable<any> {
-  //   const params = new HttpParams().set('order[id]', order);
-  //   return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
-  // }
+
   getProductUserStoragesSorted(order: string, searchQuery: string) {
     const params = new HttpParams()
       .set('order', order)
-      .set('product.name', searchQuery); // Passez la requête de recherche à l'API
+      .set('product.name', searchQuery);
 
     return this.http.get(this.apiUrl + '/product_user_storages', { params });
+  }
+  
+  protected today = new Date();
+  protected sevenDaysFromNow = new Date(this.today.getTime() + 7 * 24 * 60 * 60 * 1000);
+  protected oneDayFromNow = new Date(this.today.getTime() + 1 * 24 * 60 * 60 * 1000);
+  protected fifteenDaysFromNow = new Date(this.today.getTime() + 15 * 24 * 60 * 60 * 1000);
+
+  getProductUserStoragesExpiringIn7Days(): Observable<any> {
+    const params = new HttpParams()
+      .set('DLC[strictly_after]',this.oneDayFromNow.toISOString())
+      .set('DLC[before]', this.sevenDaysFromNow.toISOString());
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
+
+  getProductUserStoragesExpiringIn15Days(): Observable<any> {
+    const params = new HttpParams()
+      .set('DLC[strictly_after]', this.sevenDaysFromNow.toISOString())
+      .set('DLC[before]', this.fifteenDaysFromNow.toISOString());
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
+
+  getProductUserStoragesExpiringIn1Day(): Observable<any> {
+    const params = new HttpParams()
+      .set('DLC[strictly_after]', this.today.toISOString())
+      .set('DLC[before]', this.oneDayFromNow.toISOString());
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
+  }
+
+  getProductUserStoragesExpired(): Observable<any> {
+    const params = new HttpParams()
+      .set('DLC[before]', this.today.toISOString());
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { params });
   }
 
   // PRODUCT_FOR_LIST
@@ -196,4 +207,3 @@ export class WebApiService {
   }
 
 }
-

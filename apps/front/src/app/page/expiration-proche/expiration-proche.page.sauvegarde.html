@@ -23,17 +23,17 @@
         PERIME
       </ion-list-header>
 
-      <ion-col size="6" *ngFor="let productUserStorage of productUserStoragesExpired" class="perime">
+      <ion-col size="3" *ngFor="let productUserStorage of productUserStorages" class="perime">
         <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) < 0">
-          <ion-card class="perime product-thumbnail" [routerLink]="['/product-detail', productUserStorage.id]">
-            <ion-card-content>
-              <div class="ion-text-center">
-                <h3 class="textStyle"> {{ productUserStorage.product.name }} </h3>
-                <h3 class="textStyle"> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</h3>
-                <h3 class="textStyle"> Périmé depuis: {{ calculateDaysDifference(productUserStorage.DLC)* -1 }} J</h3>
+          <a [routerLink]="['/product-detail', productUserStorage.id]">
+            <div class="product-thumbnail">
+              <div class="product-thumbnail-title">
+                <p> {{ productUserStorage.product.name }} </p>
+                <!-- <p> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</p> -->
+                <p> Périmé depuis: {{ calculateDaysDifference(productUserStorage.DLC)* -1 }}</p>
               </div>
-            </ion-card-content>
-          </ion-card>
+            </div>
+          </a>
         </ng-container>
       </ion-col>
     </ion-row>
@@ -42,7 +42,9 @@
       <ion-list-header>
         Dans 1 jour
       </ion-list-header>
-      <ion-col size="6" *ngFor="let productUserStorage of productUserStoragesExpiringIn1Day" class="dans-1-jour">
+      <ion-col size="6" *ngFor="let productUserStorage of productUserStorages" class="dans-1-jour">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC)  === 0 ">
+
           <ion-card class="dans-1-jour product-thumbnail" [routerLink]="['/product-detail', productUserStorage.id]">
             <ion-card-content>
               <div class="ion-text-center">
@@ -52,15 +54,18 @@
               </div>
             </ion-card-content>
           </ion-card>
+        </ng-container>
+
       </ion-col>
     </ion-row>
 
-
-    <ion-row>
+    <!-- <ion-row>
       <ion-list-header>
         Dans 7 jours
       </ion-list-header>
-      <ion-col size="6" *ngFor="let productUserStorage of productUserStoragesExpiringIn7Days" class="dans-7-jours">
+      <ion-col size="6" *ngFor="let productUserStorage of productUserStorages" class="dans-7-jours">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 7 && calculateDaysDifference(productUserStorage.DLC) > 1">
+
           <ion-card  class="dans-7-jours product-thumbnail"  [routerLink]="['/product-detail', productUserStorage.id]">
             <ion-card-content>
               <div class="ion-text-center">
@@ -70,14 +75,35 @@
             </div>
             </ion-card-content>
         </ion-card>
+        </ng-container>
+      </ion-col>
+    </ion-row> -->
+
+    <ion-row>
+      <ion-list-header>
+        Dans 7 jours
+      </ion-list-header>
+      <ion-col size="6" *ngFor="let productUserStorage of productUserStorages" class="dans-7-jours">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 7 && calculateDaysDifference(productUserStorage.DLC) > 1">
+          <ion-card  class="dans-7-jours product-thumbnail"  [routerLink]="['/product-detail', productUserStorage.id]">
+            <ion-card-content>
+              <div class="ion-text-center">
+                <h3 class="textStyle"> {{ productUserStorage.product.name }} </h3>
+                <h3 class="textStyle"> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</h3>
+                <h3 class="textStyle"> J - {{ calculateDaysDifference(productUserStorage.DLC) }}</h3>
+            </div>
+            </ion-card-content>
+        </ion-card>
+        </ng-container>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-list-header>
-        Dans moins de 15 jours
+        Dans 15 jours
       </ion-list-header>
-      <ion-col size="6" *ngFor="let productUserStorage of productUserStoragesExpiringIn15Days" class="dans-15-jours">
+      <ion-col size="6" *ngFor="let productUserStorage of productUserStorages" class="dans-15-jours">
+        <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 15 && calculateDaysDifference(productUserStorage.DLC) > 7">
           <ion-card  class="dans-15-jours product-thumbnail"  [routerLink]="['/product-detail', productUserStorage.id]">
             <ion-card-content>
               <div class="ion-text-center">
@@ -87,6 +113,7 @@
               </div>
             </ion-card-content>
           </ion-card>
+        </ng-container>
       </ion-col>
     </ion-row>
   </ion-grid>

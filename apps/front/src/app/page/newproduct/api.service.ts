@@ -52,7 +52,7 @@ export class ApiService {
 
 
 
-      private readonly API_URL = 'https://127.0.0.1:8000/api'; // for web salim A
+      // private readonly API_URL = 'https://127.0.0.1:8000/api'; // for web salim A
 
 
     // private readonly API_URL = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
