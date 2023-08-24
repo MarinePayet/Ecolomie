@@ -142,5 +142,7 @@
       console.log('onClickCheckBox', product);
     }
 
+    
+
 
   }

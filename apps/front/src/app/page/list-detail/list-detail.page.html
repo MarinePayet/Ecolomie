@@ -1,87 +1,66 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button routerLink="/login" color="warning">
-        <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
-  </ion-toolbar>
-  <ion-toolbar color="danger">
-    idList : {{ idList}} //
-  </ion-toolbar>
-  <ion-header>
-    <ion-toolbar color="light">
-      <ion-buttons slot="end">
-        <ion-button size="small" color="primary" routerLink="/newproduct-for-list/{{idList}}">
-          <ion-icon name="add"></ion-icon>
-          <ion-label>Ajouter un produit</ion-label>
-        </ion-button>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+      <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
+      <ion-buttons slot="end">
+          <ion-button routerLink="/login" color="warning">
+              <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="light">
+      <ion-buttons slot="end">
+          <ion-button size="small" color="primary" routerLink="/newproduct-for-list/{{idList}}">
+              <ion-icon name="add"></ion-icon>
+              <ion-label>Ajouter un produit</ion-label>
+          </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
   <ion-grid>
-    <ion-col *ngFor="let myListProduct of myListProducts, let i = index">
+    <ion-col size="12" *ngFor="let myListProduct of myListProducts, let i = index">
       <ng-container *ngIf="myListProduct.myList.id === idList">
-        <ion-list>
-          <ion-item-sliding>
-            <ion-item color="primary">
-              <ion-list >
-                <ion-checkbox (ionChange)="onClickCheckBox($event, myListProduct)">
-                  <ng-container *ngIf="myListProduct.isProductBuy === true">
-                    <ion-item class="rayer">
-                      id: {{ myListProduct.id }}
-                      <br>
-                      name : {{ myListProduct.productForList.name }}
-                      <br>
-                      qtt : {{ myListProduct.quantity }}
-                      <br>
-                      courseId : {{ myListProduct.myList.id }}
-                      <br>
-                      buy : {{ myListProduct.isProductBuy === true ? 'Yes' : 'No' }}
-                    </ion-item>
-                  </ng-container>
-                  <ng-container *ngIf="myListProduct.isProductBuy === false">
-                    <ion-item >
-                      id: {{ myListProduct.id }}
-                      <br>
-                      name : {{ myListProduct.productForList.name }}
-                      <br>
-                      qtt : {{ myListProduct.quantity }}
-                      <br>
-                      courseId : {{ myListProduct.myList.id }}
-                      <br>
-                      buy : {{ myListProduct.isProductBuy === true ? 'Yes' : 'No' }}
-                    </ion-item>
-                  </ng-container>
+        <ion-card [class.transparent-card]="myListProduct.isProductBuy" color="light">
+          <ion-card-header class="ion-text-center">
+            <ion-card-title><strong>{{ myListProduct.productForList.name }}</strong></ion-card-title>
+            <ion-card-subtitle>Acheté : <strong>{{ myListProduct.isProductBuy ? 'Oui' : 'Non' }}</strong></ion-card-subtitle>
+          </ion-card-header>
 
-                </ion-checkbox>
-                  <ion-button class="button-spacing" color="white" (click)="decreaseQuantity(myListProduct)">-</ion-button>
-                    {{ myListProduct.quantity }}
-                  <ion-button class="button-spacing" color="white" (click)="increaseQuantity(myListProduct)">+</ion-button>
+          <ion-card-content class="ion-text-center">
+            Quantité : <strong>{{ myListProduct.quantity }}</strong>
+          </ion-card-content>
 
-                </ion-list>
-              </ion-item>
-              <ion-item-options>
-                <ion-item-option color="danger" (click)="openDeleteConfirm( myListProduct.id)">
-                  <ion-icon slot="icon-only" name="trash"></ion-icon>
-                </ion-item-option>
-
-              </ion-item-options>
-              </ion-item-sliding>
-          </ion-list>
-        </ng-container>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="2">
+              <ion-checkbox (ionChange)="onClickCheckBox($event, myListProduct)"></ion-checkbox>
+            </ion-col>
+            <ion-col size="3" class="ion-text-center">
+              <ion-button fill="clear" color="primary" (click)="decreaseQuantity(myListProduct)">
+                <ion-icon name="remove-circle"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="2" class="ion-text-center">
+              <strong>{{ myListProduct.quantity }}</strong>
+            </ion-col>
+            <ion-col size="3" class="ion-text-center">
+              <ion-button fill="clear" color="success" (click)="increaseQuantity(myListProduct)">
+                <ion-icon name="add-circle"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="2">
+              <ion-button fill="clear" color="danger" (click)="openDeleteConfirm(myListProduct.id)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ng-container>
     </ion-col>
   </ion-grid>
 </ion-content>
-
-
-
 
