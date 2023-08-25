@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { ApiForListService } from './api-for-list.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'; // Import Router here
 
 @Component({
   selector: 'app-newproduct-for-list',
@@ -15,14 +15,14 @@ export class NewproductForListPage implements OnInit {
     name: string;
   };
 
-
   categories: any[] = [];
   idList?: number
 
   constructor(
     private apiForListService: ApiForListService,
     private toastController: ToastController,
-    private route: ActivatedRoute)
+    private route: ActivatedRoute,
+    private router: Router) // Inject Router service here
       {
         this.product = {
           quantity: 0,
@@ -38,10 +38,7 @@ export class NewproductForListPage implements OnInit {
     });
   }
 
-
-
   async addProduct() {
-
     this.product.category = '/api/categories/' + this.product.category;
 
     try {
@@ -57,8 +54,6 @@ export class NewproductForListPage implements OnInit {
         updated_at: '',
         created_at: '',
         text: 'bliblablou',
-
-
       };
       console.log("myListData : ")
       console.log(myListData);
@@ -71,8 +66,10 @@ export class NewproductForListPage implements OnInit {
         position: 'bottom'
       });
       toast.present();
-    } catch (error) {
 
+      this.router.navigate(['/list-detail', this.idList]);
+
+    } catch (error) {
       const toast = await this.toastController.create({
         message: 'Une erreur est survenue lors de l\'ajout du produit.',
         duration: 2000,
@@ -83,18 +80,14 @@ export class NewproductForListPage implements OnInit {
     }
   }
 
-    getCategories() {
-      this.apiForListService.getCategories().subscribe((data) => {
-        this.categories = data['hydra:member'];
-        console.log(this.categories)
-      });
+  getCategories() {
+    this.apiForListService.getCategories().subscribe((data) => {
+      this.categories = data['hydra:member'];
+      console.log(this.categories)
+    });
+  }
 
-    }
-
-    ionViewWillEnter() {
-      this.getCategories();
-
-    }
+  ionViewWillEnter() {
+    this.getCategories();
+  }
 }
-
-

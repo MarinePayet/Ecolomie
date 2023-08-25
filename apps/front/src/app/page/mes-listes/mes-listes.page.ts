@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { WebApiService } from '../../service/web-api.service';
 import { AlertController, ToastController } from '@ionic/angular';
+import { AuthService } from '../login/auth.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-mes-listes',
   templateUrl: './mes-listes.page.html',
@@ -9,22 +12,39 @@ import { AlertController, ToastController } from '@ionic/angular';
 export class MesListesPage implements OnInit {
 
   my_lists: any;
+  userId: string | null;
 
   constructor(
     private webApiService: WebApiService,
     private alertController: AlertController,
-    private toastController: ToastController
-  ) {}
+    private toastController: ToastController,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.my_lists = [];
+    this.userId = this.authService.getCurrentUserId();
+  }
 
   ngOnInit() {
+    if (!this.isLoggedIn) {
+      console.log('Utilisateur non connecté, redirection vers la connexion.');
+      this.router.navigate(['/login']);
+      return;
+    }
     this.getMyLists();
   }
 
   getMyLists() {
-    this.webApiService.getMyLists().subscribe((data) => {
-      this.my_lists = data['hydra:member'];
-    });
+    if (this.userId) {
+      this.webApiService.getMyLists(this.userId).subscribe((data) => {
+          this.my_lists = data['hydra:member'];
+          console.log(this.my_lists);
+      });
+    } else {
+      console.error('Utilisateur non trouvé.');
+    }
   }
+
 
   async deleteList(list: any) {
     const alert = await this.alertController.create({
@@ -83,17 +103,19 @@ export class MesListesPage implements OnInit {
           {
             text: 'Créer',
             handler: (data) => {
-              const newList = { name: data.name };
-              this.webApiService.createList(newList.name).subscribe(
-                () => {
-                  console.log('Liste créée avec succès.');
-                  this.presentToast('Liste créée avec succès');
-                  this.getMyLists();
-                },
-                (error) => {
-                  console.log(error);
-                }
-              );
+              if (this.userId) {
+                const newList = { name: data.name };
+                this.webApiService.createList(newList.name, this.userId).subscribe(
+                  () => {
+                    console.log('Liste créée avec succès.');
+                    this.presentToast('Liste créée avec succès');
+                    this.getMyLists();
+                  },
+                  (error) => {
+                    console.log(error);
+                  }
+                );
+              }
             },
           },
         ],
@@ -103,4 +125,14 @@ export class MesListesPage implements OnInit {
       });
   }
 
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn;
+  }
+
+  async onLogout() {
+    this.authService.logout();
+    console.log('Logout successful');
+    this.presentToast('Logout successful');
+    this.router.navigate(['/login']);
+  }
 }

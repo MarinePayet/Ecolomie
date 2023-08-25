@@ -8,6 +8,12 @@ interface StorageCreationRequest {
   name: string;
   user: string;
 }
+
+interface ListCreationRequest {
+  name: string;
+  user: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -94,18 +100,34 @@ export class WebApiService {
   }
   // LISTS
 
-  getMyLists(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/my_lists`);
+  getMyLists(userId: string): Observable<any> {
+    const params = new HttpParams().set('user', userId);
+
+    return this.http.get(`${this.apiUrl}/my_lists`, { params }).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 401 || err.status === 403) {
+          console.error('Accès non autorisé.');
+          return throwError('Accès non autorisé.');
+        }
+        return throwError(err);
+      })
+    );
+  }
+
+  createList(name: string, userId: string): Observable<any> {
+    const list = {
+      name: name,
+      user: `/api/users/${userId}`,
+    };
+    return this.http.post(`${this.apiUrl}/my_lists`, list);
   }
 
   deleteList(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
   }
 
-  createList(name: string): Observable<any> {
-    const list = { name: name };
-    return this.http.post(`${this.apiUrl}/my_lists`, list);
-  }
+
+
 
   deleteProductFromList(idList: number, productId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${idList}/${productId}`);
