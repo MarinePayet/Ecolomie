@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 interface StorageCreationRequest {
   name: string;
@@ -33,9 +34,9 @@ export class WebApiService {
 
   // private readonly apiUrl = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
 
-     private readonly apiUrl = 'https://127.0.0.1:8000/api'; // for web salim A
 
- // private readonly apiUrl = 'http://127.0.0.1:8000/api'; // for web Marine
+private readonly apiUrl = environment.apiUrl;
+
 
   constructor(private http: HttpClient) { }
 
@@ -125,8 +126,6 @@ export class WebApiService {
   deleteList(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
   }
-
-
 
 
   deleteProductFromList(idList: number, productId: number): Observable<any> {

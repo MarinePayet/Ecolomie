@@ -15,6 +15,12 @@ export class AuthService {
 
 
   constructor(private http: HttpClient) {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      this.isLoggedIn = true;
+      this.loggedInSubject.next(true);
+    }
+
     if (window.location.hostname === 'localhost') {
       this.API_URL = 'https://127.0.0.1:8000'; // URL par défaut pour le web
     } else if (window.location.hostname.startsWith('192.168.1.')) {
@@ -38,7 +44,6 @@ export class AuthService {
         const userIdMatch = response['@id'] ? response['@id'].match(/\/(\d+)$/) : null;
         const userId = userIdMatch ? userIdMatch[1] : null;
         console.log('Utilisateur inscrit avec l\'ID:', userId);
-
 
         return this.login(email, password);
       }),
@@ -65,11 +70,12 @@ export class AuthService {
         const userIdMatch = userIdUrl ? userIdUrl.match(/\/(\d+)$/) : null;
         const userId = userIdMatch ? userIdMatch[1] : null;
 
+        localStorage.setItem('jwt', token);
+        return this.http.get<any>(`${this.API_URL}/api/users/${40}`);
 
-        return this.http.get<any>(`${this.API_URL}/api/users/${74}`);
       }),
       tap((user) => {
-        
+
         const userId = user.id;
         if (userId) {
           localStorage.setItem('userId', userId.toString());
@@ -87,8 +93,8 @@ export class AuthService {
 
   logout(): void {
     this.isLoggedIn = false;
-    this.loggedInSubject.next(false); // Émettre une nouvelle valeur
-    localStorage.removeItem('jwt');
+    this.loggedInSubject.next(false);
+    localStorage.removeItem('jwt'); // Supprimer le token lors de la déconnexion
   }
 
 
