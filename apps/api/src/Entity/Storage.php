@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata as Api;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\StorageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,25 +15,34 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: StorageRepository::class)]
-#[Api\ApiResource(
+// #[Api\ApiResource(
+//     normalizationContext: ['groups' => ['storage:read']],
+//     denormalizationContext: ['groups' => ['storage:write']],
+// )]
+
+#[GetCollection(normalizationContext: ['groups' => ['storage:read']],)] 
+#[Get(normalizationContext: ['groups' => ['storage:read']],)]
+#[Post(denormalizationContext:['groups' => ['storage:post']])]
+
+#[Put(denormalizationContext: ['groups' => ['storage:write']],)]
+#[Delete(
     normalizationContext: ['groups' => ['storage:read']],
-    denormalizationContext: ['groups' => ['storage:write']],
-)]
+    denormalizationContext: ['groups' => ['storage:write']],)]
 
 class Storage
 {
-    #[ORM\Id]
+    #[ORM\Id] 
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['storage:read', 'product_user_storage:read','storage:write','product_user_storage:update'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['storage:read', 'storage:write', 'product_user_storage:read','product_user_storage:update'])]
+    #[Groups(['storage:read', 'storage:write', 'product_user_storage:read','product_user_storage:update', 'storage:post'])]
     private ?string $name = null; 
 
     #[ORM\ManyToOne(inversedBy: 'storages')]
-    #[Groups(['storage:read', 'storage:write','product_user_storage:read'])]
+    #[Groups(['storage:read', 'storage:write','product_user_storage:read', 'storage:post'])]
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'storage', targetEntity: ProductUserStorage::class)]

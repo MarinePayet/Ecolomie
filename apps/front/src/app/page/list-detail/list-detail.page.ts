@@ -13,10 +13,6 @@
     styleUrls: ['./list-detail.page.scss'],
   })
 
-  // interface CheckboxChangeEventDetail<T = any> {
-  //   value: T;
-  //   checked: boolean;
-  // }
   export class ListDetailPage implements OnInit {
 
     productsOfMyList: any;

@@ -44,7 +44,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 class ProductUserStorage
 {
-    #[ORM\Id]
+    #[ORM\Id] 
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['my_list:read','product_user_storage:read', 'product_user_storage:write','product_user_storage:update'])]       
@@ -146,5 +146,4 @@ class ProductUserStorage
 
        // return $this;
    // }
-   
 }
