@@ -1,20 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
       <ion-buttons slot="start">
-          <ion-back-button defaultHref="/"></ion-back-button>
+          <ion-back-button defaultHref="/" style="font-size: 1.5em;"></ion-back-button>
       </ion-buttons>
       <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
       <ion-buttons slot="end">
-          <ion-button routerLink="/login" color="warning">
-              <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
-          </ion-button>
+        <ion-button routerLink="/login" color="warning" *ngIf="!isLoggedIn">
+          <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" *ngIf="isLoggedIn" (click)="onLogout()">
+          <ion-icon slot="icon-only" size="large" name="log-out-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
   </ion-toolbar>
 
   <ion-toolbar color="light">
       <ion-buttons slot="end">
           <ion-button size="small" color="primary" routerLink="/newproduct-for-list/{{idList}}">
-              <ion-icon name="add"></ion-icon>
+              <ion-icon name="add" style="font-size: 1.2em;"></ion-icon>
               <ion-label>Ajouter un produit</ion-label>
           </ion-button>
       </ion-buttons>
@@ -37,11 +40,11 @@
 
           <ion-row class="ion-align-items-center">
             <ion-col size="2">
-              <ion-checkbox (ionChange)="onClickCheckBox($event, myListProduct)"></ion-checkbox>
+              <ion-checkbox (ionChange)="onClickCheckBox($event, myListProduct)" style="zoom: 1.5;"></ion-checkbox>
             </ion-col>
             <ion-col size="3" class="ion-text-center">
               <ion-button fill="clear" color="primary" (click)="decreaseQuantity(myListProduct)">
-                <ion-icon name="remove-circle"></ion-icon>
+                <ion-icon name="remove-circle" style="font-size: 1.2em;"></ion-icon>
               </ion-button>
             </ion-col>
             <ion-col size="2" class="ion-text-center">
@@ -49,12 +52,12 @@
             </ion-col>
             <ion-col size="3" class="ion-text-center">
               <ion-button fill="clear" color="success" (click)="increaseQuantity(myListProduct)">
-                <ion-icon name="add-circle"></ion-icon>
+                <ion-icon name="add-circle" style="font-size: 1.2em;"></ion-icon>
               </ion-button>
             </ion-col>
             <ion-col size="2">
               <ion-button fill="clear" color="danger" (click)="openDeleteConfirm(myListProduct.id)">
-                <ion-icon name="trash"></ion-icon>
+                <ion-icon name="trash" style="font-size: 1.2em;"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>
@@ -63,4 +66,3 @@
     </ion-col>
   </ion-grid>
 </ion-content>
-

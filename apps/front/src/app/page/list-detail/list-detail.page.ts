@@ -142,7 +142,18 @@
       console.log('onClickCheckBox', product);
     }
 
-    
+    get isLoggedIn(): boolean {
+      return this.authService.isLoggedIn;
+    }
+
+    async onLogout() {
+      this.authService.logout();
+      console.log('Logout successful');
+      this.presentToast('Logout successful');
+      this.router.navigate(['/login']);
+    }
+
+
 
 
   }
