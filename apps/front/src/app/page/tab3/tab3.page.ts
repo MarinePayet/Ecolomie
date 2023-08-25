@@ -41,7 +41,6 @@ export class Tab3Page implements OnInit {
   getProductUserStorages() {
     this.webApiService.getProductUserStorages().subscribe((data) => {
       this.productUserStorages = data['hydra:member'];
-      console.log(this.productUserStorages);
     }
     );
   }
@@ -49,7 +48,6 @@ export class Tab3Page implements OnInit {
   getProductUserStorage(id: number) {
     this.webApiService.getProductUserStorage(id).subscribe((data) => {
       this.productUserStorages = data['hydra:member'];
-      console.log(this.productUserStorages);
     }
     );
   }

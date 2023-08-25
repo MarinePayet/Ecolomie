@@ -39,7 +39,7 @@
         if (this.idList !== null) {
             this.getProductsOfMyList();
           }
-          console.log(this.getMyListWithProducts());
+        this.getMyListWithProducts();
       });
     }
 
@@ -142,7 +142,7 @@
       console.log('onClickCheckBox', product);
     }
 
-    
+
 
 
   }

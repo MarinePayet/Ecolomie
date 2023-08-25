@@ -22,17 +22,17 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
 #[Api\ApiResource(
-    normalizationContext: ['groups' => ['product_user_storage:read']],
-    denormalizationContext: ['groups' => ['product_user_storage:write']],
+    // normalizationContext: ['groups' => ['product_user_storage:read']],
+    // denormalizationContext: ['groups' => ['product_user_storage:write']],
     order: ['storage.name', 'DLC' => 'ASC']
 )]
-// #[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
-// #[Post(
-//     normalizationContext: ['groups' => ['product_user_storage:read']],
-//     denormalizationContext: ['groups' => ['product_user_storage:write']],)]
-// #[GetCollection(normalizationContext: ['groups' => ['product_user_storage:read']],)] 
-// #[Delete()] 
-// #[Put(denormalizationContext: ['groups' => ['product_user_storage:update']],)]
+#[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
+#[Post(
+    normalizationContext: ['groups' => ['product_user_storage:read']],
+    denormalizationContext: ['groups' => ['product_user_storage:write']],)]
+#[GetCollection(normalizationContext: ['groups' => ['product_user_storage:read']],)] 
+#[Delete()] 
+#[Put(denormalizationContext: ['groups' => ['product_user_storage:update']],)]
 
 #[ApiFilter(
     SearchFilter::class,
@@ -58,7 +58,7 @@ class ProductUserStorage
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]    
     private ?float $quantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
+    #[ORM\ManyToOne(inversedBy: 'productUserStorages', cascade: ['persist'] )]
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]
     private ?Storage $storage = null;
 
@@ -67,7 +67,7 @@ class ProductUserStorage
     private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'product_user_storage')]
-    #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]
+    #[Groups(['product_user_storage:read','product_user_storage:write','product:read'])]
     private ?Product $product = null;
 
     public function getId(): ?int

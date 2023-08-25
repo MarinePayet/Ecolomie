@@ -23,7 +23,6 @@ export class MesListesPage implements OnInit {
   getMyLists() {
     this.webApiService.getMyLists().subscribe((data) => {
       this.my_lists = data['hydra:member'];
-      console.log(this.my_lists);
     });
   }
 
