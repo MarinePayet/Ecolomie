@@ -28,7 +28,7 @@
           <ion-card class="perime product-thumbnail" [routerLink]="['/product-detail', productUserStorage.id]">
             <ion-card-content>
               <div class="ion-text-center">
-                <h3 class="textStyle"> {{ productUserStorage.product.name }} </h3>
+                <h3 class="textStyle"> {{ productUserStorage.product.name | slice:0:15 }} </h3>
                 <h3 class="textStyle"> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</h3>
                 <h3 class="textStyle"> Périmé depuis: {{ calculateDaysDifference(productUserStorage.DLC)* -1 }} J</h3>
               </div>
@@ -46,9 +46,9 @@
           <ion-card class="dans-1-jour product-thumbnail" [routerLink]="['/product-detail', productUserStorage.id]">
             <ion-card-content>
               <div class="ion-text-center">
-                <h3 class="textStyle">  {{ productUserStorage.product.name }} </h3>
-                <h3 class="textStyle">  {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</h3>
-                <h3 class="textStyle">  J - {{ calculateDaysDifference(productUserStorage.DLC) }}</h3>
+                <h3 class="textStyle"> {{ productUserStorage.product.name | slice:0:15 }} </h3>
+                <h3 class="textStyle"> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</h3>
+                <!-- <h3 class="textStyle">  J - {{ calculateDaysDifference(productUserStorage.DLC) }}</h3> -->
               </div>
             </ion-card-content>
           </ion-card>
@@ -64,7 +64,7 @@
           <ion-card  class="dans-7-jours product-thumbnail"  [routerLink]="['/product-detail', productUserStorage.id]">
             <ion-card-content>
               <div class="ion-text-center">
-                <h3 class="textStyle"> {{ productUserStorage.product.name }} </h3>
+                <h3 class="textStyle"> {{ productUserStorage.product.name | slice:0:15 }} </h3>
                 <h3 class="textStyle"> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</h3>
                 <h3 class="textStyle"> J - {{ calculateDaysDifference(productUserStorage.DLC) }}</h3>
             </div>
@@ -81,7 +81,7 @@
           <ion-card  class="dans-15-jours product-thumbnail"  [routerLink]="['/product-detail', productUserStorage.id]">
             <ion-card-content>
               <div class="ion-text-center">
-                <h3 class="textStyle">{{ productUserStorage.product.name }} </h3>
+                <h3 class="textStyle"> {{ productUserStorage.product.name | slice:0:15 }} </h3>
                 <h3 class="textStyle"> {{ productUserStorage.DLC | date: 'dd/MM/yyyy' }}</h3>
                 <h3 class="textStyle">J - {{ calculateDaysDifference(productUserStorage.DLC) }}</h3>
               </div>
@@ -90,7 +90,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
 </ion-content>
 
 

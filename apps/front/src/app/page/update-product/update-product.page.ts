@@ -19,12 +19,13 @@ export class UpdateProductPage  implements OnInit {
     private webApiService: WebApiService,
     private router: Router,
     private toastController: ToastController
-    ) {}
+    ) {
+
+    }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
         let id = params.get('id');
-        console.log('Product ID:', id);
         if (id !== null) {
             this.getProductUserStorage(Number(id)); // Conversion de la chaîne en nombre
         }
@@ -34,15 +35,16 @@ export class UpdateProductPage  implements OnInit {
       this.storageOptions = data;
   }
     );
+
 }
 
   getProductUserStorage(id: number) {
     this.webApiService.getProductUserStorage(id).subscribe((data) => {
       this.productUserStorage = data;
-      console.log(this.productUserStorage);
+      if (this.productUserStorage && this.productUserStorage.storage) {
+        this.productUserStorage.originalStorageId = this.productUserStorage.storage.id;
+      };
       this.getStorageOptions(); // Ajoutez cette ligne pour récupérer les options d'emplacement
-      console.log(typeof(this.storageOptions));
-      console.log('porut update');
     });
   }
 
@@ -52,35 +54,34 @@ export class UpdateProductPage  implements OnInit {
     });
   }
 
-
   async updateProductUserStorage() {
-    // Prepare the data to send
-    let updatedData = {
-      ...this.productUserStorage,
-      storage: this.productUserStorage.storage // Send the full path to the storage
-    };
 
-    // Call your service to update the data
-    try {
-      let data = await this.webApiService.updateProductUserStorage(this.productUserStorage.id, updatedData).toPromise();
-      console.log('Product updated successfully!');
-      this.productUserStorage = data;
+    if (this.productUserStorage && this.productUserStorage.storage.id !== this.productUserStorage.originalStorageId) {
+
+      let updatedData = {
+        ...this.productUserStorage,
+        storage: this.productUserStorage.storage
+      };
+      try {
+        let data = await this.webApiService.updateProductUserStorage(this.productUserStorage.id, updatedData).toPromise();
+        console.log('Product updated successfully!');
+        this.productUserStorage = data;
+        this.router.navigate(['/tabs/tab3']);
+      } catch (error) {
+        console.log('There was an error updating the product.');
+      }
+    } else {
       this.router.navigate(['/tabs/tab3']);
-    } catch (error) {
-      console.log('There was an error updating the product.');
     }
   }
-
 
     updateStorage(storageId: number) {
       this.productUserStorage.storage.id = storageId;
     }
 
-
     deleteProductUserStorage(id: number) {
       this.webApiService.deleteProductUserStorage(id).subscribe((data) => {
         this.productUserStorage = data;
-        console.log(this.productUserStorage);
       }
       );
     }

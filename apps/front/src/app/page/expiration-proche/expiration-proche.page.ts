@@ -28,28 +28,24 @@ export class ExpirationProchePage implements OnInit {
   getProductUserStoragesExpiringIn7Days() {
     this.webApiService.getProductUserStoragesExpiringIn7Days().subscribe((data: any) => {
       this.productUserStoragesExpiringIn7Days = data['hydra:member'];
-      console.log('Produits expirant dans 7 jours :', this.productUserStoragesExpiringIn7Days);
     });
   }
 
   getProductUserStoragesExpiringIn1Day() {
     this.webApiService.getProductUserStoragesExpiringIn1Day().subscribe((data: any) => {
       this.productUserStoragesExpiringIn1Day = data['hydra:member'];
-      console.log('Produits expirant dans 1 jours :', this.productUserStoragesExpiringIn1Day);
     });
   }
 
   getProductUserStoragesExpiringIn15Days() {
     this.webApiService.getProductUserStoragesExpiringIn15Days().subscribe((data: any) => {
       this.productUserStoragesExpiringIn15Days = data['hydra:member'];
-      console.log('Produits expirant dans 1 jours :', this.productUserStoragesExpiringIn15Days);
     });
   }
 
   getProductUserStoragesExpired() {
     this.webApiService.getProductUserStoragesExpired().subscribe((data: any) => {
       this.productUserStoragesExpired = data['hydra:member'];
-      console.log('Produits périmés :', this.productUserStoragesExpired);
     });
   }
 
