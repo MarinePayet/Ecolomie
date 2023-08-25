@@ -39,7 +39,7 @@
         if (this.idList !== null) {
             this.getProductsOfMyList();
           }
-          console.log(this.getMyListWithProducts());
+        this.getMyListWithProducts();
       });
     }
 
@@ -152,7 +152,6 @@
       this.presentToast('Logout successful');
       this.router.navigate(['/login']);
     }
-
 
 
 

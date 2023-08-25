@@ -21,11 +21,11 @@
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let productUserStorage of productUserStorages">
-        <ion-card style="background-color: var(--ion-color-secondary);" [routerLink]="['/product-detail', productUserStorage.id]">
+        <ion-card class="bg-card" [routerLink]="['/product-detail', productUserStorage.id]">
           <ion-card-content>
             <div class="ion-text-center">
               <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) < 0; else oneDay">
-                <ion-badge class="perime">J- {{ calculateDaysDifference(productUserStorage.DLC) }}</ion-badge>
+                <ion-badge class="perime">J- {{ calculateDaysDifference(productUserStorage.DLC)* -1 }}</ion-badge>
               </ng-container>
               <ng-template #oneDay>
                 <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) === 1 ||calculateDaysDifference(productUserStorage.DLC) === 0 ; else sevenDays">
@@ -38,14 +38,19 @@
                 </ng-container>
               </ng-template>
               <ng-template #fifteenDays>
-                <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) < 15 ">
+                <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) <= 15; else longDays">
                   <ion-badge class="dans-15-jours ">J- {{ calculateDaysDifference(productUserStorage.DLC) }}</ion-badge>
+                </ng-container>
+              </ng-template>
+              <ng-template #longDays>
+                <ng-container *ngIf="calculateDaysDifference(productUserStorage.DLC) > 15; else longDays">
+                  <ion-badge class="dans-longtemps ">J- {{ calculateDaysDifference(productUserStorage.DLC) }}</ion-badge>
                 </ng-container>
               </ng-template>
               <h3 class="ion-text-center">{{ productUserStorage.product.name }}</h3>
               <!--class="ion-text-center""  <h3 style="color: var(--ion-color-danger-contrast);">{{ productUserStorage.DLC | date:'short' }}</h3> -->
-              <h3 class="ion-text-center">{{ productUserStorage.storage.name }}</h3>
-              <h3 class="ion-text-center">quantité : {{ productUserStorage.quantity }}</h3>
+              <h3 class="ion-text-center text-storage">{{ productUserStorage.storage.name }}</h3>
+              <h3 class="ion-text-center">* qté : {{ productUserStorage.quantity }}</h3>
             </div>
           </ion-card-content>
         </ion-card>

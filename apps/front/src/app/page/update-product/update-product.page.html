@@ -10,12 +10,12 @@
 
 <ion-content>
   <ion-list *ngIf="productUserStorage">
-
-    <ion-label>Emplacement : {{productUserStorage.storage.name}}</ion-label>
+    <ion-label>Emplacement : {{ productUserStorage?.storage?.name }}</ion-label>
+    <input type="hidden" (ngModel)="productUserStorage.originalStorageId" name="originalStorageId">
     <br>
 
     <ion-label>Nouvel emplacement : </ion-label>
-     <ion-item>
+    <ion-item>
       <ion-select [(ngModel)]="productUserStorage.storage" name="storage" aria-label="Sélectionnez un emplacement">
         <ion-select-option *ngFor="let option of storageOptions" [value]="'/api/storages/' + option.id"> {{ option.name }}</ion-select-option>
       </ion-select>

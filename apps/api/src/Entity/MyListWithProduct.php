@@ -19,8 +19,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource()]
 #[Get(
     normalizationContext:['groups' => 'read:MyListWithProduct']
-    // ,
-    // denormalizationContext:['groups' => 'write:MyListWithProduct']
 )]
 #[Post(
     normalizationContext:['groups' => 'read:MyListWithProduct'],
@@ -28,8 +26,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 #[GetCollection(
     normalizationContext:['groups' => 'read:MyListWithProduct']
-    // ,
-    // denormalizationContext:['groups' => 'write:MyListWithProduct']
 )]
 #[Put(
     normalizationContext:['groups' => 'read:MyListWithProduct'],
@@ -39,7 +35,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext:['groups' => 'read:MyListWithProduct'],
     denormalizationContext:['groups' => 'write:MyListWithProduct']
 )]
-
 
 
 class MyListWithProduct
@@ -105,7 +100,6 @@ class MyListWithProduct
 
         return $this;
     }
-
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {

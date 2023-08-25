@@ -32,10 +32,7 @@ export class ProductDetailPage implements OnInit {
   getProductUserStorage(id: number) {
     this.webApiService.getProductUserStorage(id).subscribe((data) => {
       this.productUserStorage = data;
-      console.log(this.productUserStorage);
       this.getStorageOptions(); // Ajoutez cette ligne pour récupérer les options d'emplacement
-      console.log(typeof(this.storageOptions));
-      console.log('porut');
     });
   }
 
@@ -78,7 +75,6 @@ export class ProductDetailPage implements OnInit {
   deleteProductUserStorage(id: number) {
     this.webApiService.deleteProductUserStorage(id).subscribe((data) => {
       this.productUserStorage = data;
-      console.log(this.productUserStorage);
       this.router.navigate(['/tabs/tab3']);
     }
     );

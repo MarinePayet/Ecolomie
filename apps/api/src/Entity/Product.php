@@ -37,7 +37,6 @@ class Product
     #[Groups(['product_user_storage:read',])]
     private ?Category $category = null;
 
-
     #[ORM\ManyToMany(targetEntity: MyList::class, inversedBy: 'products')]
     private Collection $my_list;
     
@@ -49,11 +48,6 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductUserStorage::class)]
     #[Groups(['product:read'])]
     private Collection $product_user_storage;
-
-
-
-    // #[ORM\ManyToOne(inversedBy: 'product')]
-    // private ?ProductUserStorage $productUserStorageId = null;
 
     public function __construct()
     {
@@ -113,7 +107,6 @@ class Product
         return $this;
     }
 
-
     /**
      * @return Collection<int, MyList>
      */
@@ -150,18 +143,6 @@ class Product
         return $this;
     }
 
-    // public function getProductUserStorageId(): ?ProductUserStorage
-    // {
-    //     return $this->productUserStorageId;
-    // }
-
-    // public function setProductUserStorageId(?ProductUserStorage $productUserStorageId): static
-    // {
-    //     $this->productUserStorageId = $productUserStorageId;
-
-    //     return $this;
-    // }
-
     /**
      * @return Collection<int, ProductUserStorage>
      */
@@ -180,7 +161,6 @@ class Product
         return $this;
     }
 
-
     public function __toString(): string
     {
         return $this->name;
@@ -197,5 +177,4 @@ class Product
         return $this;
     }
 
-   
 }

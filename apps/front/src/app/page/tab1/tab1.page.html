@@ -54,8 +54,8 @@
     </ion-card-header>
   </ion-card>
 
-  <div id="container">
-    <ion-button (click)="scheduleNotification()"> Schedule Notification</ion-button>
+  <div id="container" *ngFor="let product of productUserStorages" >
+    <ion-button  (click)="scheduleNotificationForProduct(product)"> Schedule Notification</ion-button>
   </div>
 </ion-content>
 

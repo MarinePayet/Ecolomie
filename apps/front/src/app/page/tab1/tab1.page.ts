@@ -15,6 +15,7 @@ export class Tab1Page implements OnInit {
   storages: any;
   isEditing: boolean = false;
   selectedStorageId: number | null = null;
+  productUserStorages: any;
 
   constructor(
     private webApiService: WebApiService,
@@ -143,11 +144,12 @@ export class Tab1Page implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  async scheduleNotificationForExpiration(expirationDate: Date) {
-    const heureActuelle = new Date();
-    const differenceDeTemps = expirationDate.getTime() - heureActuelle.getTime();
+  async scheduleNotificationForProduct(product: any) {
+    const expirationDate = new Date(product.DLC);
+    const currentTime = new Date();
+    const timeDifference = expirationDate.getTime() - currentTime.getTime();
 
-    if (differenceDeTemps <= 1) {
+    if (timeDifference <= 0) {
       console.log('Le produit est déjà expiré');
       return;
     }
@@ -155,12 +157,12 @@ export class Tab1Page implements OnInit {
     const options: ScheduleOptions = {
       notifications: [
         {
-          id: 44, // Vous pouvez utiliser un ID unique pour chaque produit
-          title: "Expiration du Produit",
-          body: "Le produit est sur le point d'expirer !",
-          schedule: { at: new Date(heureActuelle.getTime() + differenceDeTemps) }
+          id: product.barcode, // Utilisez un ID unique pour chaque produit
+          title: "Expiration del producto ",
+          body: (product.name, 'Le produit est sur le point d expirer !'),
+          schedule: { at: new Date(currentTime.getTime() + timeDifference) }
         }
-      ]
+      ],
     };
 
     try {
@@ -170,45 +172,23 @@ export class Tab1Page implements OnInit {
       console.error('Erreur lors de la planification de la notification :', ex);
     }
   }
-
-  async scheduleNotification()
-  {
-    let options:ScheduleOptions={
-      // notifications:[
-      //   {
-      //     id:444,
-      //     title:"Reminder Notification",
-      //     body:"Explore new variety and offers",
-      //     largeBody: "Get 30% discount on new products",
-      //     summaryText:"Exciting offers !!!"
-      //   }
-      // ]
-      notifications: [
-        {
-          id: 44, // Vous pouvez utiliser un ID unique pour chaque produit
-          title: "Expiration du Produit",
-          body: "Le produit est sur le point d'expirer !",
-          // schedule: { at: new Date(heureActuelle.getTime() + differenceDeTemps) }
-        }
-      ]
+  getProductUserStorages() {
+    this.webApiService.getProductUserStorages().subscribe((data) => {
+      this.productUserStorages = data['hydra:member'];
     }
-    try{
-      await LocalNotifications.schedule(options)
-    }
-    catch(ex)
-    {
-      alert(JSON.stringify(ex));
-    }
+    );
   }
+
 
   createNewProduct(product: any) {
     this.apiService.saveProduct(product).subscribe(() => {
       console.log('Produit créé avec succès.');
-      this.scheduleNotificationForExpiration(product.DLC); // Planifier la notification
+      this.scheduleNotificationForProduct(product); // Planifier la notification
     }, erreur => {
       console.log('Erreur lors de la création du produit :', erreur);
     });
   }
+
 
 
 }

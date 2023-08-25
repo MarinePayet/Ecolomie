@@ -36,7 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email([
         'message' => 'The email "{{ value }}" is not a valid email.'
     ])]
-    
     private ?string $email = null;
 
 
@@ -59,8 +58,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['read_user', 'write_user'])]
     private ?string $plainTextPassword = null;
 
-
-
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Groups(['read_user', 'write_user'])]
@@ -78,7 +75,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->storages = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -126,7 +122,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
     
-
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -174,7 +169,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     /**
      * @return Collection<int, Storage>
