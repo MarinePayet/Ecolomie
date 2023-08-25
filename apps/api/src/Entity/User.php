@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata as Api;
+use App\Controller\MeAction;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,10 +16,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource(
+#[Api\ApiResource(
     normalizationContext:['groups' => 'read_user'],
-    denormalizationContext:['groups' => 'write_user']
-    )]
+    denormalizationContext:['groups' => 'write_user'],
+    operations: [
+        new Api\Get(
+            uriTemplate:'/me',
+            read: false,
+            security: 'is_granted("ROLE_USER")',
+            controller: MeAction::class,
+            openapiContext: [
+                'summary' => 'show current user profile',
+            ],
+        )
+    
+    ]
+)]
+
 #[ORM\EntityListeners(['App\EntityListener\PasswordListener'])]
 
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
