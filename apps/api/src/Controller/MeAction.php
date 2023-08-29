@@ -11,8 +11,8 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 class MeAction extends AbstractController
 {
     public function __invoke(
-        #[CurrentUser] User $user
-
+        #[CurrentUser] 
+        User $user
     ): User {
         return $user;
     }

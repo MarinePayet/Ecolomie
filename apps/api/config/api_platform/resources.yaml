@@ -1,0 +1,9 @@
+resources:
+    App\Entity\Storage:
+        operations:
+            ApiPlatform\Metadata\Get: ~
+            post_publication:
+                class: ApiPlatform\Metadata\Post
+                method: POST
+                uriTemplate: /me/{id}/publication
+                controller: ApiPlatform\Action\MeAction

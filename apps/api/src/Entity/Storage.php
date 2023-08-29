@@ -8,28 +8,58 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Controller\MeAction;
 use App\Repository\StorageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\OpenApi\Model;
 
 #[ORM\Entity(repositoryClass: StorageRepository::class)]
 // #[Api\ApiResource(
+    //     normalizationContext: ['groups' => ['storage:read']],
+    //     denormalizationContext: ['groups' => ['storage:write']],
+    // )]
+    
+    
+#[Api\ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['storage:read']]),
+        new Get(
+            normalizationContext: ['groups' => ['storage:read']]
+        ),
+        new Post(
+            denormalizationContext:['groups' => ['storage:post']],
+            name: 'publication', 
+            uriTemplate: '/me/publication', 
+            // security:'is_granted("ROLE_USER") && object.getOwner().getId() == user.getId()',
+            controller: MeAction::class,
+            openapi: new Model\Operation(
+            summary: 'Post currentUser storage '
+            ),
+        ),
+        new Put(
+            denormalizationContext: ['groups' => ['storage:write']]
+        ),
+        new Delete(
+            normalizationContext: ['groups' => ['storage:read']],
+            denormalizationContext: ['groups' => ['storage:write']]
+        )
+    ]
+)]
+
+// #[GetCollection(normalizationContext: ['groups' => ['storage:read']],)] 
+// #[Get(normalizationContext: ['groups' => ['storage:read']],)]
+// #[Post(denormalizationContext:['groups' => ['storage:post']])]
+
+// #[Put(denormalizationContext: ['groups' => ['storage:write']],)]
+// #[Delete(
 //     normalizationContext: ['groups' => ['storage:read']],
-//     denormalizationContext: ['groups' => ['storage:write']],
-// )]
+//     denormalizationContext: ['groups' => ['storage:write']],)]
 
-#[GetCollection(normalizationContext: ['groups' => ['storage:read']],)] 
-#[Get(normalizationContext: ['groups' => ['storage:read']],)]
-#[Post(denormalizationContext:['groups' => ['storage:post']])]
-
-#[Put(denormalizationContext: ['groups' => ['storage:write']],)]
-#[Delete(
-    normalizationContext: ['groups' => ['storage:read']],
-    denormalizationContext: ['groups' => ['storage:write']],)]
-
-class Storage
+class Storage implements OwnerableInterface
 {
     #[ORM\Id] 
     #[ORM\GeneratedValue]
@@ -110,5 +140,10 @@ class Storage
         }
 
         return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->getUser();
     }
 }

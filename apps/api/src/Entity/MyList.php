@@ -8,37 +8,85 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Controller\MeAction;
 use App\Repository\MyListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\OpenApi\Model;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: MyListRepository::class)]
-#[Api\ApiResource ()]
-#[GetCollection(
-    normalizationContext: ['groups' => ['my_list:read']],
-)]
-#[Get(
-    normalizationContext: ['groups' => ['my_list:read']],
-    denormalizationContext: ['groups' => ['my_list:write']],
-)]
-#[Put(
-    denormalizationContext: ['groups' => ['my_list:write']],
-    )]
 
-#[Delete(
-    normalizationContext: ['groups' => ['removeProductFromList:read']],
-    denormalizationContext: ['groups' => ['removeProductFromList:write']],
+// #[ApiResource(operations: [
+//     new Get(),
+//     new Post(
+//         name: 'publication', 
+//         uriTemplate: '/books/{id}/publication', 
+//         controller: CreateBookPublication::class, 
+//         normalizationContext: ['groups' => 'publication']
+//     )
+// ])]
+#[Api\ApiResource (
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['my_list:read']],
+            denormalizationContext: ['groups' => ['my_list:write']],
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['my_list:read']],
+        ),
+        new Put(
+            denormalizationContext: ['groups' => ['my_list:write']],
+        ),
+        new Delete(
+            normalizationContext: ['groups' => ['removeProductFromList:read']],
+            denormalizationContext: ['groups' => ['removeProductFromList:write']],
+        ),
+        new Post(
+            normalizationContext: ['groups' => ['my_list:read']],
+            denormalizationContext: ['groups' => ['my_list:write']],
+            uriTemplate:'/me',
+            read:false,
+            // security:'is_granted("ROLE_USER") && object.getOwner().getId() == user.getId()',
+            controller: MeAction::class,
+            openapi: new Model\Operation(
+            summary: 'Post current MyList '
+            )
+        )
+    ]
 )]
+// #[GetCollection(
+//     normalizationContext: ['groups' => ['my_list:read']],
+// )]
+// #[Get(
+//     normalizationContext: ['groups' => ['my_list:read']],
+//     denormalizationContext: ['groups' => ['my_list:write']],
+    
+// )]
+// #[Put(
+//     denormalizationContext: ['groups' => ['my_list:write']],
+//     )]
 
-#[Post(
-    normalizationContext: ['groups' => ['my_list:read']],
-    denormalizationContext: ['groups' => ['my_list:write']],
-)]
+// #[Delete(
+//     normalizationContext: ['groups' => ['removeProductFromList:read']],
+//     denormalizationContext: ['groups' => ['removeProductFromList:write']],
+// )]
 
-class MyList
+// #[Post(
+//     normalizationContext: ['groups' => ['my_list:read']],
+//     denormalizationContext: ['groups' => ['my_list:write']],
+//     uriTemplate:'/me',
+//     read:false,
+//     // security:'is_granted("ROLE_USER") && object.getOwner().getId() == user.getId()',
+//     controller: MeAction::class,
+//     openapi: new Model\Operation(
+//         summary: 'show current user profile'
+//     )
+// )]
+
+class MyList implements OwnerableInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -51,7 +99,7 @@ class MyList
     private ?string $name = null;
     
     #[ORM\ManyToOne]
-    #[Groups(['my_list:read', 'my_list:write'])]
+    #[Groups(['my_list:read', 'my_list:write',])]
     private ?User $user = null;
     
     #[ORM\OneToMany(mappedBy: 'myList', targetEntity: MyListWithProduct::class)]
@@ -119,6 +167,11 @@ class MyList
         }
 
         return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->getUser();
     }
 
 }

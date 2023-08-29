@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap, catchError, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,11 @@ export class AuthService {
 
 
 
-  constructor(private http: HttpClient) {
-    const token = localStorage.getItem('jwt');
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService) {
+    const token = this.cookieService.get('jwt');
+    // const token = localStorage.getItem('jwt');
     if (token) {
       this.isLoggedIn = true;
       this.loggedInSubject.next(true);
@@ -57,11 +60,23 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     const body = { email: email, password: password };
 
-    return this.http.post<any>(`${this.API_URL}/auth`, body).pipe(
-      switchMap((response) => {
+      return this.http.post<any>(`${this.API_URL}/auth`, body).pipe(
+        switchMap((response) => {
+            console.log('Server Response:', response);
+        if (!response.token) {
+          console.error('Token not found in the server response');
+          return throwError('Token not found');
+        }
 
         const token = response.token;
-        localStorage.setItem('jwt', token);
+
+    // return this.http.post<any>(`${this.API_URL}/auth`, body).pipe(
+    //   switchMap((response) => {
+
+        // const token = response.token;
+        // localStorage.setItem('jwt', token);
+        // const token = response.token;
+        this.cookieService.set('jwt', token);
         this.isLoggedIn = true;
         this.loggedInSubject.next(true);
 
@@ -91,10 +106,16 @@ export class AuthService {
     );
   }
 
+  // logout(): void {
+  //   this.isLoggedIn = false;
+  //   this.loggedInSubject.next(false);
+  //   localStorage.removeItem('jwt'); // Supprimer le token lors de la déconnexion
+  // }
+
   logout(): void {
     this.isLoggedIn = false;
     this.loggedInSubject.next(false);
-    localStorage.removeItem('jwt'); // Supprimer le token lors de la déconnexion
+    this.cookieService.delete('jwt'); // Supprimer le cookie
   }
 
 

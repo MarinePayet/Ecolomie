@@ -14,29 +14,40 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
+use ApiPlatform\OpenApi\Model as Model;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Api\ApiResource(
     normalizationContext:['groups' => 'read_user'],
     denormalizationContext:['groups' => 'write_user'],
     operations: [
+        new Api\delete(
+            security: 'is_granted("ROLE_USER") && object.getId() == user.getId()',
+        ),
+        new Api\Post(
+            description: "Crée un nouveau profil utilisateur."
+        ),
+        new Api\Put(
+            security: 'is_granted("ROLE_USER") && object.getId() == user.getId()',
+        ),
         new Api\Get(
             uriTemplate:'/me',
             read: false,
             security: 'is_granted("ROLE_USER")',
             controller: MeAction::class,
-            openapiContext: [
-                'summary' => 'show current user profile',
-            ],
-        )
-    
+            openapi: new Model\Operation(
+                summary: 'show current user profile',
+            )
+            ),
+        new Api\GetCollection(),
     ]
 )]
+        
 
 #[ORM\EntityListeners(['App\EntityListener\PasswordListener'])]
 
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements  UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -83,6 +94,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastname = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class)]
+    #[Groups(['read_user'])]
     private Collection $storages;
 
     public function __construct()
@@ -223,4 +235,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->plainTextPassword = $plaintextPassword;
         return $this;
     }
+
 }
