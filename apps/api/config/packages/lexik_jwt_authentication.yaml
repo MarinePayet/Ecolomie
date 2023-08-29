@@ -2,9 +2,39 @@ lexik_jwt_authentication:
     secret_key: '%env(resolve:JWT_SECRET_KEY)%'
     public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
     pass_phrase: '%env(JWT_PASSPHRASE)%'
+    
     # user_identity_field: email
 
     api_platform:
         check_path: /auth
         username_path: email
         password_path: password
+
+    token_extractors:
+        authorization_header:
+            enabled: false
+
+        cookie:
+            enabled: true
+
+    set_cookies:
+        BEARER:
+            lifetime: 2592000
+            # domain: '%env(COOKIE_DOMAIN)%'
+            samesite: none
+            httpOnly: false
+            secure: true 
+            
+    
+when@test:
+    lexik_jwt_authentication:
+        token_extractors:
+            authorization_header:
+                enabled: true
+        remove_token_from_body_when_cookies_used: false
+    
+    
+
+    
+    
+

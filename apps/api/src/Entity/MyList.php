@@ -38,7 +38,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     denormalizationContext: ['groups' => ['my_list:write']],
 )]
 
-class MyList
+class MyList implements OwnerableInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -51,7 +51,7 @@ class MyList
     private ?string $name = null;
     
     #[ORM\ManyToOne]
-    #[Groups(['my_list:read', 'my_list:write'])]
+    #[Groups(['my_list:read', 'my_list:write',])]
     private ?User $user = null;
     
     #[ORM\OneToMany(mappedBy: 'myList', targetEntity: MyListWithProduct::class)]
@@ -119,6 +119,11 @@ class MyList
         }
 
         return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->getUser();
     }
 
 }

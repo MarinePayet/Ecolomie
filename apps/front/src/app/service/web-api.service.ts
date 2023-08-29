@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { Observable, pipe, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 interface StorageCreationRequest {
   name: string;
-  user: string;
 }
 
 interface ListCreationRequest {
@@ -20,53 +18,41 @@ interface ListCreationRequest {
 })
 export class WebApiService {
 
-  //private readonly apiUrl = 'http://192.168.50.39:8000/api'; //URL Android en dev selon l'IP salim B
+ // private readonly apiUrl = environment.apiUrl;
 
-  // private readonly apiUrl = 'http://192.168.50.117:8000/api'; //URL Android en dev selon l'IP marine
-
-  // private readonly apiUrl = 'http://192.168.50.118:8000/api'; //URL Android en dev selon l'IP marine DONKEY
-
-  // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
-
-  //  private readonly apiUrl = 'http://192.168.1.9:8000/api'; //URL Android en dev selon l'IP marine domicile
-
-  //  private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
-
-  // private readonly apiUrl = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
-
-
-private readonly apiUrl = environment.apiUrl;
-
+  private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
   constructor(private http: HttpClient) { }
 
+  private handleError(err: HttpErrorResponse) {
+    if (err.status === 401 || err.status === 403) {
+      console.error('Accès non autorisé.');
+      return throwError('Accès non autorisé.');
+    }
+    return throwError(err);
+  }
+
   // STORAGES user
-
-  getStorages(userId: string): Observable<any> {
-    const params = new HttpParams().set('user', userId);
-
-    return this.http.get(`${this.apiUrl}/storages`, { params }).pipe(
-      catchError((err: HttpErrorResponse) => {
-        if (err.status === 401 || err.status === 403) {
-          console.error('Accès non autorisé.');
-          return throwError('Accès non autorisé.');
-        }
-        return throwError(err);
-      })
-    );
+  getStorages(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/storages`, { withCredentials: true })
+      .pipe(catchError(this.handleError));
   }
 
   deleteStorages(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/storages/${id}`);
+    return this.http.delete(`${this.apiUrl}/storages/${id}`)
+      .pipe(catchError(this.handleError));
   }
 
-  createStorage(name: string, userId: string): Observable<any> {
+  createStorage(name: string): Observable<any> {
     const storage: StorageCreationRequest = {
       name: name,
-      user: `/api/users/${userId}`,
+
     };
-    return this.http.post(`${this.apiUrl}/storages`, storage);
+    return this.http.post(`${this.apiUrl}/storages`, storage, { withCredentials: true })
+      .pipe(catchError(this.handleError));
   }
+
+
 
   getStorage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages/`);
@@ -103,24 +89,17 @@ private readonly apiUrl = environment.apiUrl;
 
   getMyLists(userId: string): Observable<any> {
     const params = new HttpParams().set('user', userId);
-
-    return this.http.get(`${this.apiUrl}/my_lists`, { params }).pipe(
-      catchError((err: HttpErrorResponse) => {
-        if (err.status === 401 || err.status === 403) {
-          console.error('Accès non autorisé.');
-          return throwError('Accès non autorisé.');
-        }
-        return throwError(err);
-      })
-    );
+    return this.http.get(`${this.apiUrl}/my_lists`, { params, withCredentials: true })
+      .pipe(catchError(this.handleError));
   }
 
-  createList(name: string, userId: string): Observable<any> {
+
+  createList(name: string): Observable<any> {
     const list = {
       name: name,
-      user: `/api/users/${userId}`,
     };
-    return this.http.post(`${this.apiUrl}/my_lists`, list);
+    return this.http.post(`${this.apiUrl}/my_lists`, list , { withCredentials: true });
+    pipe(catchError(this.handleError));
   }
 
   deleteList(id: number): Observable<any> {

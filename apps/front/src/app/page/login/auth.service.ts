@@ -1,52 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap, catchError, throwError } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
+
+
+interface User {
+  // Ajoutez d'autres propriétés selon vos besoins
+  storages: any[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly API_URL = environment.authBaseUrl;
+  private readonly apiurl = environment.apiUrl;
 
-  private API_URL: string;
 
 
-
-  constructor(private http: HttpClient) {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      this.isLoggedIn = true;
-      this.loggedInSubject.next(true);
-    }
-
-    if (window.location.hostname === 'localhost') {
-      this.API_URL = 'https://127.0.0.1:8000'; // URL par défaut pour le web
-    } else if (window.location.hostname.startsWith('192.168.1.')) {
-      this.API_URL = 'http://192.168.1.21:8000'; // URL pour le web (émulateur Android)
-    } else {
-      this.API_URL = 'https://127.0.0.1:8000'; // URL par défaut pour le web
-    }
-  }
-
-  isLoggedIn = false;
-
-  private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn);
+  private currentUser: any = null;
+  private loggedInSubject = new BehaviorSubject<boolean>(false);
   loggedIn$ = this.loggedInSubject.asObservable();
 
-  register(email: string, password: string, firstname: string, lastname: string): Observable<any> {
-    const body = { email: email, plainTextPassword: password, firstname: firstname, lastname: lastname };
+  constructor(private http: HttpClient) {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    this.loggedInSubject.next(isLoggedIn);
+  }
 
+
+
+  register(email: string, password: string, firstname: string, lastname: string): Observable<any> {
+    const body = {
+      email: email,
+      plainTextPassword: password,
+      firstname: firstname,
+      lastname: lastname
+    };
 
     return this.http.post(`${this.API_URL}/api/users`, body).pipe(
-      switchMap((response: any) => {
-        const userIdMatch = response['@id'] ? response['@id'].match(/\/(\d+)$/) : null;
-        const userId = userIdMatch ? userIdMatch[1] : null;
-        console.log('Utilisateur inscrit avec l\'ID:', userId);
-
-        return this.login(email, password);
-      }),
+      tap(() => this.login(email, password)),
       catchError(error => {
         console.error('Erreur lors de l\'inscription:', error);
         return throwError(error);
@@ -57,33 +51,13 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     const body = { email: email, password: password };
 
-    return this.http.post<any>(`${this.API_URL}/auth`, body).pipe(
-      switchMap((response) => {
-
-        const token = response.token;
-        localStorage.setItem('jwt', token);
-        this.isLoggedIn = true;
+    return this.http.post<{ [key: string]: any }>(`${this.API_URL}`, body, { withCredentials: true }).pipe(
+      tap((data) => {
         this.loggedInSubject.next(true);
-
-
-        const userIdUrl = response['@id'];
-        const userIdMatch = userIdUrl ? userIdUrl.match(/\/(\d+)$/) : null;
-        const userId = userIdMatch ? userIdMatch[1] : null;
-
-        localStorage.setItem('jwt', token);
-        return this.http.get<any>(`${this.API_URL}/api/users/${40}`);
-
+        localStorage.setItem('isLoggedIn', 'true'); // Ajout de cette ligne
+        this.setUser(data);
       }),
-      tap((user) => {
-
-        const userId = user.id;
-        if (userId) {
-          localStorage.setItem('userId', userId.toString());
-          console.log('Utilisateur connecté avec l\'ID:', userId);
-        } else {
-          console.error('ID utilisateur non trouvé dans la réponse');
-        }
-      }),
+       // Mettez à jour le statut de connexion lorsqu'un utilisateur se connecte
       catchError(error => {
         console.error('Erreur lors de la connexion:', error);
         return throwError(error);
@@ -92,13 +66,31 @@ export class AuthService {
   }
 
   logout(): void {
-    this.isLoggedIn = false;
     this.loggedInSubject.next(false);
-    localStorage.removeItem('jwt'); // Supprimer le token lors de la déconnexion
+    localStorage.removeItem('isLoggedIn'); // Ajout de cette ligne
   }
 
 
-  getCurrentUserId(): string | null {
-    return localStorage.getItem('userId');
+  getUserInfo(): Observable<User> {
+    return this.http.get<User>(`${this.apiurl}/me`, { withCredentials: true }).pipe(
+      tap(data => {
+        console.log('Réponse de getUserInfo:', data);
+      }),
+      catchError(error => {
+        console.error('Erreur lors de la récupération des informations de l\'utilisateur:', error);
+        return throwError(error);
+      })
+    );
   }
+
+  getUserId(): string {
+    return this.currentUser ? this.currentUser.id : null;
+  }
+
+  private setUser(data: any): void {
+    this.currentUser = data;
+  }
+
+
+
 }

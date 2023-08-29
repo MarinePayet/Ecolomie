@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WebApiService } from 'src/app/service/web-api.service';
+import { AuthService } from '../login/auth.service';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-expiration-proche',
@@ -12,13 +15,23 @@ export class ExpirationProchePage implements OnInit {
   productUserStoragesExpiringIn1Day: any;
   productUserStoragesExpired: any;
   productUserStoragesExpiringIn15Days: any;
+  loggedIn: boolean;
+
 
 
   constructor(
     private webApiService: WebApiService,
-  ) { }
+    private authService: AuthService,
+    private router: Router,
+    private toastController: ToastController
+  ) {
+    this.loggedIn = false;
+  }
 
-  ngOnInit() {
+    ngOnInit() {
+      this.authService.loggedIn$.subscribe(isLoggedIn => {
+        this.loggedIn = isLoggedIn; // Mettre à jour la variable loggedIn ici
+      });
     this.getProductUserStoragesExpiringIn7Days();
     this.getProductUserStoragesExpired();
     this.getProductUserStoragesExpiringIn1Day();
@@ -55,5 +68,20 @@ export class ExpirationProchePage implements OnInit {
     const timeDifference = givenDate.getTime() - today.getTime();
     const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
     return Math.floor(daysDifference);
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  async onLogout() {
+    this.authService.logout();
+    console.log('Logout successful');
+    this.presentToast('Logout successful');
+    this.router.navigate(['/login']);
   }
 }

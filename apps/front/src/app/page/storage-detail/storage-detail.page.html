@@ -4,8 +4,11 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="secondary">
-      <ion-button routerLink="/login" color="warning">
+      <ion-button routerLink="/login" color="warning" *ngIf="!loggedIn">
         <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" *ngIf="loggedIn" (click)="onLogout()">
+        <ion-icon slot="icon-only" size="large" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title class="ion-text-uppercase">Ecolomie</ion-title>
@@ -20,7 +23,7 @@
   <!-- <ion-grid> -->
   <ion-col *ngFor="let product of productsUserStorage">
     <!-- <ion-col *ngFor="let prod of product.product"> -->
-    <ng-container *ngIf="product.storage.id == idStorage">
+    <ng-container *ngIf="product.storage.id === idStorage">
       <!-- <ion-list> -->
 
       <ion-item color="primary">

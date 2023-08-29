@@ -28,14 +28,12 @@ export class LoginPage {
   }
 
   get isLoggedIn() {
-    return this.authService.isLoggedIn;
+    return this.authService.loggedIn$;
   }
 
   get email() {
-    return this.loginForm.controls['email'];
+    return this.loginForm.get('email');
   }
-
-
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({
@@ -47,7 +45,7 @@ export class LoginPage {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.presentToast('Please fill out the form correctly');
+      this.presentToast('Veuillez remplir le formulaire correctement.');
       return;
     }
 
@@ -58,44 +56,48 @@ export class LoginPage {
     } else {
       this.authService.login(email, password).subscribe(
         data => {
-          console.log('Login successful');
-          this.presentToast('Login successful');
+          console.log('Connexion réussie');
+          this.presentToast('Connexion réussie');
           this.router.navigate(['/tabs/tab1']);
         },
-
         error => {
-          console.log('Login failed', error);
-          this.presentToast(error);
+          console.log('Échec de la connexion', error);
+          this.handleError(error, 'Échec de la connexion');
         }
       );
     }
+
     this.loginForm.reset();
   }
 
   onRegister(email: string, password: string, firstname: string, lastname: string) {
-    if (firstname.trim() === '' || lastname.trim() === '') {
-      this.presentToast('Firstname and Lastname cannot be blank.');
+    if (!firstname.trim() || !lastname.trim()) {
+      this.presentToast('Le prénom et le nom ne peuvent pas être vides.');
       return;
     }
 
-      this.authService.register(email, password, firstname, lastname).subscribe(
+    this.authService.register(email, password, firstname, lastname).subscribe(
       data => {
-        console.log('Registration successful');
-        this.presentToast('Registration successful');
+        console.log('Inscription réussie');
+        this.presentToast('Inscription réussie');
         this.router.navigate(['/tabs/tab1']);
       },
       error => {
-        console.log('Registration failed', error);
-        this.presentToast(error);
+        console.log("Échec de l'inscription', error");
+        this.handleError(error, "Échec de l'inscription");
       }
     );
   }
 
-
   onLogout() {
     this.authService.logout();
-    console.log('Logout successful');
-    this.presentToast('Logout successful');
+    console.log('Déconnexion réussie');
+    this.presentToast('Déconnexion réussie');
     this.router.navigate(['/login']);
+  }
+
+  private handleError(error: any, defaultErrorMsg: string) {
+    let errorMsg = error && error.message ? error.message : defaultErrorMsg;
+    this.presentToast(errorMsg);
   }
 }

@@ -19,6 +19,8 @@
     productOfMyList: any;
     idList?: number;
     myListProducts: any;
+    loggedIn: boolean;
+
 
     constructor(
       private webApiService: WebApiService,
@@ -27,17 +29,32 @@
       private route: ActivatedRoute,
       private AlertController: AlertController,
       private toastController: ToastController,
-      ) {}
+      ) {
+        this.loggedIn = false;
+      }
 
-    ngOnInit() {
-      this.route.paramMap.subscribe(params => {
-        this.idList = Number(params.get('id'));
-        if (this.idList !== null) {
-            this.getProductsOfMyList();
+      ngOnInit() {
+
+        this.authService.loggedIn$.subscribe(isLoggedIn => {
+          this.loggedIn = isLoggedIn;
+          if (!isLoggedIn) {
+            console.log('Utilisateur non connecté, redirection vers la connexion.');
+            this.router.navigate(['/login']);
+          } else {
+            this.route.paramMap.subscribe(params => {
+              const idListParam = params.get('id');
+              if (idListParam !== null) {
+                this.idList = Number(idListParam);
+                if (!isNaN(this.idList)) {
+                  this.getProductsOfMyList();
+                }
+              }
+              this.getMyListWithProducts();
+            });
           }
-        this.getMyListWithProducts();
-      });
-    }
+        });
+      }
+
 
     getProductsOfMyList() {
       this.webApiService.getProductsForList().subscribe((data) => {
@@ -138,8 +155,8 @@
       console.log('onClickCheckBox', product);
     }
 
-    get isLoggedIn(): boolean {
-      return this.authService.isLoggedIn;
+    get isLoggedIn() {
+      return this.authService.loggedIn$;
     }
 
     async onLogout() {
@@ -148,6 +165,7 @@
       this.presentToast('Logout successful');
       this.router.navigate(['/login']);
     }
+
 
 
 

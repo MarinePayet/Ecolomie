@@ -37,7 +37,6 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/me', name: 'app_me')]
-
     public function me(): JsonResponse
     {
         $user = $this->getUser();

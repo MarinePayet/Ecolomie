@@ -12,7 +12,9 @@ import { Router } from '@angular/router';
 export class MesListesPage implements OnInit {
 
   my_lists: any;
-  userId: string | null;
+  userId!: any;
+  loggedIn: boolean;
+
 
   constructor(
     private webApiService: WebApiService,
@@ -22,23 +24,28 @@ export class MesListesPage implements OnInit {
     private router: Router
   ) {
     this.my_lists = [];
-    this.userId = this.authService.getCurrentUserId();
+    this.userId = this.authService.getUserInfo();
+    this.loggedIn = false;
+
   }
 
   ngOnInit() {
-    if (!this.isLoggedIn) {
-      console.log('Utilisateur non connecté, redirection vers la connexion.');
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.getMyLists();
+    this.authService.loggedIn$.subscribe(isLoggedIn => {
+      this.loggedIn = isLoggedIn;
+      if (!isLoggedIn) {
+        console.log('Utilisateur non connecté, redirection vers la connexion.');
+        this.router.navigate(['/login']);
+      } else {
+        this.getMyLists();
+      }
+    });
   }
 
   getMyLists() {
     if (this.userId) {
       this.webApiService.getMyLists(this.userId).subscribe((data) => {
-          this.my_lists = data['hydra:member'];
-          console.log(this.my_lists);
+        this.my_lists = data['hydra:member'];
+        console.log(this.my_lists);
       });
     } else {
       console.error('Utilisateur non trouvé.');
@@ -105,7 +112,7 @@ export class MesListesPage implements OnInit {
             handler: (data) => {
               if (this.userId) {
                 const newList = { name: data.name };
-                this.webApiService.createList(newList.name, this.userId).subscribe(
+                this.webApiService.createList(newList.name,).subscribe(
                   () => {
                     console.log('Liste créée avec succès.');
                     this.presentToast('Liste créée avec succès');
@@ -125,8 +132,8 @@ export class MesListesPage implements OnInit {
       });
   }
 
-  get isLoggedIn(): boolean {
-    return this.authService.isLoggedIn;
+  get isLoggedIn() {
+    return this.authService.loggedIn$;
   }
 
   async onLogout() {
