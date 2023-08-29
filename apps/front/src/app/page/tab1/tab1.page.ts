@@ -6,16 +6,34 @@ import { AuthService } from '../login/auth.service';
 import { LocalNotifications, ScheduleOptions } from '@capacitor/local-notifications';
 import { ApiService } from '../newproduct/api.service';
 
+
+interface User {
+  storages: Storage[];
+}
+
+interface Storage {
+  id: number;
+  name: string;
+}
+
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  storages: any;
+
   isEditing: boolean = false;
   selectedStorageId: number | null = null;
   productUserStorages: any;
+  userInfo: any;
+  loggedIn: boolean;
+  storages: Storage[] = [];
+  
+
+
+
 
   constructor(
     private webApiService: WebApiService,
@@ -24,30 +42,42 @@ export class Tab1Page implements OnInit {
     private toastController: ToastController,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.loggedIn = false;
+  }
+
+
+
 
   ngOnInit() {
-    if (!this.authService.isLoggedIn) {
-      console.log('Utilisateur non connecté, redirection vers la connexion.');
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.getStorages();
+    this.authService.loggedIn$.subscribe(isLoggedIn => {
+      this.loggedIn = isLoggedIn;
+      if (!isLoggedIn) {
+        console.log('Utilisateur non connecté, redirection vers la connexion.');
+        this.router.navigate(['/login']);
+      } else {
+        this.getStorages();
+      }
+    });
   }
 
   getStorages() {
-    const userId = this.authService.getCurrentUserId();
-    if (userId === null) {
-      console.error('Utilisateur non trouvé.');
-      return;
-    }
-
-    this.webApiService.getStorages(userId).subscribe((response) => {
-      this.storages = response['hydra:member'];
+    this.webApiService.getStorages().subscribe(response => {
+      console.log("Storages récupérés: ", response);
+      if (response['hydra:member'] && Array.isArray(response['hydra:member'])) {
+        this.storages = response['hydra:member'];
+      }
     }, error => {
-      console.error('Erreur lors de la récupération des storages:', error);
+      console.error("Erreur lors de la récupération des storages:", error);
     });
-}
+  }
+
+
+  refreshStorages() {
+    this.getStorages();
+  }
+
+
 
   async deleteStorage(storage: any) {
     const alert = await this.alertController.create({
@@ -63,8 +93,10 @@ export class Tab1Page implements OnInit {
           handler: () => {
             this.webApiService.deleteStorage(storage.id).subscribe(() => {
               console.log('Emplacement supprimé avec succès.');
+              this.refreshStorages();
               this.getStorages();
               this.presentToast('Emplacement supprimé avec succès.');
+
             }, error => {
               console.log("Erreur lors de la suppression de l'emplacement", error);
             });
@@ -72,6 +104,7 @@ export class Tab1Page implements OnInit {
         }
       ]
     });
+
 
     await alert.present();
   }
@@ -86,22 +119,15 @@ export class Tab1Page implements OnInit {
   }
 
   createNewStorage(name: string) {
-    const userId = this.authService.getCurrentUserId(); // Récupérer l'ID de l'utilisateur connecté
-
-    if (!userId) {
-      console.error('Utilisateur non trouvé.');
-      return;
-    }
-
-    console.log('ID de l\'utilisateur connecté:', userId);
-
-    this.webApiService.createStorage(name, userId).subscribe(() => {
+    this.webApiService.createStorage(name).subscribe(() => {
       console.log('Stockage créé avec succès.');
       this.getStorages();
-    }, erreur => {
-      console.log('Erreur lors de la création du stockage :', erreur);
+    }, error => {
+      console.log('Erreur lors de la création du stockage :', error);
     });
   }
+
+
 
   async createNewStoragePrompt() {
     const alert = await this.alertController.create({
@@ -133,8 +159,8 @@ export class Tab1Page implements OnInit {
     await alert.present();
   }
 
-  get isLoggedIn(): boolean {
-    return this.authService.isLoggedIn;
+  get isLoggedIn() {
+    return this.authService.loggedIn$;
   }
 
   async onLogout() {
@@ -143,6 +169,7 @@ export class Tab1Page implements OnInit {
     this.presentToast('Logout successful');
     this.router.navigate(['/login']);
   }
+
 
   async scheduleNotificationForProduct(product: any) {
     const expirationDate = new Date(product.DLC);
@@ -172,10 +199,12 @@ export class Tab1Page implements OnInit {
       console.error('Erreur lors de la planification de la notification :', ex);
     }
   }
+
+
   getProductUserStorages() {
-    this.webApiService.getProductUserStorages().subscribe((data) => {
-      this.productUserStorages = data['hydra:member'];
-    }
+    this.webApiService.getProductUserStorages().subscribe(
+      data => this.productUserStorages = data['hydra:member'],
+      error => console.error('Erreur lors de la récupération des storages:', error)
     );
   }
 
@@ -184,11 +213,10 @@ export class Tab1Page implements OnInit {
     this.apiService.saveProduct(product).subscribe(() => {
       console.log('Produit créé avec succès.');
       this.scheduleNotificationForProduct(product); // Planifier la notification
-    }, erreur => {
-      console.log('Erreur lors de la création du produit :', erreur);
+      this.getProductUserStorages();
+    }, error => {
+      console.log('Erreur lors de la création du produit :', error);
     });
   }
-
-
-
 }
+

@@ -29,7 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['storage:read']],
     denormalizationContext: ['groups' => ['storage:write']],)]
 
-class Storage
+class Storage implements OwnerableInterface
 {
     #[ORM\Id] 
     #[ORM\GeneratedValue]
@@ -38,7 +38,7 @@ class Storage
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['storage:read', 'storage:write', 'product_user_storage:read','product_user_storage:update', 'storage:post'])]
+    #[Groups(['storage:read', 'storage:write', 'product_user_storage:read','product_user_storage:update', 'storage:post','read:user'])]
     private ?string $name = null; 
 
     #[ORM\ManyToOne(inversedBy: 'storages')]
@@ -110,5 +110,10 @@ class Storage
         }
 
         return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->getUser();
     }
 }

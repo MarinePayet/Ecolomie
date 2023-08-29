@@ -53,7 +53,7 @@ export class Tab3Page implements OnInit {
   }
 
   get isLoggedIn() {
-    return this.authService.isLoggedIn;
+    return this.authService.loggedIn$;
   }
 
   async onLogout() {

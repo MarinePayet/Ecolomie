@@ -42,6 +42,7 @@ export class Tab2Page {
   storages: Array<any> = [];
   categories: Array<any> = [];
   showProductDetails = false;
+  loggedIn: boolean;
 
 
   constructor(
@@ -50,6 +51,7 @@ export class Tab2Page {
     private toastController: ToastController,
     private apiService: ApiService
   ) {
+    this.loggedIn = false;
   }
 
   getProduct(barcode: string) {
@@ -66,10 +68,6 @@ export class Tab2Page {
       }
     );
   }
-
-
-
-
 
   async scanBarcode() {
     try {
@@ -109,12 +107,16 @@ export class Tab2Page {
 
 
   ngOnInit() {
+    this.authService.loggedIn$.subscribe(isLoggedIn => {
+      this.loggedIn = isLoggedIn; // Mettre à jour la variable loggedIn ici
+    });
     this.getStorages();
     this.getCategories();
   }
 
+
   get isLoggedIn() {
-    return this.authService.isLoggedIn;
+    return this.authService.loggedIn$;
   }
 
   async onLogout() {

@@ -1,10 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
-      <ion-button routerLink="/login" color="warning" *ngIf="!isLoggedIn">
+      <ion-button routerLink="/login" color="warning" *ngIf="!loggedIn">
         <ion-icon slot="icon-only" size="large" name="person-circle"></ion-icon>
       </ion-button>
-      <ion-button color="danger" *ngIf="isLoggedIn" (click)="onLogout()">
+      <ion-button color="danger" *ngIf="loggedIn" (click)="onLogout()">
         <ion-icon slot="icon-only" size="large" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
