@@ -23,13 +23,13 @@ use ApiPlatform\OpenApi\Model as Model;
     normalizationContext:['groups' => 'read_user'],
     denormalizationContext:['groups' => 'write_user'],
     operations: [
-        new Api\delete(
+        new Api\Delete(
             security: 'is_granted("ROLE_USER") && object.getId() == user.getId()',
         ),
-        new Api\post(
+        new Api\Post(
             description: "Crée un nouveau profil utilisateur."
         ),
-        new Api\put(
+        new Api\Put(
             security: 'is_granted("ROLE_USER") && object.getId() == user.getId()',
         ),
         new Api\Get(
@@ -42,6 +42,10 @@ use ApiPlatform\OpenApi\Model as Model;
             )
             ),
         new Api\GetCollection(),
+        new Api\Get(
+            security: 'is_granted("ROLE_USER") && object.getId() == user.getId()',
+        )
+
     ]
 )]
         

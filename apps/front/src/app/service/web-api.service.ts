@@ -18,7 +18,9 @@ interface ListCreationRequest {
 })
 export class WebApiService {
 
-  private readonly apiUrl = environment.apiUrl;
+ // private readonly apiUrl = environment.apiUrl;
+
+  private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
   constructor(private http: HttpClient) { }
 

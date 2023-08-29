@@ -38,7 +38,7 @@ class Storage implements OwnerableInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['storage:read', 'storage:write', 'product_user_storage:read','product_user_storage:update', 'storage:post','read:user'])]
+    #[Groups(['storage:read', 'storage:write', 'product_user_storage:read','product_user_storage:update', 'storage:post','read_user'])]
     private ?string $name = null; 
 
     #[ORM\ManyToOne(inversedBy: 'storages')]

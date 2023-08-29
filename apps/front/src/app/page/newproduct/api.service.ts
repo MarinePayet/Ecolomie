@@ -48,7 +48,7 @@ export class ApiService {
   //  private readonly API_URL = 'http://192.168.1.255:8000/api'; //URL Android en dev selon l'IP marine donkey
   //  private readonly API_URL = 'http://192.168.50.118:8000/api'; //URL Android en dev selon l'IP marine
 
-  private readonly API_URL = environment.apiUrl;
+  private readonly apiUrl = environment.apiUrl;
 
 
     // private readonly API_URL = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
@@ -63,26 +63,26 @@ export class ApiService {
       constructor(private http: HttpClient) { }
 
       getProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(`${this.API_URL}/products`);
+        return this.http.get<Product[]>(`${this.apiUrl}/products`);
       }
 
       getProduct(barcode: string): Observable<Product> {
-        return this.http.get<Product>(`${this.API_URL}/products/${barcode}`);
+        return this.http.get<Product>(`${this.apiUrl}/products/${barcode}`);
       }
 
       addProduct(product: Product): Observable<Product> {
-        return this.http.post<Product>(`${this.API_URL}/products`, product);
+        return this.http.post<Product>(`${this.apiUrl}/products`, product);
       }
 
       getStorages(): Observable<ApiResponse<Storage>> {
-        return this.http.get<ApiResponse<Storage>>(`${this.API_URL}/storages`);
+        return this.http.get<ApiResponse<Storage>>(`${this.apiUrl}/storages`);
       }
 
       getCategories(): Observable<ApiResponse<Category>> {
-        return this.http.get<ApiResponse<Category>>(`${this.API_URL}/categories`);
+        return this.http.get<ApiResponse<Category>>(`${this.apiUrl}/categories`);
       }
 
       saveProduct(product: SaveProductRequest): Observable<any> {
-        return this.http.post<any>(`${this.API_URL}/product_user_storages`, product);
+        return this.http.post<any>(`${this.apiUrl}/product_user_storages`, product);
       }
     }
