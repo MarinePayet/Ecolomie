@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 
 
 interface User {
-  // Ajoutez d'autres propriétés selon vos besoins
+  id: string;
   storages: any[];
 }
 
@@ -54,10 +54,9 @@ export class AuthService {
     return this.http.post<{ [key: string]: any }>(`${this.API_URL}`, body, { withCredentials: true }).pipe(
       tap((data) => {
         this.loggedInSubject.next(true);
-        localStorage.setItem('isLoggedIn', 'true'); // Ajout de cette ligne
+        localStorage.setItem('isLoggedIn', 'true'); 
         this.setUser(data);
       }),
-       // Mettez à jour le statut de connexion lorsqu'un utilisateur se connecte
       catchError(error => {
         console.error('Erreur lors de la connexion:', error);
         return throwError(error);
@@ -86,6 +85,7 @@ export class AuthService {
   getUserId(): string {
     return this.currentUser ? this.currentUser.id : null;
   }
+
 
   private setUser(data: any): void {
     this.currentUser = data;

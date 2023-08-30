@@ -49,7 +49,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 )]
 #[ApiFilter(DateFilter::class, properties: ['DLC'])]
 
-class ProductUserStorage
+class ProductUserStorage implements OwnerableInterface
 {
     #[ORM\Id] 
     #[ORM\GeneratedValue]
@@ -66,7 +66,7 @@ class ProductUserStorage
     private ?float $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages', cascade: ['persist'] )]
-    #[Groups(['product_user_storage:read','product_user_storage:update','product:read'])]
+    #[Groups(['product_user_storage:read','product_user_storage:update','product:read','product_user_storage:write'])]
     private ?Storage $storage = null;
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
@@ -142,4 +142,8 @@ class ProductUserStorage
         return $this;
     }
 
+    public function getOwner(): ?User
+    {
+        return $this->getStorage()->getOwner();
+    }
 }

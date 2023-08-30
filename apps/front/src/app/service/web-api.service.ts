@@ -6,7 +6,9 @@ import { environment } from 'src/environments/environment';
 
 interface StorageCreationRequest {
   name: string;
+  user: string;
 }
+
 
 interface ListCreationRequest {
   name: string;
@@ -20,7 +22,7 @@ export class WebApiService {
 
 private readonly apiUrl = environment.apiUrl;
 
-  // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
+ // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
   constructor(private http: HttpClient) { }
 
@@ -43,10 +45,11 @@ private readonly apiUrl = environment.apiUrl;
       .pipe(catchError(this.handleError));
   }
 
-  createStorage(name: string): Observable<any> {
+
+  createStorage(name: string, userId: string): Observable<any> {
     const storage: StorageCreationRequest = {
       name: name,
-
+      user: `/api/users/${userId}`
     };
     return this.http.post(`${this.apiUrl}/storages`, storage, { withCredentials: true })
       .pipe(catchError(this.handleError));
@@ -55,6 +58,7 @@ private readonly apiUrl = environment.apiUrl;
   getStorage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages/`);
   }
+
 
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
@@ -91,17 +95,21 @@ private readonly apiUrl = environment.apiUrl;
       .pipe(catchError(this.handleError));
   }
 
-  createList(name: string): Observable<any> {
+
+  createList(name: string, userId: string): Observable<any> {
     const list = {
       name: name,
+      user: `/api/users/${userId}`
     };
-    return this.http.post(`${this.apiUrl}/my_lists`, list , { withCredentials: true });
-    pipe(catchError(this.handleError));
+    return this.http.post(`${this.apiUrl}/my_lists`, list, { withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
+
 
   deleteList(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
   }
+
 
   deleteProductFromList(idList: number, productId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${idList}/${productId}`);

@@ -5,10 +5,13 @@ import { Router } from '@angular/router';
 import { AuthService } from '../login/auth.service';
 import { LocalNotifications, ScheduleOptions } from '@capacitor/local-notifications';
 import { ApiService } from '../newproduct/api.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 interface User {
   storages: Storage[];
+  id: string;
 }
 
 interface Storage {
@@ -29,6 +32,8 @@ export class Tab1Page implements OnInit {
   userInfo: any;
   loggedIn: boolean;
   storages: Storage[] = [];
+  userId: string;
+
 
   constructor(
     private webApiService: WebApiService,
@@ -36,9 +41,11 @@ export class Tab1Page implements OnInit {
     private alertController: AlertController,
     private toastController: ToastController,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.loggedIn = false;
+    this.userId = '';
   }
 
   ngOnInit() {
@@ -48,10 +55,23 @@ export class Tab1Page implements OnInit {
         console.log('Utilisateur non connecté, redirection vers la connexion.');
         this.router.navigate(['/login']);
       } else {
+        // Utilisateur connecté
         this.getStorages();
-      }
+
+        // Obtenez également les informations de l'utilisateur, y compris son userId
+        this.authService.getUserInfo().subscribe(
+          (userInfo) => {
+            this.userId = userInfo.id; // Assurez-vous que 'id' est le bon champ
+          },
+          (error) => {
+            console.log('Erreur lors de la récupération des informations de l\'utilisateur:', error);
+          }
+        );
+  }
+
     });
   }
+
 
   getStorages() {
     this.webApiService.getStorages().subscribe(response => {
@@ -59,6 +79,7 @@ export class Tab1Page implements OnInit {
       if (response['hydra:member'] && Array.isArray(response['hydra:member'])) {
         this.storages = response['hydra:member'];
       }
+      this.cdr.detectChanges();
     }, error => {
       console.error("Erreur lors de la récupération des storages:", error);
     });
@@ -106,13 +127,21 @@ export class Tab1Page implements OnInit {
   }
 
   createNewStorage(name: string) {
-    this.webApiService.createStorage(name).subscribe(() => {
-      console.log('Stockage créé avec succès.');
-      this.getStorages();
-    }, error => {
-      console.log('Erreur lors de la création du stockage :', error);
-    });
+    if (this.userId) {  // Assurez-vous que userId est défini avant de l'utiliser
+      this.webApiService.createStorage(name, this.userId).subscribe(
+        () => {
+          console.log('Storage créé avec succès.');
+          this.getStorages();  // Actualisez la liste des storages
+        },
+        (error) => {
+          console.log('Erreur lors de la création du storage:', error);
+        }
+      );
+    } else {
+      console.log('UserId non défini.');
+    }
   }
+
 
   async createNewStoragePrompt() {
     const alert = await this.alertController.create({
