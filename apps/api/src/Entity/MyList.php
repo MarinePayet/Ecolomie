@@ -16,26 +16,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: MyListRepository::class)]
-#[Api\ApiResource ()]
-#[GetCollection(
-    normalizationContext: ['groups' => ['my_list:read']],
-)]
-#[Get(
-    normalizationContext: ['groups' => ['my_list:read']],
-    denormalizationContext: ['groups' => ['my_list:write']],
-)]
-#[Put(
-    denormalizationContext: ['groups' => ['my_list:write']],
-    )]
 
-#[Delete(
-    normalizationContext: ['groups' => ['removeProductFromList:read']],
-    denormalizationContext: ['groups' => ['removeProductFromList:write']],
-)]
-
-#[Post(
-    normalizationContext: ['groups' => ['my_list:read']],
-    denormalizationContext: ['groups' => ['my_list:write']],
+#[Api\ApiResource (
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['my_list:read']]),
+        new Get(
+            normalizationContext: ['groups' => ['my_list:read']],
+            denormalizationContext: ['groups' => ['my_list:write']]
+        ),
+        new Put(
+            denormalizationContext: ['groups' => ['my_list:write']]
+        ),
+        new Delete(
+            normalizationContext: ['groups' => ['removeProductFromList:read']],
+            denormalizationContext: ['groups' => ['removeProductFromList:write']]
+        ),
+        new Post(
+            normalizationContext: ['groups' => ['my_list:read']],
+            denormalizationContext: ['groups' => ['my_list:write']]
+        )
+    ]
 )]
 
 class MyList implements OwnerableInterface
@@ -43,11 +44,11 @@ class MyList implements OwnerableInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['my_list:read' , 'my_list:write', 'read:productForList','read:MyListWithProduct'])]
+    #[Groups(['my_list:read' , 'my_list:write', 'product_for_list:read','my_list_with_product:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['my_list:read', 'my_list:write', 'read:productForList', 'read:MyListWithProduct'])]
+    #[Groups(['my_list:read', 'my_list:write', 'product_for_list:read', 'my_list_with_product:read'])]
     private ?string $name = null;
     
     #[ORM\ManyToOne]

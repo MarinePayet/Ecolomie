@@ -21,7 +21,6 @@ export class NewproductPage {
   categories: any[] = [];
   storages: any[] = [];
 
-
   constructor(private apiService: ApiService, private toastController: ToastController) {
     this.product = {
       quantity: 0,
@@ -39,8 +38,6 @@ export class NewproductPage {
     this.product.storage = '/api/storages/' + this.product.storage;
 
     try {
-      // const response = await this.apiService.addProduct(this.product);
-
       const toast = await this.toastController.create({
         message: 'Produit ajouté avec succès.',
         duration: 2000,

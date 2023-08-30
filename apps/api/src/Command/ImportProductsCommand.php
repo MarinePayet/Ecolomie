@@ -28,8 +28,8 @@ class ImportProductsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-       $output->writeln('start');
-       $this->productImporter->process();
+        $output->writeln('start');
+        $this->productImporter->process();
 
         return Command::SUCCESS;
     }

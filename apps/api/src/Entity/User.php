@@ -45,11 +45,9 @@ use ApiPlatform\OpenApi\Model as Model;
         new Api\Get(
             security: 'is_granted("ROLE_USER") && object.getId() == user.getId()',
         )
-
     ]
 )]
         
-
 #[ORM\EntityListeners(['App\EntityListener\PasswordListener'])]
 
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -73,7 +71,6 @@ class User implements  UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
     #[Groups(['read_user'])]
-
 
     /**
      * @var string The hashed password
@@ -100,7 +97,7 @@ class User implements  UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastname = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class)]
-    #[Groups(['read_user', 'write_user'])]
+    #[Groups(['read_user'])]
     private Collection $storages;
 
     public function __construct()

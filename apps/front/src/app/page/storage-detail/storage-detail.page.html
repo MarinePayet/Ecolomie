@@ -17,15 +17,8 @@
     storage : {{ idStorage }}
   </ion-toolbar>
 
-
-
-  <!-- <ion-content > -->
-  <!-- <ion-grid> -->
   <ion-col *ngFor="let product of productsUserStorage">
-    <!-- <ion-col *ngFor="let prod of product.product"> -->
     <ng-container *ngIf="product.storage.id === idStorage">
-      <!-- <ion-list> -->
-
       <ion-item color="primary">
         <ion-list>
           id pdt : {{ product.id }}
@@ -48,10 +41,5 @@
 
         </ion-list>
       </ion-item>
-
-      <!-- </ion-list>         -->
     </ng-container>
-    <!-- </ion-col> -->
   </ion-col>
-  <!-- </ion-grid> -->
-  <!-- </ion-content>   -->

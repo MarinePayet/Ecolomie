@@ -7,7 +7,6 @@ import { ApiService , } from '../newproduct/api.service';
 
 
 interface Product {
-
   name: string;
   nutriscore: string;
   image: string;
@@ -105,7 +104,6 @@ export class Tab2Page {
     );
   }
 
-
   ngOnInit() {
     this.authService.loggedIn$.subscribe(isLoggedIn => {
       this.loggedIn = isLoggedIn; // Mettre à jour la variable loggedIn ici
@@ -162,6 +160,4 @@ export class Tab2Page {
       console.error("Error saving product", error);
     });
   }
-
-
 }
