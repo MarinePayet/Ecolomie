@@ -11,24 +11,24 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductForListRepository::class)]
 #[ApiResource(
-    normalizationContext:['groups' => 'read:productForList'],
-    denormalizationContext:['groups' => 'write:productForList']
+    normalizationContext:['groups' => 'product_for_list:read'],
+    denormalizationContext:['groups' => 'product_for_list:write']
 )]
 class ProductForList
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read:productForList', 'my_list:read','read:MyListWithProduct', 'write:productForList'])]
+    #[Groups(['product_for_list:read', 'my_list:read','my_list_with_product:read', 'product_for_list:write'])]
     private ?int $id = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:productForList', 'my_list:read','read:MyListWithProduct', 'write:productForList'])]
+    #[Groups(['product_for_list:read', 'my_list:read','my_list_with_product:read', 'product_for_list:write'])]
     private ?string $name = null;
     
     
     #[ORM\ManyToOne(inversedBy: 'productForLists')]
-    #[Groups(['read:productForList', 'my_list:read','read:MyListWithProduct', 'write:productForList'])]
+    #[Groups(['product_for_list:read', 'my_list:read','my_list_with_product:read', 'product_for_list:write'])]
     private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'productForList', targetEntity: MyListWithProduct::class)]

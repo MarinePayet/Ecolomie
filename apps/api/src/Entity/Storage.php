@@ -15,19 +15,27 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: StorageRepository::class)]
-// #[Api\ApiResource(
-//     normalizationContext: ['groups' => ['storage:read']],
-//     denormalizationContext: ['groups' => ['storage:write']],
-// )]
+#[Api\ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['storage:read']]
+        ),
+        new Get(
+            normalizationContext: ['groups' => ['storage:read']],
+        ),
+        new Post(
+            denormalizationContext:['groups' => ['storage:post']]
+        ),
+        new Put(
+            denormalizationContext: ['groups' => ['storage:write']]
+        ),
+        new Delete(
+            normalizationContext: ['groups' => ['storage:read']],
+            denormalizationContext: ['groups' => ['storage:write']]
+        )
+    ]
+)]
 
-#[GetCollection(normalizationContext: ['groups' => ['storage:read']],)] 
-#[Get(normalizationContext: ['groups' => ['storage:read']],)]
-#[Post(denormalizationContext:['groups' => ['storage:post']])]
-
-#[Put(denormalizationContext: ['groups' => ['storage:write']],)]
-#[Delete(
-    normalizationContext: ['groups' => ['storage:read']],
-    denormalizationContext: ['groups' => ['storage:write']],)]
 
 class Storage implements OwnerableInterface
 {

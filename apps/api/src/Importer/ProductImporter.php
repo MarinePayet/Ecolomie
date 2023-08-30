@@ -22,7 +22,6 @@ class ProductImporter
 
     public function process()
     {
-
         foreach ($this->getRows($this->tsvPath) as $i => $row) {
             if ($i == 0 || !is_array($row)) {
                 continue;

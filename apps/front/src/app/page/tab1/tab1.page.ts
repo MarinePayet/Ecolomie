@@ -16,7 +16,6 @@ interface Storage {
   name: string;
 }
 
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -30,10 +29,6 @@ export class Tab1Page implements OnInit {
   userInfo: any;
   loggedIn: boolean;
   storages: Storage[] = [];
-  
-
-
-
 
   constructor(
     private webApiService: WebApiService,
@@ -45,9 +40,6 @@ export class Tab1Page implements OnInit {
   ) {
     this.loggedIn = false;
   }
-
-
-
 
   ngOnInit() {
     this.authService.loggedIn$.subscribe(isLoggedIn => {
@@ -72,12 +64,9 @@ export class Tab1Page implements OnInit {
     });
   }
 
-
   refreshStorages() {
     this.getStorages();
   }
-
-
 
   async deleteStorage(storage: any) {
     const alert = await this.alertController.create({
@@ -105,7 +94,6 @@ export class Tab1Page implements OnInit {
       ]
     });
 
-
     await alert.present();
   }
 
@@ -115,7 +103,6 @@ export class Tab1Page implements OnInit {
       duration: 2000 // 2 secondes
     });
     toast.present();
-
   }
 
   createNewStorage(name: string) {
@@ -126,8 +113,6 @@ export class Tab1Page implements OnInit {
       console.log('Erreur lors de la création du stockage :', error);
     });
   }
-
-
 
   async createNewStoragePrompt() {
     const alert = await this.alertController.create({
@@ -170,7 +155,6 @@ export class Tab1Page implements OnInit {
     this.router.navigate(['/login']);
   }
 
-
   async scheduleNotificationForProduct(product: any) {
     const expirationDate = new Date(product.DLC);
     const currentTime = new Date();
@@ -200,14 +184,12 @@ export class Tab1Page implements OnInit {
     }
   }
 
-
   getProductUserStorages() {
     this.webApiService.getProductUserStorages().subscribe(
       data => this.productUserStorages = data['hydra:member'],
       error => console.error('Erreur lors de la récupération des storages:', error)
     );
   }
-
 
   createNewProduct(product: any) {
     this.apiService.saveProduct(product).subscribe(() => {

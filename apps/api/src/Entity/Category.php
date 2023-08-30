@@ -13,20 +13,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['product:read', 'product_user_storage:read']],
+    normalizationContext: ['groups' => ['product:read']],
     denormalizationContext: ['groups' => ['product:write']]
 )]
 #[ApiFilter(FilterOrderFilter::class, properties: ['name'], arguments: ['orderParameterName' => 'order'])]
+
 class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product:read', 'product:write', 'product_user_storage:read','read:productForList'])]
+    #[Groups(['product:read', 'product:write', 'product_user_storage:read','product_for_list:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['product:read', 'product:write', 'product_user_storage:read','read:productForList'])]
+    #[Groups(['product:read', 'product:write', 'product_user_storage:read','product_for_list:read'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]

@@ -15,7 +15,6 @@ export class MesListesPage implements OnInit {
   userId!: any;
   loggedIn: boolean;
 
-
   constructor(
     private webApiService: WebApiService,
     private alertController: AlertController,
@@ -26,7 +25,6 @@ export class MesListesPage implements OnInit {
     this.my_lists = [];
     this.userId = this.authService.getUserInfo();
     this.loggedIn = false;
-
   }
 
   ngOnInit() {
@@ -51,7 +49,6 @@ export class MesListesPage implements OnInit {
       console.error('Utilisateur non trouvé.');
     }
   }
-
 
   async deleteList(list: any) {
     const alert = await this.alertController.create({

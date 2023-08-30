@@ -18,9 +18,9 @@ interface ListCreationRequest {
 })
 export class WebApiService {
 
- // private readonly apiUrl = environment.apiUrl;
+private readonly apiUrl = environment.apiUrl;
 
-  private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
+  // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
   constructor(private http: HttpClient) { }
 
@@ -51,8 +51,6 @@ export class WebApiService {
     return this.http.post(`${this.apiUrl}/storages`, storage, { withCredentials: true })
       .pipe(catchError(this.handleError));
   }
-
-
 
   getStorage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages/`);
@@ -93,7 +91,6 @@ export class WebApiService {
       .pipe(catchError(this.handleError));
   }
 
-
   createList(name: string): Observable<any> {
     const list = {
       name: name,
@@ -105,7 +102,6 @@ export class WebApiService {
   deleteList(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
   }
-
 
   deleteProductFromList(idList: number, productId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${idList}/${productId}`);

@@ -90,7 +90,4 @@ export class AuthService {
   private setUser(data: any): void {
     this.currentUser = data;
   }
-
-
-
 }

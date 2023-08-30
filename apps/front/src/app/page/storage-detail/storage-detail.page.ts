@@ -12,14 +12,10 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class StorageDetailPage implements OnInit {
 
-  // productsOfMyList: any;
   productsUserStorage: any;
   idStorage?: number;
-  // myListProducts: any;
   storages: any;
   loggedIn: boolean;
-
-
 
   constructor(
     private webApiService: WebApiService,
@@ -32,7 +28,6 @@ export class StorageDetailPage implements OnInit {
     this.loggedIn = false;
 
   }
-
 
   ngOnInit() {
     this.authService.loggedIn$.subscribe(isLoggedIn => {

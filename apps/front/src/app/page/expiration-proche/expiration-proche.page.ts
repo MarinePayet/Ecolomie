@@ -17,8 +17,6 @@ export class ExpirationProchePage implements OnInit {
   productUserStoragesExpiringIn15Days: any;
   loggedIn: boolean;
 
-
-
   constructor(
     private webApiService: WebApiService,
     private authService: AuthService,

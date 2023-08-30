@@ -22,17 +22,24 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
 #[Api\ApiResource(
-    // normalizationContext: ['groups' => ['product_user_storage:read']],
-    // denormalizationContext: ['groups' => ['product_user_storage:write']],
-    order: ['storage.name', 'DLC' => 'ASC']
+    order: ['storage.name', 'DLC' => 'ASC'],
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['product_user_storage:read']]
+        ),
+        new Get(
+            normalizationContext: ['groups' => ['product_user_storage:read']]
+        ),
+        new Post(
+            normalizationContext: ['groups' => ['product_user_storage:read']],
+            denormalizationContext: ['groups' => ['product_user_storage:write']]
+        ),
+        new Put(
+            denormalizationContext: ['groups' => ['product_user_storage:update']]
+        ),
+        new Delete()
+    ]
 )]
-#[Get(normalizationContext: ['groups' => ['product_user_storage:read']],)]
-#[Post(
-    normalizationContext: ['groups' => ['product_user_storage:read']],
-    denormalizationContext: ['groups' => ['product_user_storage:write']],)]
-#[GetCollection(normalizationContext: ['groups' => ['product_user_storage:read']],)] 
-#[Delete()] 
-#[Put(denormalizationContext: ['groups' => ['product_user_storage:update']],)]
 
 #[ApiFilter(
     SearchFilter::class,
@@ -59,7 +66,7 @@ class ProductUserStorage
     private ?float $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages', cascade: ['persist'] )]
-    #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]
+    #[Groups(['product_user_storage:read','product_user_storage:update','product:read'])]
     private ?Storage $storage = null;
 
     #[ORM\ManyToOne(inversedBy: 'productUserStorages')]
@@ -72,7 +79,7 @@ class ProductUserStorage
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->id; 
     }
 
     public function getDLC(): ?\DateTimeInterface
@@ -135,15 +142,4 @@ class ProductUserStorage
         return $this;
     }
 
-    //public function removeProduct(Product $product): static
-    //{
-       // if ($this->product->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-          //  if ($product->getProductUserStorageId() === $this) {
-          //      $product->setProductUserStorageId(null);
-         //   }
-       // }
-
-       // return $this;
-   // }
 }

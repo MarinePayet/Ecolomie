@@ -27,13 +27,8 @@ class NotificationsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
         $this->notificationsService->create();
 
         return Command::SUCCESS;
     }
-    
-    
-
-
 }
