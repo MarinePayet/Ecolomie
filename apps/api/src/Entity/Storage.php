@@ -17,21 +17,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: StorageRepository::class)]
 #[Api\ApiResource(
     operations: [
-        new GetCollection(
+        new Api\GetCollection(
             normalizationContext: ['groups' => ['storage:read']]
         ),
-        new Get(
+        new Api\Get(
             normalizationContext: ['groups' => ['storage:read']],
         ),
-        new Post(
+        new Api\Post(
             denormalizationContext:['groups' => ['storage:post']]
         ),
-        new Put(
+        new Api\Put(
             denormalizationContext: ['groups' => ['storage:write']]
         ),
-        new Delete(
+        new Api\Delete(
             normalizationContext: ['groups' => ['storage:read']],
-            denormalizationContext: ['groups' => ['storage:write']]
+            denormalizationContext: ['groups' => ['storage:write']],
         )
     ]
 )]
@@ -123,5 +123,6 @@ class Storage implements OwnerableInterface
     public function getOwner(): ?User
     {
         return $this->getUser();
+        
     }
 }

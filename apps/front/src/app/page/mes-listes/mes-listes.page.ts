@@ -35,6 +35,14 @@ export class MesListesPage implements OnInit {
         this.router.navigate(['/login']);
       } else {
         this.getMyLists();
+        this.authService.getUserInfo().subscribe(
+          (userInfo) => {
+            this.userId = userInfo.id; // Assurez-vous que 'id' est le bon champ
+          },
+          (error) => {
+            console.log('Erreur lors de la récupération des informations de l\'utilisateur:', error);
+          }
+        );
       }
     });
   }
@@ -101,33 +109,38 @@ export class MesListesPage implements OnInit {
         ],
         buttons: [
           {
-            text: 'Annuler',
-            role: 'cancel',
-          },
-          {
             text: 'Créer',
             handler: (data) => {
+              if (!data.name) {
+                console.log('Le nom de la liste ne peut pas être vide.');
+                this.presentToast('Le nom de la liste ne peut pas être vide.');
+                return;
+              }
+
               if (this.userId) {
                 const newList = { name: data.name };
-                this.webApiService.createList(newList.name).subscribe(
+
+                this.webApiService.createList(newList.name, this.userId).subscribe(
                   () => {
                     console.log('Liste créée avec succès.');
-                    this.presentToast('Liste créée avec succès');
-                    this.getMyLists();
+                    this.presentToast('Liste créée avec succès.');
+                    this.getMyLists();  // actualise la liste des listes
                   },
                   (error) => {
-                    console.log(error);
+                    console.log('Erreur lors de la création de la liste:', error);
+                    this.presentToast('Erreur lors de la création de la liste.');
                   }
                 );
               }
-            },
-          },
-        ],
+            }
+          }
+        ]
       })
       .then((prompt) => {
         prompt.present();
       });
   }
+
 
   get isLoggedIn() {
     return this.authService.loggedIn$;

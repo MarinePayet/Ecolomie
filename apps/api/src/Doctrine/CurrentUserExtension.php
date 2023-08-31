@@ -54,8 +54,13 @@ final class CurrentUserExtension implements QueryCollectionExtensionInterface, Q
             throw new AccessDeniedException();
         }
 
-        $rootAliases = $queryBuilder->getRootAliases()[0];
-        $queryBuilder->andWhere(sprintf('%s.user = :current_user', $rootAliases));
-        $queryBuilder->setParameter('current_user', $user->getId());
+            $rootAlias = $queryBuilder->getRootAliases()[0];
+            $queryBuilder->andWhere(sprintf('%s.user = :current_user', $rootAlias));
+            $queryBuilder->setParameter('current_user', $user);
+            
+            
+        }
+        
+        
     }
-}
+

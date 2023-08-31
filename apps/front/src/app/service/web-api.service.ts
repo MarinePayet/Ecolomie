@@ -6,7 +6,9 @@ import { environment } from 'src/environments/environment';
 
 interface StorageCreationRequest {
   name: string;
+  user: string;
 }
+
 
 interface ListCreationRequest {
   name: string;
@@ -20,7 +22,7 @@ export class WebApiService {
 
 private readonly apiUrl = environment.apiUrl;
 
-  // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
+ // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
   constructor(private http: HttpClient) { }
 
@@ -39,14 +41,15 @@ private readonly apiUrl = environment.apiUrl;
   }
 
   deleteStorages(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/storages/${id}`)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(`${this.apiUrl}/storages/${id}`,{ withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
 
-  createStorage(name: string): Observable<any> {
+
+  createStorage(name: string, userId: string): Observable<any> {
     const storage: StorageCreationRequest = {
       name: name,
-
+      user: `/api/users/${userId}`
     };
     return this.http.post(`${this.apiUrl}/storages`, storage, { withCredentials: true })
       .pipe(catchError(this.handleError));
@@ -55,6 +58,7 @@ private readonly apiUrl = environment.apiUrl;
   getStorage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/storages/`);
   }
+
 
   deleteStorage(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/storages/${id}`);
@@ -91,17 +95,22 @@ private readonly apiUrl = environment.apiUrl;
       .pipe(catchError(this.handleError));
   }
 
-  createList(name: string): Observable<any> {
+
+  createList(name: string, userId: string): Observable<any> {
     const list = {
       name: name,
+      user: `/api/users/${userId}`
     };
-    return this.http.post(`${this.apiUrl}/my_lists`, list , { withCredentials: true });
-    pipe(catchError(this.handleError));
+    return this.http.post(`${this.apiUrl}/my_lists`, list, { withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
 
+
   deleteList(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
+    return this.http.delete(`${this.apiUrl}/my_lists/${id}`,{ withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
+
 
   deleteProductFromList(idList: number, productId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/my_lists/${idList}/${productId}`);
@@ -109,21 +118,29 @@ private readonly apiUrl = environment.apiUrl;
 
   // PRODUCT_USER_STORAGE
 
-  getProductUserStorage(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product_user_storages/${id}`);
-  }
+
+ getProductUserStorage(userId: string): Observable<any> {
+  const params = new HttpParams().set('user', userId);
+  return this.http.get(`${this.apiUrl}/productUserStorages`, { params, withCredentials: true })
+    .pipe(catchError(this.handleError));
+}
+
 
   getProductUserStorages(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product_user_storages`);
-  }
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { withCredentials: true })
+    .pipe(catchError(this.handleError));
+}
+
 
   updateProductUserStorage(id: number, productUserStorage: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage);
+    return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage,{ withCredentials: true })
+    .pipe(catchError(this.handleError));
 
   }
 
   deleteProductUserStorage(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
+    return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`,{ withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
 
   getProductUserStoragesSorted(order: string, searchQuery: string) {
@@ -131,7 +148,8 @@ private readonly apiUrl = environment.apiUrl;
       .set('order', order)
       .set('product.name', searchQuery);
 
-    return this.http.get(this.apiUrl + '/product_user_storages', { params });
+    return this.http.get(this.apiUrl + '/product_user_storages', { params ,  withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
 
   protected today = new Date();
