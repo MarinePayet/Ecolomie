@@ -19,6 +19,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter as FilterOrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use App\Entity\OwnerableInterface;
+
 
 #[ORM\Entity(repositoryClass: ProductUserStorageRepository::class)]
 #[Api\ApiResource(
@@ -65,7 +67,7 @@ class ProductUserStorage implements OwnerableInterface
     #[Groups(['product_user_storage:read','product_user_storage:write','product_user_storage:update','product:read'])]    
     private ?float $quantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'productUserStorages', cascade: ['persist'] )]
+    #[ORM\ManyToOne(inversedBy: 'productUserStorages', cascade: ['persist'])]
     #[Groups(['product_user_storage:read','product_user_storage:update','product:read','product_user_storage:write'])]
     private ?Storage $storage = null;
 
@@ -144,6 +146,7 @@ class ProductUserStorage implements OwnerableInterface
 
     public function getOwner(): ?User
     {
-        return $this->getStorage()->getOwner();
+        return $this->getStorage()?->getUser();
     }
+
 }

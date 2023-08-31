@@ -101,10 +101,9 @@ export class Tab1Page implements OnInit {
         {
           text: 'Supprimer',
           handler: () => {
-            this.webApiService.deleteStorage(storage.id).subscribe(() => {
+            this.webApiService.deleteStorages(storage.id).subscribe(() => {
               console.log('Emplacement supprimé avec succès.');
-              this.refreshStorages();
-              this.getStorages();
+              this.refreshStorages();  // Rafraîchit la liste des storages, gardez ce seul appel
               this.presentToast('Emplacement supprimé avec succès.');
 
             }, error => {

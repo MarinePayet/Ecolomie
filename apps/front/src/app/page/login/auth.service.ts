@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 
@@ -10,6 +10,8 @@ interface User {
   id: string;
   storages: any[];
 }
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +41,8 @@ export class AuthService {
       lastname: lastname
     };
 
-    return this.http.post(`${this.API_URL}/api/users`, body).pipe(
-      tap(() => this.login(email, password)),
+    return this.http.post(`${this.apiurl}/users`, body).pipe(
+      switchMap(() => this.login(email, password)),
       catchError(error => {
         console.error('Erreur lors de l\'inscription:', error);
         return throwError(error);
@@ -48,13 +50,14 @@ export class AuthService {
     );
   }
 
+
   login(email: string, password: string): Observable<any> {
     const body = { email: email, password: password };
 
     return this.http.post<{ [key: string]: any }>(`${this.API_URL}`, body, { withCredentials: true }).pipe(
       tap((data) => {
         this.loggedInSubject.next(true);
-        localStorage.setItem('isLoggedIn', 'true'); 
+        localStorage.setItem('isLoggedIn', 'true');
         this.setUser(data);
       }),
       catchError(error => {
@@ -64,10 +67,13 @@ export class AuthService {
     );
   }
 
+
   logout(): void {
+    localStorage.removeItem('token');
     this.loggedInSubject.next(false);
-    localStorage.removeItem('isLoggedIn'); // Ajout de cette ligne
+    localStorage.removeItem('isLoggedIn');
   }
+
 
 
   getUserInfo(): Observable<User> {

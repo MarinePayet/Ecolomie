@@ -54,12 +54,13 @@ final class CurrentUserExtension implements QueryCollectionExtensionInterface, Q
             throw new AccessDeniedException();
         }
 
-        // if ($resourceClass === productUserStorage::class) { 
             $rootAlias = $queryBuilder->getRootAliases()[0];
             $queryBuilder->andWhere(sprintf('%s.user = :current_user', $rootAlias));
             $queryBuilder->setParameter('current_user', $user);
             
+            
         }
-                
+        
+        
     }
 

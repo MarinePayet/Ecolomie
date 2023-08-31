@@ -41,8 +41,8 @@ private readonly apiUrl = environment.apiUrl;
   }
 
   deleteStorages(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/storages/${id}`)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(`${this.apiUrl}/storages/${id}`,{ withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
 
 
@@ -107,7 +107,8 @@ private readonly apiUrl = environment.apiUrl;
 
 
   deleteList(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/my_lists/${id}`);
+    return this.http.delete(`${this.apiUrl}/my_lists/${id}`,{ withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
 
 
@@ -117,21 +118,29 @@ private readonly apiUrl = environment.apiUrl;
 
   // PRODUCT_USER_STORAGE
 
-  getProductUserStorage(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product_user_storages/${id}`);
-  }
+
+ getProductUserStorage(userId: string): Observable<any> {
+  const params = new HttpParams().set('user', userId);
+  return this.http.get(`${this.apiUrl}/productUserStorages`, { params, withCredentials: true })
+    .pipe(catchError(this.handleError));
+}
+
 
   getProductUserStorages(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product_user_storages`);
-  }
+    return this.http.get(`${this.apiUrl}/product_user_storages`, { withCredentials: true })
+    .pipe(catchError(this.handleError));
+}
+
 
   updateProductUserStorage(id: number, productUserStorage: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage);
+    return this.http.put(`${this.apiUrl}/product_user_storages/${id}`, productUserStorage,{ withCredentials: true })
+    .pipe(catchError(this.handleError));
 
   }
 
   deleteProductUserStorage(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`);
+    return this.http.delete(`${this.apiUrl}/product_user_storages/${id}`,{ withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
 
   getProductUserStoragesSorted(order: string, searchQuery: string) {
@@ -139,7 +148,8 @@ private readonly apiUrl = environment.apiUrl;
       .set('order', order)
       .set('product.name', searchQuery);
 
-    return this.http.get(this.apiUrl + '/product_user_storages', { params });
+    return this.http.get(this.apiUrl + '/product_user_storages', { params ,  withCredentials: true })
+    .pipe(catchError(this.handleError));
   }
 
   protected today = new Date();

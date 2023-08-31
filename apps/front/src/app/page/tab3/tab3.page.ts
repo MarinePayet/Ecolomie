@@ -24,7 +24,7 @@ export class Tab3Page implements OnInit {
 
   ngOnInit() {
     this.loadProductUserStorages();
-    this.getProductUserStorages();
+    this.getProductUserStorage();
   }
 
   loadProductUserStorages() {
@@ -45,11 +45,11 @@ export class Tab3Page implements OnInit {
     );
   }
 
-  getProductUserStorage(id: number) {
-    this.webApiService.getProductUserStorage(id).subscribe((data) => {
+  getProductUserStorage() {
+    const userId = this.authService.getUserId();
+    this.webApiService.getProductUserStorage(userId).subscribe((data: any) => {
       this.productUserStorages = data['hydra:member'];
-    }
-    );
+    });
   }
 
   get isLoggedIn() {

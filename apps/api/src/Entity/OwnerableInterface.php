@@ -7,4 +7,6 @@ use App\Entity\User;
 interface OwnerableInterface
 {
     public function getOwner(): ?User;
+    
 }
+

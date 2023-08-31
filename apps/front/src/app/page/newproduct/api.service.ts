@@ -45,7 +45,7 @@ export class ApiService {
   //  private readonly API_URL = 'http://192.168.1.255:8000/api'; //URL Android en dev selon l'IP marine donkey
   //  private readonly API_URL = 'http://192.168.50.118:8000/api'; //URL Android en dev selon l'IP marine
     // private readonly API_URL = 'http://192.168.50.159:8000/api'; // for android emulator salim A donkey
-      // private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
+      //private readonly apiUrl = 'http://192.168.1.21:8000/api'; // for android emulator salim A
 
       constructor(private http: HttpClient) { }
 
@@ -62,7 +62,7 @@ export class ApiService {
       }
 
       getStorages(): Observable<ApiResponse<Storage>> {
-        return this.http.get<ApiResponse<Storage>>(`${this.apiUrl}/storages`);
+        return this.http.get<ApiResponse<Storage>>(`${this.apiUrl}/storages`,{ withCredentials: true })
       }
 
       getCategories(): Observable<ApiResponse<Category>> {
@@ -70,6 +70,6 @@ export class ApiService {
       }
 
       saveProduct(product: SaveProductRequest): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}/product_user_storages`, product);
+        return this.http.post<any>(`${this.apiUrl}/product_user_storages`, product ,{ withCredentials: true });
       }
     }
