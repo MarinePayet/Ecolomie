@@ -32,19 +32,24 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card color="warning" class="ion-padding" *ngFor="let storage of storages" [routerLink]="['/storage-detail', storage.id]">
+  <ion-card *ngFor="let storage of storages" [routerLink]="['/storage-detail', storage.id]">
     <ion-item-sliding>
       <ion-item color="warning">
         <ion-card-header>
-          <ion-card-title class="ion-text-uppercase ion-text-center">{{ storage.name }}</ion-card-title>
+          <ion-card-title class="ion-text-uppercase ion-text-center ion-text-wrap">{{ storage.name }}</ion-card-title>
         </ion-card-header>
       </ion-item>
 
       <ion-item-options side="end">
+
         <ion-item-option color="danger" (click)="deleteStorage(storage)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-item-option>
+
+
+
       </ion-item-options>
+
     </ion-item-sliding>
   </ion-card>
 

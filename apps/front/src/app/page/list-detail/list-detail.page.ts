@@ -33,6 +33,7 @@
       }
 
       ngOnInit() {
+        this.ionViewWillEnter();
         this.authService.loggedIn$.subscribe(isLoggedIn => {
           this.loggedIn = isLoggedIn;
           if (!isLoggedIn) {
@@ -59,6 +60,7 @@
   }
 
     getProductsOfMyList() {
+
       this.webApiService.getProductsForList().subscribe((data) => {
         this.productsOfMyList = data['hydra:member'];
       });
@@ -93,8 +95,8 @@
               this.webApiService.deleteMyListWithProducts( Number(productId) ).subscribe(() => {
                 this.getProductsOfMyList();
                 this.presentToast('Le produit a été supprimé avec succès.');
-                this.ionViewWillEnter();
               });
+              this.ionViewWillEnter();
             }
           }
         ]

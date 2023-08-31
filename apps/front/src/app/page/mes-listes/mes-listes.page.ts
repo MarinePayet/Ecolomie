@@ -119,6 +119,7 @@ export class MesListesPage implements OnInit {
 
               if (this.userId) {
                 const newList = { name: data.name };
+
                 this.webApiService.createList(newList.name, this.userId).subscribe(
                   () => {
                     console.log('Liste créée avec succès.');
